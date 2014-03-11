@@ -1,0 +1,90 @@
+\changetocdepth {4}
+\select@language {brazil}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{Introdu\IeC {\c c}\IeC {\~a}o}{29}{chapter*.14}
+\contentsline {part}{\partnumberline {I}\MakeTextUppercase {Prepara\IeC {\c c}\IeC {\~a}o da pesquisa}}{31}{part.1}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase {Resultados de comandos}}{33}{chapter.1}
+\precistoctext {Isto \IeC {\'e} uma sinopse de cap\IeC {\'\i }tulo. A ABNT n\IeC {\~a}o traz nenhuma normatiza\IeC {\c c}\IeC {\~a}o a respeito desse tipo de resumo, que \IeC {\'e} mais comum em romances e livros t\IeC {\'e}cnicos.}
+\contentsline {section}{\numberline {1.1}Codifica\IeC {\c c}\IeC {\~a}o dos arquivos: UTF8}{33}{section.1.1}
+\contentsline {section}{\numberline {1.2}Cita\IeC {\c c}\IeC {\~o}es diretas}{33}{section.1.2}
+\select@language {english}
+\select@language {brazil}
+\contentsline {section}{\numberline {1.3}Notas de rodap\IeC {\'e}}{34}{section.1.3}
+\contentsline {section}{\numberline {1.4}Tabelas}{34}{section.1.4}
+\contentsline {section}{\numberline {1.5}Figuras}{35}{section.1.5}
+\contentsline {subsection}{\numberline {1.5.1}Figuras em \emph {minipages}}{35}{subsection.1.5.1}
+\contentsline {section}{\numberline {1.6}Express\IeC {\~o}es matem\IeC {\'a}ticas}{36}{section.1.6}
+\contentsline {section}{\numberline {1.7}Enumera\IeC {\c c}\IeC {\~o}es: al\IeC {\'\i }neas e subal\IeC {\'\i }neas}{37}{section.1.7}
+\contentsline {section}{\numberline {1.8}Espa\IeC {\c c}amento entre par\IeC {\'a}grafos e linhas}{38}{section.1.8}
+\contentsline {section}{\numberline {1.9}Inclus\IeC {\~a}o de outros arquivos}{39}{section.1.9}
+\contentsline {section}{\numberline {1.10}Compilar o documento \textlatin {\LaTeX }}{39}{section.1.10}
+\contentsline {section}{\numberline {1.11}Remiss\IeC {\~o}es internas}{39}{section.1.11}
+\contentsline {section}{\numberline {1.12}Divis\IeC {\~o}es do documento: se\IeC {\c c}\IeC {\~a}o}{40}{section.1.12}
+\contentsline {subsection}{\numberline {1.12.1}Divis\IeC {\~o}es do documento: subse\IeC {\c c}\IeC {\~a}o}{40}{subsection.1.12.1}
+\contentsline {subsubsection}{\numberline {1.12.1.1}Divis\IeC {\~o}es do documento: subsubse\IeC {\c c}\IeC {\~a}o}{40}{subsubsection.1.12.1.1}
+\contentsline {subsubsection}{\numberline {1.12.1.2}Divis\IeC {\~o}es do documento: subsubse\IeC {\c c}\IeC {\~a}o}{40}{subsubsection.1.12.1.2}
+\contentsline {subsection}{\numberline {1.12.2}Divis\IeC {\~o}es do documento: subse\IeC {\c c}\IeC {\~a}o}{40}{subsection.1.12.2}
+\contentsline {subsubsection}{\numberline {1.12.2.1}Divis\IeC {\~o}es do documento: subsubse\IeC {\c c}\IeC {\~a}o}{40}{subsubsection.1.12.2.1}
+\contentsline {paragraph}{\numberline {1.12.2.1.1}Esta \IeC {\'e} uma subse\IeC {\c c}\IeC {\~a}o de quinto n\IeC {\'\i }vel}{40}{paragraph.1.12.2.1.1}
+\contentsline {paragraph}{\numberline {1.12.2.1.2}Esta \IeC {\'e} outra subse\IeC {\c c}\IeC {\~a}o de quinto n\IeC {\'\i }vel}{41}{paragraph.1.12.2.1.2}
+\contentsline {paragraph}{\numberline {1.12.2.1.3}Este \IeC {\'e} um par\IeC {\'a}grafo numerado}{41}{paragraph.1.12.2.1.3}
+\contentsline {paragraph}{\numberline {1.12.2.1.4}Esta \IeC {\'e} outro par\IeC {\'a}grafo numerado}{41}{paragraph.1.12.2.1.4}
+\contentsline {section}{\numberline {1.13}Este \IeC {\'e} um exemplo de nome de se\IeC {\c c}\IeC {\~a}o longo. Ele deve estar alinhado \IeC {\`a} esquerda e a segunda e demais linhas devem iniciar logo abaixo da primeira palavra da primeira linha}{41}{section.1.13}
+\contentsline {section}{\numberline {1.14}Diferentes idiomas e hifeniza\IeC {\c c}\IeC {\~o}es}{41}{section.1.14}
+\contentsline {section}{\numberline {1.15}Consulte o manual da classe \textsf {abntex2}}{43}{section.1.15}
+\contentsline {section}{\numberline {1.16}Refer\IeC {\^e}ncias bibliogr\IeC {\'a}ficas}{43}{section.1.16}
+\contentsline {subsection}{\numberline {1.16.1}Acentua\IeC {\c c}\IeC {\~a}o de refer\IeC {\^e}ncias bibliogr\IeC {\'a}ficas}{43}{subsection.1.16.1}
+\contentsline {section}{\numberline {1.17}Precisa de ajuda?}{44}{section.1.17}
+\contentsline {section}{\numberline {1.18}Voc\IeC {\^e} pode ajudar?}{44}{section.1.18}
+\contentsline {section}{\numberline {1.19}Quer customizar os modelos do abn\textlatin {T\kern -.1667em\lower .5ex\hbox {E}\kern -.125emX\spacefactor \@m }2\ para sua institui\IeC {\c c}\IeC {\~a}o ou universidade?}{44}{section.1.19}
+\contentsline {part}{\partnumberline {II}\MakeTextUppercase {Referenciais te\IeC {\'o}ricos}}{45}{part.2}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase {Norma ISO/IEC 13818-1}}{47}{chapter.2}
+\contentsline {section}{\numberline {2.1}Transport Stream}{47}{section.2.1}
+\contentsline {part}{\partnumberline {III}\MakeTextUppercase {Resultados}}{49}{part.3}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase {Resultados obtidos com o multiplexador}}{51}{chapter.3}
+\contentsline {section}{\numberline {3.1}Desempenho em velocidade de multiplexa\IeC {\c c}\IeC {\~a}o}{51}{section.3.1}
+\vspace {\cftbeforechapterskip }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{Conclus\IeC {\~a}o}{53}{chapter*.19}
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\contentsline {chapter}{Perspectivas}{55}{chapter*.20}
+\vspace {\cftbeforechapterskip }
+\renewcommand *{\cftappendixname }{AP\^ENDICE \space }
+\setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
+\cftinsert {A}
+\contentsline {part}{\uppercase {Ap\^endices}}{57}{section*.22}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\cftinsert {A}
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase {Tabelas selecionadas retiradas da norma ISO/IEC 13818-1}}{59}{appendix.A}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\cftinsert {A}
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase {Trecho do c\IeC {\'o}digo implementado em linguagem C}}{61}{appendix.B}
+\cftinsert {AAA}
+\renewcommand *{\cftappendixname }{ANEXO \space }
+\setlength {\cftpartindent }{\cftlastnumwidth } \setlength {\cftpartnumwidth }{2em}
+\cftinsert {A}
+\contentsline {part}{\uppercase {Anexos}}{63}{section*.23}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\cftinsert {A}
+\contentsline {appendix}{\chapternumberline {A}\MakeTextUppercase {Morbi ultrices rutrum lorem.}}{65}{appendix.anexochapback.1}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\cftinsert {A}
+\contentsline {appendix}{\chapternumberline {B}\MakeTextUppercase {Cras non urna sed feugiat cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus}}{67}{appendix.anexochapback.2}
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\cftinsert {A}
+\contentsline {appendix}{\chapternumberline {C}\MakeTextUppercase {Fusce facilisis lacinia dui}}{69}{appendix.anexochapback.3}
+\vspace {\cftbeforechapterskip }
