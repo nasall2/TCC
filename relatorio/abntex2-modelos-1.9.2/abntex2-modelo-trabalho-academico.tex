@@ -95,7 +95,7 @@
 % ---
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % ---
-\titulo{Desenvolvimento de Multiplexador para Transport Stream padrão MPEG2 \\ para a televisão digital brasileira}
+\titulo{Desenvolvimento de Multiplexador MPEG2 \\ para o Sistema Brasileiro de TV Digital}
 \autor{Lucas Pereira Endres}
 \local{Brasil}
 \data{2014}
@@ -271,41 +271,41 @@ da Universidade Federal do Rio Grande do Sul.}
 %
 % \includepdf{folhadeaprovacao_final.pdf}
 %
-\begin{folhadeaprovacao}
-
-  \begin{center}
-    {\ABNTEXchapterfont\large\imprimirautor}
-
-    \vspace*{\fill}\vspace*{\fill}
-    \begin{center}
-      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
-    \end{center}
-    \vspace*{\fill}
-    
-    \hspace{.45\textwidth}
-    \begin{minipage}{.5\textwidth}
-        \imprimirpreambulo
-    \end{minipage}%
-    \vspace*{\fill}
-   \end{center}
-        
-   Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
-
-   \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
-   \assinatura{\textbf{Sylvie Kerouedan} \\ Convidado Telecom Bretagne}
-   \assinatura{\textbf{Fulano de Tal} \\ Convidado 2}
-   %\assinatura{\textbf{Professor} \\ Convidado 3}
-   %\assinatura{\textbf{Professor} \\ Convidado 4}
-      
-   \begin{center}
-    \vspace*{0.5cm}
-    {\large\imprimirlocal}
-    \par
-    {\large\imprimirdata}
-    \vspace*{1cm}
-  \end{center}
-  
-\end{folhadeaprovacao}
+%\begin{folhadeaprovacao}
+%
+%  \begin{center}
+%    {\ABNTEXchapterfont\large\imprimirautor}
+%
+%    \vspace*{\fill}\vspace*{\fill}
+%    \begin{center}
+%      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+%    \end{center}
+%    \vspace*{\fill}
+%    
+%    \hspace{.45\textwidth}
+%    \begin{minipage}{.5\textwidth}
+%        \imprimirpreambulo
+%    \end{minipage}%
+%    \vspace*{\fill}
+%   \end{center}
+%        
+%   Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
+%
+%   \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
+%   \assinatura{\textbf{Sylvie Kerouedan} \\ Convidado Telecom Bretagne}
+%   %\assinatura{\textbf{Fulano de Tal} \\ Convidado 2}
+%   %\assinatura{\textbf{Professor} \\ Convidado 3}
+%   %\assinatura{\textbf{Professor} \\ Convidado 4}
+%      
+%   \begin{center}
+%    \vspace*{0.5cm}
+%    {\large\imprimirlocal}
+%    \par
+%    {\large\imprimirdata}
+%    \vspace*{1cm}
+%  \end{center}
+%  
+%\end{folhadeaprovacao}
 % ---
 
 % ---
@@ -315,8 +315,7 @@ da Universidade Federal do Rio Grande do Sul.}
    \vspace*{\fill}
    \centering
    \noindent
-   \textit{ Este trabalho é dedicado às crianças adultas que,\\
-   quando pequenas, sonharam em se tornar cientistas.} \vspace*{\fill}
+   \textit{ Dedicatória ...} \vspace*{\fill}
 \end{dedicatoria}
 % ---
 
@@ -430,6 +429,13 @@ contribuirão para a evolução do \abnTeX.
 % ---
 \begin{siglas}
   \item[ABNT] Associação Brasileira de Normas Técnicas
+  \item[ISO] International Standards Organization
+  \item[ARIB]
+  \item[MPEG2]
+  \item[]
+  \item[]
+  \item[]
+  \item[]
   \item[abnTeX] ABsurdas Normas para TeX
 \end{siglas}
 % ---
@@ -466,6 +472,34 @@ contribuirão para a evolução do \abnTeX.
 \chapter*[Introdução]{Introdução}
 \addcontentsline{toc}{chapter}{Introdução}
 % ----------------------------------------------------------
+
+Historicamente, a televisão está presente nas casas dos cidadãos brasileiros e é a principal fonte de
+entretenimento e informação para a população. Nos últimos 10 anos, os novos meios de comunicação digital, tais
+como o computador e o telefone celular, estão sendo assimilados pela população de diferentes classes sociais. Um
+dado recente afirma que já 46% da população brasileira dispõe de uma linha de telefone celular. Embora seja 
+significativa, a participação deste meio ainda é muito inferior à da televisão, cuja área de cobertura de sinal atinge
+100% da população por via satelital, e próximo de 70% da população por via terrestre. A televisão é, portanto, o
+principal canal de comunicação disponível ao grande público no Brasil.
+
+Ainda que tenha cobertura incomparável às demais tecnologias, a televisão é, a grosso modo, um meio de comunicação
+unidirecional. Não há possibilidade, no atual sistema de transmissão adotado no Brasil, de haver interatividade dos
+telespectadores com o conteúdo apresentado pela geradora. Se comparada à \textit{Internet}, por exemplo, a televisão
+está em desvantagem nesse aspecto. É possível, no entanto, dotar a programação de interatividade se houver um meio de
+retornar dados para a geradora. Ao usuário podem ser apresentadas opções de programação e, a partir de sua escolha,
+a geradora envia o conteúdo. Assim, se poderia aliar a interatividade da \textit{Internet} à abrangência
+da televisão e com isso promover a inclusão social de regiões remotas, sem acesso à infraestrutura de dados em alta
+velocidade presente nas grandes metrópoles.
+
+Essa tecnologia é inviável com a infraestrutura atual da televisão analógica: é impossível enviar através de um único
+canal analógico mais de um conteúdo de vídeo ou áudio simultaneamente. Como solução a essa dificuldade, desenvolveu-se
+o sistema de transmissão digital descrito pela norma ISO/IEC 13818, comercialmente conhecido pela sigla que dá nome ao
+comitê formado para redigí-la, o MPEG2. A norma descreve um padrão de transmissão e codificação de vídeo, áudio e dados
+digitais que permite, entre outras funções, transmitir conteúdos audiovisuais independentes simultaneamente, permitindo
+assim que o usuário do sistema escolha, dentre as informações enviadas pela geradora, qual ele deseja receber.
+
+A escolha pelo padrão de transmissão MPEG2 foi definido em 
+
+%% FIM DA INTRODUÇÃO ESCRITA PARA O TCC
 
 Este documento e seu código-fonte são exemplos de referência de uso da classe
 \textsf{abntex2} e do pacote \textsf{abntex2cite}. O documento 
