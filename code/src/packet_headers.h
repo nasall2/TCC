@@ -16,3 +16,6 @@ typedef struct {
 	uint	adaptation_field_control	: 2;
 	uint	continuity_counter		: 4;
 } TS_packet_header;
+
+//typedef struct {
+//} PES_packet_header

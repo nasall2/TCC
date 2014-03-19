@@ -6,3 +6,9 @@
 */
 
 #define SYNC_BYTE 0x47
+
+
+
+
+#define TS_PACKET_HEADER_LENGTH	4	//In bytes
+
