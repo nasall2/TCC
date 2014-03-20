@@ -4,91 +4,52 @@
 #include "packet_headers.h"
 #include "ISO13818_definitions.h"
 
-void test();
+TS_packet_header write_TS_packet_header(uint PID, uint continuity_counter) {
+
+    if(PID>0x1FFF || continuity_counter>0xf) {
+	printf("You have errors in TS packet header fields.\n");
+	printf("PID and/or cont_ctr exceed expeted values.\n");
+	return NULL
+
+    header->sync_byte = SYNC_BYTE;			    // xxxx xxxx
+    header->transport_error_indicator = 0b0;	    // x
+    header->payload_unit_start_indicator = 0b1;	    // x
+    header->transport_priority = 0b0;		    // x
+    header->PID = 0x0001;			    // xxxx xxxx xxxx x
+    header->transport_scrambling_control = 0b00;    // xx
+    header->adaptation_field_control = 0b00;	    // xx
+    header->continuity_counter = 0x1;		    // xxxx
+
+}
 
 void main(){
 
-	test();
+    TS_packet_header header;
+    TS_packet packet;
 
-}
-void old_main(){
+    FILE* video_ES;
+    FILE* audio_ES;
+    FILE* output_TS;
 
-	TS_packet_header header;
-	TS_packet_header * header_ptr;
+    int i;
 
-	FILE * video_ES_ptr;
-	FILE * audio_ES_ptr;
-	FILE * output_TS_ptr;
-	int i;
+//  open streams
+    video_ES = fopen("video_ES.ES","r");
+    audio_ES = fopen("audio_ES.ES","r");
+    output_TS = fopen("output_TS.TS","w");
 
-	int teste;
-	int * teste_ptr;
+//ACTION!!!
 
-	header_ptr = &header;
+    write_TS_packet_header(&header);
+    packet.header = header;
 
-	header.sync_byte = 0xff;			// xxxx xxxx
-	header.transport_error_indicator = 0x1; 	// x
-	header.payload_unit_start_indicator = 0x1; 	// x
-	header.transport_priority = 0x1; 		// x
-	header.PID = 0x1fff; 				// xxxx xxxx xxxx x
-	header.transport_scrambling_control = 0x3; 	// xx
-	header.adaptation_field_control = 0x3;		// xx
-	header.continuity_counter = 0xf;		// xxxx
+    for(i=0;i<TS_PACKET_PAYLOAD_LENGTH;i++)
+	packet.payload[i] = i;
 
+    fwrite (&packet, TS_PACKET_LENGTH, 1, output_TS);
 
-//	printf("HEADER sync byte:\n%x\n",header.sync_byte);
-//	printf("HEADER PID:\n%x\n",header.PID);
-//	printf("HEADER adaptation_field_control:\n%x\n",header.adaptation_field_control);
-//	printf("HEADER continuity counter:\n%x\n",header.continuity_counter);
-
-	video_ES_ptr = fopen("video_ES.ES","w");
-	audio_ES_ptr = fopen("audio_ES.ES","w");
-	output_TS_ptr= fopen("output_TS.TS","w");
-
-//	for(i = 0; i<TS_PACKET_HEADER_LENGTH; i++) {
-//		putc(0x00,video_ES_ptr);
-//		printf("%hhX \t", *(header_ptr));
-//	}
-
-	printf("\n");
-
-//	for(i = 0; i<10; i++) {
-//		putc(0xff,audio_ES_ptr);
-//	}
-
-	printf("%X \n", *header_ptr);
-	printf("%hhX \n", *header_ptr);
-//	fprintf(output_TS_ptr, "%X \n", *header_ptr);
-//	putc(*header_ptr,output_TS_ptr);
-	printf("\n");
-}
-
-typedef struct {
-	char a;
-	char b;
-	char c;
-	char d;
-} structure;
-
-void test(){
-
-	structure struc;
-	structure * struc_ptr;
-	structure * struc_a_ptr;
-	structure * struc_b_ptr;
-
-	struc_ptr = &struc;
-	struc_a_ptr = &(struc.a);
-	struc_b_ptr = &(struc.b);
-
-	struc_ptr->a = 0x00;
-	struc_ptr->b = 0x11;
-	struc_ptr->c = 0x22;
-	struc_ptr->d = 0x33;
-
-
-	printf("%X \n", struc_ptr->a);
-	printf("%X \n", struc_ptr);
-	printf("%X \n", struc_a_ptr++);
-	printf("%X \n", struc_b_ptr);
+//  close streams
+    fclose(video_ES);
+    fclose(audio_ES);
+    fclose(output_TS);
 }
