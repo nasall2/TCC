@@ -52,7 +52,8 @@ void main(){
 	printf("%X \n", *header_ptr);
 	printf("%hhX \n", *header_ptr);
 //	fprintf(output_TS_ptr, "%X \n", *header_ptr);
-	putc(*header_ptr,output_TS_ptr);
+//	putc(*header_ptr,output_TS_ptr);
 	printf("\n");
 }
 
+void test( 
