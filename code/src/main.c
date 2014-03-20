@@ -4,7 +4,14 @@
 #include "packet_headers.h"
 #include "ISO13818_definitions.h"
 
+void test();
+
 void main(){
+
+	test();
+
+}
+void old_main(){
 
 	TS_packet_header header;
 	TS_packet_header * header_ptr;
@@ -56,4 +63,32 @@ void main(){
 	printf("\n");
 }
 
-void test( 
+typedef struct {
+	char a;
+	char b;
+	char c;
+	char d;
+} structure;
+
+void test(){
+
+	structure struc;
+	structure * struc_ptr;
+	structure * struc_a_ptr;
+	structure * struc_b_ptr;
+
+	struc_ptr = &struc;
+	struc_a_ptr = &(struc.a);
+	struc_b_ptr = &(struc.b);
+
+	struc_ptr->a = 0x00;
+	struc_ptr->b = 0x11;
+	struc_ptr->c = 0x22;
+	struc_ptr->d = 0x33;
+
+
+	printf("%X \n", struc_ptr->a);
+	printf("%X \n", struc_ptr);
+	printf("%X \n", struc_a_ptr++);
+	printf("%X \n", struc_b_ptr);
+}
