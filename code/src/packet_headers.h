@@ -6,6 +6,7 @@
 //Variable type definitions
 
 #define uint unsigned int
+#define DEBUG(var) printf("DEBUG:" #var ": %d\n", var)
 
 typedef struct {
 
