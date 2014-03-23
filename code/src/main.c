@@ -44,8 +44,8 @@ void main(){
 
     int packet_count, byte_number;
     int TS_packet_free_byte_counter;
-    bool available_data_on_input_streams;
-    char temp_byte;
+    bool available_data_on_input_streams, write_this_packet;
+    int temp_byte;
 
 //  open streams
     video_ES = fopen("video_ES.ES","r");
@@ -65,26 +65,42 @@ void main(){
 // ACTION!!!
     while (available_data_on_input_streams) {
     	
-	packet.header = write_TS_packet_header(0x0001,false);
-    
-	printf("Checkpoint 1\n");
-	DEBUG(byte_number);
-        if (byte_number < TS_PACKET_PAYLOAD_LENGTH) {
+	packet.header = write_TS_packet_header(0x1FFE,false);
+
+	write_this_packet = true;
+
+//	printf("Checkpoint 1\n");
+
+        while (byte_number < TS_PACKET_PAYLOAD_LENGTH && write_this_packet) {
+	    if (available_data_on_input_streams) {
 		temp_byte = getc(video_ES);
-		DEBUG(temp_byte);
-	    if (available_data_on_input_streams && temp_byte != EOF) {
+//		printf("byte:%hhX\t",temp_byte);
+	    }
+	    if ( available_data_on_input_streams && temp_byte == EOF ) {//no more data on input file
+		available_data_on_input_streams = false;
+		printf("EOF reached in byte_number=%d\n", byte_number);
+	    }
+
+	    if ( available_data_on_input_streams ) {
+//		printf("WRITING BYTE %d\n", byte_number);
 		packet.payload[byte_number] = temp_byte;
 	    }
-	    else {
+	    else if ( byte_number != 0 ){
+//		printf("STUFFING BYTE %d\n", byte_number);
 		packet.payload[byte_number] = 0xFF;//stuffing bytes
 	    }
+	    else {
+//		printf("SKIPPING BYTE %d\n", byte_number);
+		write_this_packet = false;
+	    }
+	    byte_number++;
         }
 
+	if ( write_this_packet ) {
+	    fwrite (&packet, TS_PACKET_LENGTH, 1, output_TS);
+	}
 
-    	fwrite (&packet, TS_PACKET_LENGTH, 1, output_TS);
-    
-    	if ( feof(video_ES) ) //no more data on input file
-    	    available_data_on_input_streams = false;
+	byte_number = 0;
     
     	if (packet_count == MAX_PACKETS_TO_WRITE) //loop safety limit
     	    available_data_on_input_streams = false;
