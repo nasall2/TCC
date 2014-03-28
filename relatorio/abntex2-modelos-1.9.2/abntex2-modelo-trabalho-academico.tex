@@ -465,7 +465,7 @@ da Universidade Federal do Rio Grande do Sul.}
 Historicamente, a televisão está presente nas casas da maioria dos cidadãos brasileiros e é a principal fonte de
 entretenimento e informação para a população. Nos últimos 10 anos, os novos meios de comunicação digital, tais
 como o computador e o telefone celular, estão sendo adotados pela população de diferentes classes sociais. Um
-dado recente\citeonline{pnad2011} afirma que, em 2011, 69\% da população brasileira dispunha de uma linha de 
+dado recente\cite{pnad2011} afirma que, em 2011, 69\% da população brasileira dispunha de uma linha de 
 telefone celular. Embora seja significativa, a participação deste meio ainda é muito inferior à da televisão,
 cuja área de cobertura de sinal atinge 100\% do território por via satelital\citeonline{starone}, e próximo de
 70\% da população por via terrestre. A televisão é, portanto, o principal canal de comunicação disponível ao 
@@ -609,9 +609,35 @@ um pacote do TS.
 \label{fig:TS_iso13818}
 \end{figure}
 
-%\lipsum[1]
+% ---
 
-%\lipsum[2-3]
+\subsection{PCR}
+O valor do PCR é uma espécie de amostragem do clock do encoder de vídeo ou áudio em um momento específico
+da geração da Access Unit, se estivéssemos trabalhando em tempo real. Como não é, só é preciso definir
+a frequência, que é 27MHz, e calcular os valores sequenciais do PCR baseando-se na taxa de bits por
+segundo de cada um dos sinais de vídeo.
+
+\begin{equation}
+
+PCR = F * ES_BR * 
+
+\end{equation}
+
+O PCR é um campo do cabeçalho do TS, e está dentro do adaptation field. Embora seja opcional enviá-lo,
+nota-se pela leitura que é possível enviar o PCR em frequência baixa. Não é necessário enviá-lo junto
+com todos os pacotes de TS. Pode-se enviar um pacote apenas com o PCR, utilizando um PCR_ID.
+
+
+\subsection{PTS / DTS}
+
+Os campos Presentation Time Stamp (PTS) e Decoding Time Stamp (DTS) são outros dois referenciais de tempo,
+derivados do PCR, e que servem a informar ao decodificador o instante de tempo em que devem ser decodificadas
+e exibidas as Access Units de vídeo e áudio. 
+
+
+
+
+% ---
 
 % ----------------------------------------------------------
 % PARTE
