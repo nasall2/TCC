@@ -40,10 +40,12 @@
 	%subsection=TITLE,	% títulos de subseções convertidos em letras maiúsculas
 	%subsubsection=TITLE,% títulos de subsubseções convertidos em letras maiúsculas
 	% -- opções do pacote babel --
-	english,			% idioma adicional para hifenização
+	%english,			% idioma adicional para hifenização
+	brazil,
 	french,				% idioma adicional para hifenização
 	%spanish,			% idioma adicional para hifenização
-	brazil				% o último idioma é o principal do documento
+	%brazil				% o último idioma é o principal do documento
+	english
 	]{abntex2}
 
 % ---
@@ -428,7 +430,7 @@ Le tâche est, finalement, développer un outil que fasse l'encapsulation des fl
   \item[ABNT] Associação Brasileira de Normas Técnicas
   \item[ISO] International Standards Organization
   \item[ARIB]
-  \item[MPEG2]
+  \item[MPEG] Motion Pictures Experts Group ???
   \item[]
   \item[]
   \item[]
@@ -465,7 +467,7 @@ Le tâche est, finalement, développer un outil que fasse l'encapsulation des fl
 % ----------------------------------------------------------
 % Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
 % ----------------------------------------------------------
-\chapter[Introdução]{Introdução}
+\chapter[Introduction]{Introduction}
 %\addcontentsline{toc}{chapter}{Introdução}
 % ----------------------------------------------------------
 
@@ -605,18 +607,31 @@ DECRETO Nº 8.061, DE 29 DE JULHO DE 2013
 \section{Transport Stream}
 % ---
 
-Aqui será descrito o Transport Stream do MPEG2, com suas tabelas PSI. A seguir, na figura
+Na presente seção é descrito o Transport Stream do MPEG2 com suas tabelas PSI. A seguir, na figura
 \ref{fig:TS_iso13818}, retirada da norma ISO13818 tal qual, é apresentado um esquema da construção de
 um pacote do TS. Da figura, vê-se que um pacote de TS é formado por 188 bytes de dados. O cabeçalho
 obrigatório tem 4 bytes, e vai até o campo \textit{continuity counter}. Os dados do pacote podem ainda
 incluir o \textit{Adaptation Field}, espécie de extensão do cabeçalho, e com informções adicionais para
-a decodificação do TS. Um pacote de TS deve conter o cabeçalho obrigatório, e a ele devem suceder 184 bytes
-de dados. Esses bytes restantes podem ser preenchidos somente com o \textit{Adaptation Field} ou com este
-e dados de pacotes PES ou sessões de tabelas PSI. 
+a decodificação do TS. Os fluxos elementares de mídia, os ES, são divididos em pacotes de comprimento variável e formam um PES. Um pacote de TS deve conter o cabeçalho obrigatório com 4 bytes, e a ele devem suceder 184 bytes de dados. Esses bytes restantes podem ser preenchidos de diferentes maneiras:
 
-A norma ISO/IEC 13818 recomenda que a taxa de bits do TS deve ser constante, de modo que espaços vazios devem
-ser preenchidos por \textit{stuffing bytes}. O \textit{Adaptation Field} pode também ser utilizado para
-ocupar espaço vazio de um pacote do TS.
+\begin{itemize}
+
+\item{ somente com o \textit{Adaptation Field};}
+
+\item{ ou com este e mais dados de pacotes PES , que são os fluxos elementares de mídia separados em pacotes;}
+
+\item{ou ainda com sessões de tabelas de dados complementares aos fluxos, fundamentais para a parametrização do decodificador.}
+
+\end{itemize}
+
+The ISO13818 standard reccomends the TS bitrate to be constant, according to \ref{ISO_constant_bitrate}. However, the output of the video and audio encoders is necessarily variable, to increase their performance, and therefore stuffing bits must be added to the transport strems whenever there is no useful information to be transmitted. It can be better explained by taking the video encoder as an example: the frame rate is constant and equal to 29.97 frames per second. Since the frames are coded according to the H.264 standard with motion compensation and prediction techniques, the I-frames have necessarily more information than P-frames or even more than B-frames. Therefore, during the transmission of an I-frame, the amount of useful information in the output stream is higher than if a B-frame is being processed. To illustrate this variation of rates, a graphic representation of the transitions is presented in Figure \ref{fig:rate_transitions}.
+
+\begin{figure}
+\centering
+\caption{Variation of rates among the transport stream formation.}
+\includegraphics[width=1\linewidth]{figuras/rate_transitions.png}
+\label{fig:rate_transitions}
+\end{figure}
 
 \begin{figure}
 \centering
@@ -627,7 +642,7 @@ ocupar espaço vazio de um pacote do TS.
 
 % ---
 
-\subsection{PSI}
+\section{PSI}
 
 O PSI é o conjunto de informações especificas ao programa, ou \textit{Program Specific information}, em inglês,
 e serve para organizar as informações de transmissão, sincronismo, decodificação e apresentação dos
@@ -644,6 +659,53 @@ para uma tabela obrigatória fique bem abaixo.
 A sintaxe das tabelas é padronizada. Um campo no início da tabela (table\_ID) define qual o seu tipo
 (PAT,PMT, etc.) e o campo section number serve como um contador caso a tabela seja dividida em diversas
 seções. O campo version umos campos que seguem são personalizados version, section number, program number 
+
+\subsection{PAT}
+
+The Program Association Table (PAT) indicates the PID of the corresponding Program Map Table (PMT) for each service in the multiplexer. Technically, it links a \textit{program number}, which is the numeric representation of a service, to the PID of that program's PMT, the \textit{program map PID}. Also, it must contain the information for the Network Information Table (NIT). Figure \ref{fig:TSAnalyser_close_PAT}, that follows, shows the output of the MPEG TS Analyser when a PAT table section is analysed. The field \textit{table id} indicates 0x0, which is the PAT code. The pair \textit{program\_number} 0 and \textit{program\_map\_PID} 16 is unique and it indicates that the NIT table is present and is in the PID 16. It's unique because, according to the ISO standard, a program number 0 always indicates the NIT PID, and the NIT table shall always use the PID 16. The other pairs indicate that there are two programs in the transport stream, with program numbers 23104 and 23129. Each of these programs have their PMTs allocated in the PIDs 257 and 8136, respectively.
+
+\begin{figure}[!hb]
+\centering
+\caption{TS Analyser output showing a PAT Table.}
+\includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PAT.png}
+\\Source: Reproduction of the MPEG TS Analyser software.
+\label{fig:TSAnalyser_close_PAT}
+\end{figure}
+
+\subsection{PMT}
+
+The Program Map Table (PMT) indicates the PID of the elementary streams corresponding to its service. Technicaly, it links a \textit{program number} to several \textit{elementary PIDs}. Each elementary stream must have a \textit{type} identification, which designate the nature of the stream, according to ISO13818, and defines roughly whether it is a video, audio or data stream. Table \ref{tab_ISOESTypes}, that follows, is an excerpt of the standardized types.
+
+\begin{table}[!htpd]
+\caption{Some Standardized Elementary Stream Types.}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Decimal & Hex & Description \\
+Value & Value & \\
+\hline
+6 & 0x06 & ITU-T Rec. H.222 and ISO/IEC 13818-1 (MPEG-2 packetized data)\\
+ & & privately defined (ie, DVB subtitles/VBI and AC-3)\\
+ \hline
+17 & 0x11 & ISO/IEC 14496-3 (MPEG-4 LOAS multi-format framed audio)\\
+ & & in a packetized stream \\
+ \hline
+27 & 0x1B & ITU-T Rec. H.264 and ISO/IEC 14496-10 (lower bit-rate video)\\
+ & & in a packetized stream \\
+\hline
+\label{tab_ISOESTypes}
+\end{tabular}
+\\Source: \cite{ISOESTypes}
+\end{center}
+\end{table}
+
+\begin{figure}[!hb]
+\centering
+\caption{TS Analyser output showing a PMT Table.}
+\includegraphics[width=0.4\linewidth]{figuras/.png}
+\\Source: Reproduction of the MPEG TS Analyser software.
+\label{fig:}
+\end{figure}
 
 \section{Sincronismo}
 
@@ -664,9 +726,7 @@ a frequência, que é definida pela norma em 27MHz, e calcular os valores sequen
 na taxa de bits por segundo de cada um dos sinais de vídeo, ou áudio.
 
 \begin{equation}
-$$
-PCR = F * ES_BR * 
-$$
+$$ PCR = F*ES_{BR}  $$
 \end{equation}
 
 O PCR é enviado em  um campo do cabeçalho do TS, e está dentro do adaptation field. Embora seja opcional enviá-lo,
@@ -677,20 +737,197 @@ PLL do receptor a cada N segundos, N a definir.
 
 \subsection{PTS / DTS}
 
-Os campos Decoding Time Stamp (DTS) e Presentation Time Stamp (PTS) são outros dois referenciais de tempo,
+Os campos Decoding Time Stamp \(DTS\) e Presentation Time Stamp \(PTS\) são outros dois referenciais de tempo,
 derivados do PCR, e que servem a informar ao decodificador o instante de tempo em que devem ser decodificadas
-e exibidas, respectivamente, as Access Units de vídeo e áudio. Uma Presentation Unit (PU) é definida pela
-norma como sendo um quadro de áudio ou de vídeo, e uma Access Unit (AU) é a representação codificada 
+e exibidas, respectivamente, as Access Units de vídeo e áudio. Uma Presentation Unit \(PU\) é definida pela
+norma como sendo um quadro de áudio ou de vídeo, e uma Access Unit \(AU\) é a representação codificada 
 da Presentation Unit.
 
 A norma define claramente qual instante de tempo deve ser considerado para gerar o PTS ou o DTS:
 \quotation{No caso do áudio, se um PTS está presente num cabeçalho de PES, este deve fazer referência à
 primeira AU que comece no pacote. Uma AU de áudio começa em um pacote se o primeiro byte da AU de áudio
 estiver presente no pacote. No caso do vídeo, se um PTS está presente no cabeçalho do pacote PES, este
-deve se referir à AU que cujo primeiro \textit{start\_code} está neste pacote.
-}
+deve se referir à AU que cujo primeiro \textit{start\_code} está neste pacote.}
 
 % ---
+
+\chapter{Soluções existentes e limitaçoes}
+
+Uma busca rápida em um motor de pesquisa pelas palavras-chave \textit{MPEG2 TS muxer} retorna uma infinidade de
+soluçoes comerciais e gratuitas para a multiplexaçao de arquivos de mídia dos mais diferentes formatos no padrão
+MPEG2. As soluçoes comerciais geralmente estão associadas a \textit{hardwares} dedicados, como a apresentada por
+\cite{harris} e custam elevadas somas, da ordem de alguns milhares de dólares. Estes equipamentos funcionam em tempo
+real, recebendo fluxos de vídeo, áudio e dados em múltiplas interfaces de entrada ASI e entregando na saída um fluxo
+multiplexado no padrão MPEG2. Os principais clientes destas soluções são geradoras de televisão, que produzem conteúdo
+ao vivo e precisam de baixa latência na codificação do sinal. As soluções gratuitas são \textit{softwares} compatíveis com as plataformas Windows e Linux, na sua maioria. Alguns têm interface gráfica e configuraçoes padrão para auxiliar o seu uso por usuários pouco familiarizados com o padrão. A principal diferença é que o objetivo não é a utilizaçao do sistema em tempo real, de modo que as especificaçoes de processamento e memória dos computadores pessoais geralmente são
+suficientes para executar as ferramentas. As interfaces de entrada e saída são comumente arquivos binários que armazenam os fluxos de dados de maneira sequencial.
+
+Para fins de elaboraçao da ferramenta de multiplexação proposta neste trabalho, algumas ferramentas gratuitas foram escolhidas para estudo. Para a escolha destas ferramentas em particular, os critérios foram os seguintes:
+
+\begin{itemize}
+
+\item{as ferramentas deveriam ser de código aberto e com licença freeware, para manter os aspectos legais no projeto;}
+
+\item{as ferramentas deveriam possibilitar a modificaçao do código para adaptar-se o máximo possivel a situaçao atual de cada programa à norma brasileira;}
+
+\item{o desenvolvimento das ferramentas deveria estar ativo, ou seja, não se considerou soluções antigas, que não tenham sofrido atualizaçoes nos últimos 5 anos;}
+
+\item{as ferramentas precisam apresentar compatibilidade nativa com os fluxos elementares padrão da norma brasileira, como as codificações de vídeo H.264 e áudio AAC empacotado por LATM.}
+
+\end{itemize}
+
+As soluções encontradas que atendem a essas condiçoes são apresentadas na sequência, com detalhes das características individuais.
+
+%==> julgou-se inicialmente que ela deveria ser desenvolvida desde o início, mas após a pesquisa 
+
+%Multiplos Serviços(program number)
+%Encoder Fluxos Video e Audio(h264, aac-latm)
+%Garantia de Sincronismo (calculo do PTS/PCR)
+%Criaçao de Fluxo TS com taxa de bits constante
+
+
+\section{FFMPEG}
+
+Segundo os próprios desenvolvedores, o FFMPEG é uma ferramenta versátil de codificaçao, decodificação, verificaçao e exibiçao de fluxos de vídeo, áudio e legendas. Com um conjunto vasto de bibliotecas de código aberto, permite conversão entre diferentes formatos, taxa de quadros, tamanho de quadro de vídeo, amostragem de áudio, dentre outras funçoes. É a solução mais completa e em mais expressivo desenvolvimento, com atualizações diárias organizadas em um repositório público.
+
+Nativamente, não permite a criaçao de fluxos TS com múltiplos serviços(ou programas). É capaz de entregar na saída vídeos codificados em formato H.264 e áudios AAC-LATM. É possível manter o sincronismo entre os fluxos, quer mantendo as informaçoes presentes nos fluxos originais, quer gerando novas marcações temporais. Se desejado, uma taxa constante de bits pode ser programada e o resultado é confiável.
+
+\section{GPAC}
+
+Ferramenta desenvolvida pela Escola Francesa Télécom ParisTech, apresenta características similares à anterior, mas é menos performante no que compete ao sincronismo e à manutenção de uma taxa constante de bits no arquivo de saída. Suporta a criação de múltiplos serviços, mas apresenta comportamento aleatório no número de pacotes gerados. Observou-se diversas vezes que, para arquivos de entrada com 10 segundos de duraçao e as mesmas configurações da ferramenta, eventualmente eram gerados desde 7 segundos até 15 segundos, o que sugere uma falta de controle do sistema. Consequentemente, quando o arquivo era gerado com tempo diferente do original, a taxa de reprodução dos fluxos ficava alterada e o resultado não era aproveitável para exibição.
+
+\section{TSTools}
+
+Esta ferramenta é bastante simples, ainda não foi suficientemente explorada. Já foi modificada por \cite{Borin} para acrescentar as tabelas da norma brasileira a um arquivo TS existente.
+
+\section{EiTV}
+
+Não é gratuita, mas é a soluçao disponível no laboratório e também apresenta funcionalidades de multiplexaçao. Dispõe de hardware dedicado para a multiplexação e também tem conexão com um transmissor digital.É possível entregar ao equipamento um arquivo em formato TS com pacotes de 188 bytes, mas não com múltiplos serviços.
+
+\section{Available Solutions Choice}
+
+Even though FFMPEG doesn't provide native support for multiple MPEG services, it was chosen as the base solution to the project. It was noticed that the modifications to the source code in order to add multiple service support were not extensive. The working sinchronism feature counted towards this option, too. Even though FFMPEG has a public API that could be used to develop a muxing application from scratch, the main task of this project is already done by the \textit{ffmpeg-formats} util .The missing features are the main target of this project:
+
+\begin{itemize}
+
+\item{add support to multiple service MPEG2 transport streams;}
+
+\item{add the tables which are optional in the ISO/IEC standard but are obligatory in SBTVD;}
+
+\item{create a more user-friendly interface to FFMPEG, simplify the operation of the command-line interface.}
+
+\end{itemize}
+
+\chapter{Architecture of the chosen solution}
+
+FFMPEG is organized in the following structure: there are four executable applications that result from the package compilation: \textit{ffmpeg, ffprobe, ffplay} and \textit{ffserver}. These four applications run based on seven libraries that are shared among the applications, and can be also used outside FFMPEG via an API. The \textit{libavformat} library is responsible for the muxing and demuxing functionalities, and therefore includes a ISO/IEC 13818-1 compatible muxer.
+
+The main MPEG2 muxer structure is \textit{MpegTSWrite}, which has a excerpt presented in \ref{tab_MpegTSWrite}. The structure contains many control variables, as well as the PSI tables PAT and SDT as \textit{MpegTSSection} structs, a dynamic array \textit{services} and a counter \textit{nb\_services} with respect to the services contained in the TS, the output muxing rate \( \textit{mux\_rate} \) and the PIDs for tables and elementary streams \( \textit{service\_id} and \textit{pmt\_start\_pid} \) .
+
+\begin{table}[!htpd]
+\label{tab_MpegTSWrite}
+\caption{ Excerpt of MpegTSWrite structure.}
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\\
+typedef struct MpegTSWrite \{\\
+...\\
+MpegTSSection pat;\\
+MpegTSSection sdt;\\
+MpegTSService **services;\\
+...\\
+int nb\_services;\\
+...\\
+int mux\_rate;\\
+...\\
+int service\_id;\\
+int pmt\_start\_pid;\\
+...\\
+ \}MpegTSWrite;\\
+ \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The next relevant structure to the development of this project is MpegTSSection, which is presented in Table \ref{tab_MpegTSSection} . This is the responsible for holding a generic table representation of what is described by ISO/IEC standard, with a PID, a continuity counter \(\textit{cc}\), a pointer to the function that writes in a TS packet the corresponding table and another pointer, \textit{opaque}, that directs to the general AVFormatContext structure. This is quite a general section, the customization for each of the PSI tables is done by the functions that write the sections to the stream, which will be commented further in this text.
+
+\begin{table}[!htpd]
+\label{tab_MpegTSSection}
+\caption{ Excerpt of MpegTSSection structure.}
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\\
+typedef struct MpegTSSection \{\\
+	int pid;\\
+	int cc;\\
+	void\(*write\_packet\)\(struct MpegTSSection *s, const uint8\_t *packet\);\\
+	void *opaque;\\
+\} MpegTSSection;\\
+ \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+What follows is the structure that organizes the information concerning each MPEG service in the transport stream. The \textit{MpegTSService} struct, presented in Table \ref{tab_MpegTSService} holds the following information: a pointer to the corresponding PMT, the service ID, the provider and service names, as character strings, and the PCR PID related to this service.
+
+\begin{table}[!htpd]
+\label{tab_MpegTSService}
+\caption{ Excerpt of MpegTSService structure.}
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\\
+typedef struct MpegTSService \{
+MpegTSSection pmt; \\
+int sid; \\
+char *name;\\
+char *provider\_name;\\
+int pcr\_pid;\\
+...\\
+\}MpegTSService;\\
+ \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+The last of the selected MpegTS structures is \textit{MpegTSWriteStream}, which is formed by the information describing each of the elementary streams that will eventually be included in the services. The service that contains one stream is specified here via a pointer to a service structure, as one can see from Table \ref{tab_MpegTSWriteStream}. Along with the service, there are also the data specifying the stream PID and the current continuity counter value.
+
+\begin{table}[!htpd]
+\label{tab_MpegTSWriteStream}
+\caption{ Excerpt of MpegTSWriteStream structure.}
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\\
+typedef struct MpegTSWriteStream \{\\
+struct MpegTSService *service;\\
+int pid;\\
+int cc;\\
+...\\
+\}MpegTSWriteStream;\\
+ \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+By knowing the few information about FFMPEG muxer structures presented so far, one can already understand basically how the system works. A simple block diagram in Figure \ref{fig:diagrama_estruturas_ffmpeg} shows the relations between the presented structures, along with an example situation. Consider a digital television transport stream constituted by two services, with service IDs 1 and 2. The first service is formed by one video stream, with ID 101, and two audio streams, with IDs 111 and 112. The second service has one video stream, ID 201, and one audio stream, with ID 211. Each service has its own mapping table: for service 1 the table has a Table ID \(TID\) of 4001, and for service 2 the TID is 4002. Each program map table \(PMT\) links the service number to the stream numbers as defined by the standard. Finally, the program association table \(PAT\) links the available services 1 and 2 with their respective PMTs. To possibilitate the decoder to find these information within a transport stream, the PAT must have TID equal to 0, as can be noticed.
+
+\begin{figure}
+\centering
+\caption{Block diagram showing the relations between FFMPEG MPEG2 Muxer.}
+\includegraphics[width=1\linewidth]{figuras/diagrama_estruturas_ffmpeg.png}
+\\Source: the author.
+\label{fig:diagrama_estruturas_ffmpeg}
+\end{figure}
+
+The following paragraph is a free adaptation of FFMPEG documentation for general muxing processes. The main functions related to the muxing process are avformat\_write\_header() for writing the TS stream header, av\_write\_frame() for writing the packets and av\_write\_trailer() for writting the stream end. After setting up the muxer environment, a call to the write\_header() function starts the transport stream output. After that, sucessive calls to write\_frame() and write\_section() fill in the output stream with video and audio streams or table sections, respectively. Finally, the stream is ended by calling write\_trailler().
+
 
 % ----------------------------------------------------------
 % PARTE
@@ -701,8 +938,46 @@ deve se referir à AU que cujo primeiro \textit{start\_code} está neste pacote.
 % ---
 % primeiro capitulo de Resultados
 % ---
-%\chapter{Resultados obtidos com o multiplexador}
+\chapter{Project implementations}
 % ---
+
+% ---
+\section{Multiple services implementation}
+% ---
+
+The first proposed modification to the original FFMPEG code is add multiple service support to the main program. For that objective, the first task was to find a way to give the muxer new information about how many services should be coded from the command-line interface. Fortunately, the application counts with a \textit{options} structure, which delivers to the muxer a group of pairs \textit{<option,value>}. The option \textit{final\_nb\_services} was created to guide the muxer to create the desired number of services. Through the existent interface, the user may provide multiple input files, with multiple audio/video streams, to form a single service, multiple stream output. By modifying the service assignment process, this implementation allows the user to create multiple services, multiple stream outputs.
+
+When calling FFMPEG, the user maps the input streams which shall be placed in each service by using the \textit{\-map} option. Each input stream is assigned an internal stream number by FFMPEG, and the muxer uses this data, combined to the newly added option, to alternately assign one stream to each service created with a modulus operation of the two information. Considering the example shown in Figure \ref{fig:diagrama_estruturas_ffmpeg}, the mapping should be done by placing first the two video streams, then the first audio stream corresponding to the first service, then the audio stream corresponding to the second service and finally the second audio stream corresponding to the first service.
+
+As can be seen on the code excerpt in Table \ref{tab_service_assignment}, once the number of services parameter is set from the command line, first the muxer loops to create services by calling mpegts\_add\_service() function. Along with the service creation, some fields of the new services are initialized, such as the proper table packets writing function, the global table context, and its continuity counter. When the services are added to the \textit{ts} context, they are appended to the end of a dynamic array of services (\textit{ts->services}). In a second moment, the muxer loops in the streams and assigns alternately one service to each stream. The assignment is done using the \textit{service} pointer field in the MpegTSWriteStream structure, presented before, here initialized as \textit{ts\_st}. The index for the service array is the modulus operation result between the current stream and the total number of services.
+
+TODO !!!
+
+\begin{table}[!htpd]
+\label{tab_service_assignment}
+\caption{ Excerpt of service assignment algorithm.}
+\begin{center}
+\begin{tabular}{|l|}
+\hline
+\\
+...\\
+for(i = 0;i < ts->final_nb_services; i++) \{\\
+service = mpegts\_add\_service(ts, ts->service\_id+i, provider\_name, service\_name);\\
+service->pmt.write\_packet = section\_write\_packet;\\
+service->pmt.opaque = s;\\
+service->pmt.cc = 15;\\
+\}\\
+...\\
+for(i = 0;i < s->nb\_streams; i++) \{\\
+...\\
+ts\_st->service = ts->services[i \% ts->final\_nb\_services] ;\\
+...
+\}\\
+\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
 
 % ---
 %\section{Desempenho em velocidade de multiplexação}
@@ -735,8 +1010,8 @@ deve se referir à AU que cujo primeiro \textit{start\_code} está neste pacote.
 % ---
 % Conclusão (outro exemplo de capítulo sem numeração e presente no sumário)
 % ---
-\chapter[Conclusão]{Conclusão}
-\addcontentsline{toc}{chapter}{Conclusão}
+\chapter[Conclusions]{Conclusions}
+%\addcontentsline{toc}{chapter}{Conclusão}
 % ---
 
 %\lipsum[31-33]
@@ -766,7 +1041,7 @@ deve se referir à AU que cujo primeiro \textit{start\_code} está neste pacote.
 % ----------------------------------------------------------
 % Referências bibliográficas
 % ----------------------------------------------------------
-\bibliography{abntex2-modelo-references}
+\bibliography{abntex2-modelo-trabalho-academico}
 
 % ----------------------------------------------------------
 % Glossário
