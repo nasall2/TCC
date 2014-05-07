@@ -662,7 +662,7 @@ seções. O campo version umos campos que seguem são personalizados version, se
 
 \subsection{PAT}
 
-The Program Association Table (PAT) indicates the PID of the corresponding Program Map Table (PMT) for each service in the multiplexer. Technically, it links a \textit{program number}, which is the numeric representation of a service, to the PID of that program's PMT, the \textit{program map PID}. Also, it must contain the information for the Network Information Table (NIT). Figure \ref{fig:TSAnalyser_close_PAT}, that follows, shows the output of the MPEG TS Analyser when a PAT table section is analysed. The field \textit{table id} indicates 0x0, which is the PAT code. The pair \textit{program\_number} 0 and \textit{program\_map\_PID} 16 is unique and it indicates that the NIT table is present and is in the PID 16. It's unique because, according to the ISO standard, a program number 0 always indicates the NIT PID, and the NIT table shall always use the PID 16. The other pairs indicate that there are two programs in the transport stream, with program numbers 23104 and 23129. Each of these programs have their PMTs allocated in the PIDs 257 and 8136, respectively.
+The Program Association Table (PAT) indicates the PID of the corresponding Program Map Table (PMT) for each service in the multiplexer. Technically, it links a \textit{program number}, which is the numeric representation of a service, to the PID of that program's PMT, the \textit{program map PID}. Also, it must contain the information for the Network Information Table (NIT). Figure \ref{fig:TSAnalyser_close_PAT}, that follows, shows the output of the MPEG TS Analyser when a PAT table section is analysed. The field \textit{table id} indicates 0x0, which is the PAT code. The pair \textit{program\_number} 0 and \textit{program\_map\_PID} 16 is unique and its presence indicates that the NIT table is present and is carried in the PID 16. It's unique because, according to the ISO standard, a program number 0 always indicates the NIT PID, and the NIT table shall always use the PID 16. The other pairs indicate that there are two programs in the transport stream, with program numbers 23104 and 23129. Each of these programs have their PMTs allocated in the PIDs 257 and 8136, respectively. In the PMT section, it will be seen that these values are considered. <<< TODO TODO
 
 \begin{figure}[!hb]
 \centering
@@ -699,8 +699,9 @@ Value & Value & \\
 \end{center}
 \end{table}
 
-Figure \ref{fig:TSAnalyser_close_PMT}, that follows, shows a snapshot of the analyser output for a PMT table. program number, table ID, PCR_PID, stream types e PIDs, descriptors.
+Figure \ref{fig:TSAnalyser_close_PMT}, that follows, shows a snapshot of the analyser output for a PMT table. In the example, the \textit{program number} is 23104, the table ID corresponding to the PMT is 0x02 (as defined by ISO13818-1) and the PCR information is carried in the PID (PCR\_PID) 256d \footnote{The \textit{d} indicates a decimal number.}. Yet, from Picture \ref{fig:TSAnalyser_close_PMT_TS_Header}, it can be seen at the TS Header that the PID carying the PMT table is number 257, as indicated by the PAT table analysed before.
 
+By analyzing both Table \ref{tab_ISOESTypes} and Picture \ref{fig:TSAnalyser_close_PMT}, one may notice that the stream types and PIDs that come after the PCR information match: the ES with PID 273 is H.264 video and the ESs with PIDs 274 and 275 are AAC/LATM audio streams, which means that there are two audio streams. The stream with type 6d and PID 288 is the subtitle / closed captions stream. Later on this chapter the descriptors shown here will be discussed.
 
 \begin{figure}[!hb]
 \centering
@@ -708,6 +709,14 @@ Figure \ref{fig:TSAnalyser_close_PMT}, that follows, shows a snapshot of the ana
 \includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PMT.png}
 \\Source: Reproduction of the MPEG TS Analyser software.
 \label{fig:TSAnalyser_close_PMT}
+\end{figure}
+
+\begin{figure}[!hb]
+\centering
+\caption{TS Analyser output showing the TS Header info for the PMT Table.}
+\includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PMT_TS_Header.png}
+\\Source: Reproduction of the MPEG TS Analyser software.
+\label{fig:TSAnalyser_close_PMT_TS_Header}
 \end{figure}
 
 \subsection{NIT}
