@@ -273,41 +273,41 @@ da Universidade Federal do Rio Grande do Sul.}
 %
 % \includepdf{folhadeaprovacao_final.pdf}
 %
-%\begin{folhadeaprovacao}
-%
-%  \begin{center}
-%    {\ABNTEXchapterfont\large\imprimirautor}
-%
-%    \vspace*{\fill}\vspace*{\fill}
-%    \begin{center}
-%      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
-%    \end{center}
-%    \vspace*{\fill}
-%    
-%    \hspace{.45\textwidth}
-%    \begin{minipage}{.5\textwidth}
-%        \imprimirpreambulo
-%    \end{minipage}%
-%    \vspace*{\fill}
-%   \end{center}
-%        
-%   Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
-%
-%   \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
-%   \assinatura{\textbf{Sylvie Kerouedan} \\ Convidado Telecom Bretagne}
-%   %\assinatura{\textbf{Fulano de Tal} \\ Convidado 2}
-%   %\assinatura{\textbf{Professor} \\ Convidado 3}
-%   %\assinatura{\textbf{Professor} \\ Convidado 4}
-%      
-%   \begin{center}
-%    \vspace*{0.5cm}
-%    {\large\imprimirlocal}
-%    \par
-%    {\large\imprimirdata}
-%    \vspace*{1cm}
-%  \end{center}
-%  
-%\end{folhadeaprovacao}
+\begin{folhadeaprovacao}
+
+  \begin{center}
+    {\ABNTEXchapterfont\large\imprimirautor}
+
+    \vspace*{\fill}\vspace*{\fill}
+    \begin{center}
+      \ABNTEXchapterfont\bfseries\Large\imprimirtitulo
+    \end{center}
+    \vspace*{\fill}
+    
+    \hspace{.45\textwidth}
+    \begin{minipage}{.5\textwidth}
+        \imprimirpreambulo
+    \end{minipage}%
+    \vspace*{\fill}
+   \end{center}
+        
+   Trabalho aprovado. \imprimirlocal, 24 de novembro de 2012:
+
+   \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
+   \assinatura{\textbf{Sylvie Kerouedan} \\ Convidado Telecom Bretagne}
+   %\assinatura{\textbf{Fulano de Tal} \\ Convidado 2}
+   %\assinatura{\textbf{Professor} \\ Convidado 3}
+   %\assinatura{\textbf{Professor} \\ Convidado 4}
+      
+   \begin{center}
+    \vspace*{0.5cm}
+    {\large\imprimirlocal}
+    \par
+    {\large\imprimirdata}
+    \vspace*{1cm}
+  \end{center}
+  
+\end{folhadeaprovacao}
 % ---
 
 % ---
@@ -366,29 +366,26 @@ da Universidade Federal do Rio Grande do Sul.}
 
 % resumo em português
 \setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
-\begin{resumo}
-% Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o
-% objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão
-% destes itens dependem do tipo de resumo (informativo ou indicativo) e do
-% tratamento que cada item recebe no documento original. O resumo deve ser
-% precedido da referência do documento, com exceção do resumo inserido no
-% próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do
-% resumo, antecedidas da expressão Palavras-chave:, separadas entre si por
-% ponto e finalizadas também por ponto.
+\begin{resumo}[Resumo]
+ \begin{otherlanguage*}{brazil}
+ 
+Segundo a \citeonline[3.1-3.2]{NBR6028:2003}, o resumo deve ressaltar o objetivo, o método, os resultados e as conclusões do documento. A ordem e a extensão destes itens dependem do tipo de resumo (informativo ou indicativo) e do tratamento que cada item recebe no documento original. O resumo deve ser precedido da referência do documento, com exceção do resumo inserido no
+ próprio documento. (\ldots) As palavras-chave devem figurar logo abaixo do resumo, antecedidas da expressão Palavras-chave:, separadas entre si por ponto e finalizadas também por ponto.
 
  \textbf{Palavras-chaves}: Multiplexagem. MPEG2. Transport Stream. SBTVD.
+ \end{otherlanguage*}
 \end{resumo}
 
 % resumo em inglês
 \begin{resumo}[Abstract]
- \begin{otherlanguage*}{english}
+
    This is the english abstract.
 
    \vspace{\onelineskip}
  
    \noindent 
-   \textbf{Key-words}: latex. abntex. text editoration.
- \end{otherlanguage*}
+   \textbf{Key-words}: Multiplexing. MPEG2. Transport Stream. SBTVD.
+ 
 \end{resumo}
 
 % resumo em francês 
@@ -403,7 +400,7 @@ Ainsi, le choix pour la téchnologie japonaise modifié a permis aux centres de 
 
 Le tâche est, finalement, développer un outil que fasse l'encapsulation des flux (Elementary Streams du MPEG2) vidéo, audio et des donées en un seul flux(Transport Stream du MPEG2). Pour ce faire, on dispose des normes ISO 13818-1 (MPEG2,Systems), ARIB STD-B10(japonaise) et ABNT NBR15603-1(norme brésilienne basée sur la norme japonaise). L'idée est de developper l'outil en langage C, vu que dans ce moment il n'est pas nécessaire que l'encapsulation soit faite en temps réel. En entrée on reçoit des ES vidéo et audio en fichiers binaires et en sortie on rend un fichier binaire avec le TS.
 
-   \textbf{Mots-clés}: Multiplexage. MPEG2. ISDB-T. Transport Stream.
+   \textbf{Mots-clés}: Multiplexage. MPEG2. Transport Stream. SBTVD
  \end{otherlanguage*}
 \end{resumo}
 
@@ -418,9 +415,9 @@ Le tâche est, finalement, développer un outil que fasse l'encapsulation des fl
 % ---
 % inserir lista de tabelas
 % ---
-%\pdfbookmark[0]{\listtablename}{lot}
-%\listoftables*
-%\cleardoublepage
+\pdfbookmark[0]{\listtablename}{lot}
+\listoftables*
+\cleardoublepage
 % ---
 
 % ---
@@ -431,7 +428,7 @@ Le tâche est, finalement, développer un outil que fasse l'encapsulation des fl
   \item[ISO] International Standards Organization
   \item[ARIB]
   \item[MPEG] Motion Pictures Experts Group ???
-  \item[]
+  \item[EBC] Empresa Brasileira de Comunicação
   \item[]
   \item[]
   \item[]
@@ -471,9 +468,6 @@ Le tâche est, finalement, développer un outil que fasse l'encapsulation des fl
 %\addcontentsline{toc}{chapter}{Introdução}
 % ----------------------------------------------------------
 
-Historically, television is present in the homes of most Brazilian citizens and is the main source of entertainment and information to the population. Over the past 10 years, new digital media such as computer and cell phones are being adopted by the population of different social classes. A recent data \cite{pnad2011} says that in 2011, 69 \% of the population had a mobile phone line. Although significant, the participation of this medium is still far below the television, whose coverage area reaches 100 \% of the territory via satellite \cite{StarOne}, and around 70 \% of the population by land \cite{forum_sbtvd}. Television is therefore the main channel of communication available to the general public in Brazil.
-
-
 %Historicamente, a televisão está presente nas casas da maioria dos cidadãos brasileiros e é a principal fonte de
 %entretenimento e informação para a população. Nos últimos 10 anos, os novos meios de comunicação digital, tais
 %como o computador e o telefone celular, estão sendo adotados pela população de diferentes classes sociais. Um
@@ -502,42 +496,33 @@ Historically, television is present in the homes of most Brazilian citizens and 
 %à \textit{Internet}, como demonstrou a Caixa Econômica Federal em 2010\cite{caixa}. Contudo, a similaridade do sistema de transmissão brasileiro com o padrão internacional MPEG2 e a não obrigatoriedade da utilização de interfaces interativas até 2015 levou ao desinteresse das geradoras no desenvolvimento da tecnologia,
 %de modo que atualmente muito pouco se investe para a criação de equipamentos interativos para a televisão digital em terrítório brasileiro.
 
+Historically, television is present in the homes of most Brazilian citizens and is the main source of entertainment and information to the population. Over the past 10 years, new digital media such as computer and cell phones are being adopted by the population of different social classes. A recent data \cite{pnad2011} says that in 2011, 69 \% of the population had a mobile phone line. Although significant, the participation of this medium is still far below the television, whose coverage area reaches 100 \% of the territory via satellite \cite{StarOne}, and around 70 \% of the population by land \cite{forum_sbtvd}. Television is therefore the main channel of communication available to the general public in Brazil.
+
 Although it has unparalleled coverage to other technologies, television is, roughly speaking , a mean of unidirectional communication. It is not possible, using the analog transmission system , to hand to the viewer interactivity with the content submitted by the broadcaster. Compared to \textit{Internet}, for example , television is at disadvantage in this respect. It is possible, however, to provide interactive programming if there is a way to return data to the broadcaster. With interactivity, it can be presented to the user program options, and from the user's choice, the TV displays the chosen content . Thus , one could combine the interactivity of \textit{Internet} to television coverage and thereby promote the social inclusion of remote areas without access to infrastructure of high-speed data links, available in the larger cities . This technology is not feasible with the current analog television infrastructure : it is impossible to ship via a single analog channel more than one video and audio stream simultaneously.
 
-REvision TODO below 
+As a solution to this difficulty, ISO/IEC developed the digital transmission system described by ISO/IEC13818 standard, commercially known by the acronym which names the committee formed to draft it, MPEG2. The specification describes standards of encoding and transmitting video, audio and data and allows, among other functions, independent transmission of multiple audiovisual programs simultaneously, thus allowing the user to select which information he wants to receive among the services sent by the broadcaster.
 
-As a solution to this difficulty , we developed the digital transmission system described by ISO / IEC 13818 standard, commercially known by the acronym which names the committee formed to draft it , MPEG2 . The standard describes a standard encoding and transmitting video , audio and data and allows , among other functions , independent transmit audiovisual content simultaneously , thus allowing the system user selection from among the information sent by the generator , which he wants to receive.
+Since 1994 , private companies and government funded research and technical tests to compare the performance of three digital television systems that were known to be efficient in their countries of origin at that time: ATSC \cite{ATSC}, developed in the United States; DVB-T \cite{DVB}, developed by a consortium of companies for use in European countries; and ISDB , developed in Japan by ARIB\cite{ARIB}. The three systems have similarities and differences regarding the encoding of video and audio: for example, both the DVB and ISDB use the transport infrastructure of MPEG2 standard, but differ in the modulation schemes. After the evaluations , it was determined that the system with the best performance for Brazilian territory would be based on the Japanese ISDB with some modifications, such as pointed in \cite{SBTVD_diff_ISDB}.
 
-Since 1994 , private companies and government funded research and technical tests to compare the performance of three digital television systems at that time were known to be efficient in their countries of origin : ATSC , developed in the United States ; DVB , developed by European countries ; and ISDB , developed in Japan All three systems have differences regarding the encoding of video and audio , but the DVB and ISDB , for example , share the transportation infrastructure data MPEG2 standard , but differ in the modulation schemes signal. After the evaluations , it was determined that the system with the best performance likely in Brazilian territory would be based on ISDB , Japanese , with modifications .
-
-The differences between the original and the ISDB standard used in Brazil mainly relate to video encoding and interactivity platform. In order to promote the development of national industry , the government decided to adopt a platform interactivity open source , developed mainly with the PUC - RJ technology , Ginga . Through this tool, you can , for example , take information utility to the low-income population without access
-the \ textit { Internet } , as demonstrated by the CEF in 2010 \ cite { box } . However , the similarity of the Brazilian transmission system with the international standard MPEG2 and not mandating the use of interactive interfaces 2015 led to the disinterest of the generators in the development of technology ,
-so that currently very little is invested in the creation of interactive digital television for equipment in Brazilian territory .
-Google Tradutor para empresas:Google Toolkit de tradução para appsTradutor de sitesGlobal Market Finder
-
-
-O sistema de transmissão para 
-
---> explicar a importância da tv digital, que não só melhora a qualidade do sinal, mas também possibilita 
-a integração?
-
- --> Explicar o que é o "sistema de transmissão" !!!
+The differences between the original ISDB and the modified standard used in Brazil mainly relate to video encoding and interactivity platform. In order to promote the development of national industry , the government decided to adopt an open source interactive platform, developed mainly with Ginga, a technology developed mainly by PUC-RJ\cite{PUCRJ}. Through this tool the broadcaster can, for example, deliver useful information to the low-income population without access to the \textit{Internet}, as an application sugested by one Brazilian Bank in 2010 \cite{caixa}. Another application is a project recently developed by the brazilian public comunication company (EBC), called "Brasil 4D" \cite{consultas}. The users can make appointments with doctors or schedule meetings to solve social security issues, or yet check job offers in real time, all this through the TV remote control. However , the similarity of the Brazilian system with the international standard and the fact that interactive interfaces will not be mandatory until 2015 led to the lack of interest of many broadcasters in the development of applications, so that currently very little is invested in the creation of interactive digital television in Brazilian territory.
  
- --> previsão do fim da TV analógica em 2017, tendência de mais emissoras migrarem para o Digital...
+ A digital television system is composed basically by the group of equipments presented in Picture \ref{fig:diagrama_blocos_tvd}. At the beggining of the dignal flow, there are the video and audio capturing elements, such as cameras and microphones, and the signal may be analog or digital depending on the capture technology used. Once captured, the video and audio are passed through the H264 and AAC encoders, respectively, which have input interfaces compatible to the capture equipments. The output of the H264 or AAC encoders are standardized bitstreams known as Elementary Streams. Once the elementary streams leave the encoders, they enter the muxer, where all the streams are packetized and embedded into one single stream, the Transport Stream. What follows is one key process for the system robustness: the Transport Stream receives a layer of Error Correction Code to resist to the noisy, multipath channel between the broadcaster and the receiver, becoming the Broadcast Transport Stream (BTS). Finally, a digital modulation is applied to the BTS and than it is sent to the antenna.
  
-O sistema de transmissão de televisão digital funciona, basicamente, coordenando a entrada de fluxos elementares de
-vídeo, áudio e dados no fluxo de transmissão. Na televisão analógica, a multiplexação é frequencial, ou seja, o sinal
-de vídeo é enviado em um intervalo de frequências dentro do canal e o sinal de áudio em outro intervalo. Na tecnologia
-digital, essa multiplexação é feita no tempo: por frações de segundo, apenas um dos sinais é enviado no canal e o
-receptor armazena os sinais independentemente para depois fazer a decodificação. No momento da reprodução dos
-sinais, é preciso que haja sincronismo nos fluxos de vídeo e áudio.
+ \begin{figure}
+\centering
+\caption{Block diagram showing digital television basic signal flow.}
+\includegraphics[width=1\linewidth]{figuras/diagrama_blocos_tvd.png}
+\label{fig:diagrama_blocos_tvd}
+\end{figure}
+ 
+ The main difference between analog and digital TV broadcasting systems, at the modulation level, is that in analog TV the multiplexing is frequential, i.e., the video signal is sent in a frequency interval within the channel bandwidth and the audio in another frequency interval. In digital technology, this multiplexing happens in time domain: the muxer output has constant bitrate, and for fractions of second only one packet from one of the Packetized Elementary Streams is sent to the transmitter. In the other side of the channel, the receiver is conceived in such a way that after passing the error correction layer, a \textit{demuxer} takes the Transport Stream and splits it back into separate Elementary Streams. They are then sent to the decoders and to audiovisual output devices.
+ 
+%O sistema de transmissão de televisão digital funciona, basicamente, coordenando a entrada de fluxos elementares de vídeo, áudio e dados no fluxo de transmissão. Na televisão analógica, a multiplexação é frequencial, ou seja, o sinal de vídeo é enviado em um intervalo de frequências dentro do canal e o sinal de áudio em outro intervalo. Na tecnologia digital, essa multiplexação é feita no tempo: por frações de segundo, apenas um dos sinais é enviado no canal e o receptor armazena os sinais independentemente para depois fazer a decodificação. No momento da reprodução dos sinais, é preciso que haja sincronismo nos fluxos de vídeo e áudio.
 
-O Decreto presidencial número 8061, de 29 de julho de 2013, estabelece o cronograma de desligamento dos sistemas
-de transmissão de televisão analógica. Até 31 de dezembro de 2018, todos os transmissores analógicos devem ser desativados
-e os canais de radiofrequência devolvidos à união... COLOCAR REFERENCIA! 
+The Presitential Act number 8061\cite{decreto8061}, from july 29, 2013, establishes the chronogram of analog brodcasts shutdown. Until december 31, 2018, all analog transmitters shall be deactivated and the channels shall be vacated. The grants will then be returned to the government, that plans to use the 700MHz band to the 4G mobile telephone service, LTE.
 
-http://www.planalto.gov.br/ccivil_03/_Ato2011-2014/2013/Decreto/D8061.htm
-DECRETO Nº 8.061, DE 29 DE JULHO DE 2013
+%O Decreto presidencial número 8061, de 29 de julho de 2013, estabelece o cronograma de desligamento dos sistemas de transmissão de televisão analógica. Até 31 de dezembro de 2018, todos os transmissores analógicos devem ser desativados e os canais de radiofrequência devolvidos à união... COLOCAR REFERENCIA! 
+
 
 %% FIM DA INTRODUÇÃO ESCRITA PARA O TCC
 
