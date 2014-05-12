@@ -500,7 +500,7 @@ Historically, television is present in the homes of most Brazilian citizens and 
 
 Although it has unparalleled coverage to other technologies, television is, roughly speaking , a mean of unidirectional communication. It is not possible, using the analog transmission system , to hand to the viewer interactivity with the content submitted by the broadcaster. Compared to \textit{Internet}, for example , television is at disadvantage in this respect. It is possible, however, to provide interactive programming if there is a way to return data to the broadcaster. With interactivity, it can be presented to the user program options, and from the user's choice, the TV displays the chosen content . Thus , one could combine the interactivity of \textit{Internet} to television coverage and thereby promote the social inclusion of remote areas without access to infrastructure of high-speed data links, available in the larger cities . This technology is not feasible with the current analog television infrastructure : it is impossible to ship via a single analog channel more than one video and audio stream simultaneously.
 
-As a solution to this difficulty, ISO/IEC developed the digital transmission system described by ISO/IEC13818 standard, commercially known by the acronym which names the committee formed to draft it, MPEG2. The specification describes standards of encoding and transmitting video, audio and data and allows, among other functions, independent transmission of multiple audiovisual programs simultaneously, thus allowing the user to select which information he wants to receive among the services sent by the broadcaster.
+As a solution to this difficulty, ISO/IEC developed the digital transmission system described by ISO/IEC13818 standard, commercially known by the acronym which names the committee formed to draft it, MPEG2. The specification describes standards of encoding and transmitting video, audio and side data. One key feature for television applications is that it is possible to broadcast multiple audiovisual programs simultaneously, thus allowing the user to select which information he wants to receive among several services sent by one single broadcaster, in the same physical channel.
 
 Since 1994 , private companies and government funded research and technical tests to compare the performance of three digital television systems that were known to be efficient in their countries of origin at that time: ATSC \cite{ATSC}, developed in the United States; DVB-T \cite{DVB}, developed by a consortium of companies for use in European countries; and ISDB , developed in Japan by ARIB\cite{ARIB}. The three systems have similarities and differences regarding the encoding of video and audio: for example, both the DVB and ISDB use the transport infrastructure of MPEG2 standard, but differ in the modulation schemes. After the evaluations , it was determined that the system with the best performance for Brazilian territory would be based on the Japanese ISDB with some modifications, such as pointed in \cite{SBTVD_diff_ISDB}.
 
@@ -515,7 +515,7 @@ The differences between the original ISDB and the modified standard used in Braz
 \label{fig:diagrama_blocos_tvd}
 \end{figure}
  
- The main difference between analog and digital TV broadcasting systems, at the modulation level, is that in analog TV the multiplexing is frequential, i.e., the video signal is sent in a frequency interval within the channel bandwidth and the audio in another frequency interval. In digital technology, this multiplexing happens in time domain: the muxer output has constant bitrate, and for fractions of second only one packet from one of the Packetized Elementary Streams is sent to the transmitter. In the other side of the channel, the receiver is conceived in such a way that after passing the error correction layer, a \textit{demuxer} takes the Transport Stream and splits it back into separate Elementary Streams. They are then sent to the decoders and to audiovisual output devices.
+ The main difference between analog and digital TV broadcasting systems, at the modulation level, is that in analog TV the multiplexing is frequential, i.e., the video signal is sent in a frequency interval within the channel bandwidth and the audio in another frequency interval. In digital technology, this multiplexing happens in time domain: the muxer output has constant bitrate, and for fractions of second only one packet from one of the Packetized Elementary Streams is sent to the transmitter. In the other side of the channel, the receiver is conceived in such a way that after passing the error correction layer, a \textit{demuxer} takes the Transport Stream and splits it back into separate Elementary Streams. They are then sent to the decoders and to audiovisual output devices. One challenge succesfully accomplished in the time domain multiplexing scheme used here is to synchronize the reproduction of all the streams of one channel. It is certanly disturbing to the viewer to watch delayed video or audio outputs, so presentation time stamps were added periodically into the streams so they can be reproduced in sync.
  
 %O sistema de transmissão de televisão digital funciona, basicamente, coordenando a entrada de fluxos elementares de vídeo, áudio e dados no fluxo de transmissão. Na televisão analógica, a multiplexação é frequencial, ou seja, o sinal de vídeo é enviado em um intervalo de frequências dentro do canal e o sinal de áudio em outro intervalo. Na tecnologia digital, essa multiplexação é feita no tempo: por frações de segundo, apenas um dos sinais é enviado no canal e o receptor armazena os sinais independentemente para depois fazer a decodificação. No momento da reprodução dos sinais, é preciso que haja sincronismo nos fluxos de vídeo e áudio.
 
@@ -523,6 +523,9 @@ The Presitential Act number 8061\cite{decreto8061}, from july 29, 2013, establis
 
 %O Decreto presidencial número 8061, de 29 de julho de 2013, estabelece o cronograma de desligamento dos sistemas de transmissão de televisão analógica. Até 31 de dezembro de 2018, todos os transmissores analógicos devem ser desativados e os canais de radiofrequência devolvidos à união... COLOCAR REFERENCIA! 
 
+The first task of this project is to analyse the brazilian digital television standard and identify the similarities and differences between the original ISO MPEG2 systems layer and the one adopted in Brazil. Once the main differences are established, the next proposed task is to develop a tool that receives as input one or more video and audio files and may provide as an output a binary file with the TS packets, as well as side information, such as language tags and program guides.
+
+The main challenges to accomplish in the project are provide a tool that has four key features: output a stream with an acceptable audiovisual synchronism performance, encode multiple input stream formats into the standard recomendations, create a stream with multiple embedded services and ensure a constant bitrate in the output. In the first few weeks, no freeware solution had been found to meet these requirements, so it was proposed that the tool should be developed from scratch. After extra research efforts, some existing open source applications were found and fortunately they already met some of the requirements, but all were developed respecting the pure MPEG2 standard and naturally didn't include some of the brazilian system requirements. It was then proposed that the project target was to deliver no longer a solution from scratch, bu rather something based on one of the existing tools, adapting it to comprise the brazilian standard requirements. A discussion on the analysed tools is presented in the following chapters.
 
 %% FIM DA INTRODUÇÃO ESCRITA PARA O TCC
 
@@ -586,13 +589,13 @@ The Presitential Act number 8061\cite{decreto8061}, from july 29, 2013, establis
 % ---
 % Capitulo de revisão de literatura
 % ---
-\chapter{Norma ISO/IEC 13818-1}
+\chapter{ISO/IEC 13818-1 Standard}
 % ---
 
 % ---
 \section{Transport Stream}
 % ---
-In this section the MPEG2 TS, along with its PSI tables, is described. The Picture \ref{fig:TS_iso13818}, copied from the standard as is, presents a schema of the construction of a TS packet. From the picture, it can be seen tha a packet is formed with 188 bytes of data. The mandatory header has 4 bytes, and goes from the \textit{sync byte} to the \textit{continuity counter}. The packet data might also contain the  \textit{Adaptation Field}, a sort of header extension, with aditional data that helps the decoder to decode and preset data more optimally. The elementary streams, or \textit{ES}, are split into packets of variable length and together constitute a PES ( 'P' for packetized). Apart from the 4 mandatory bytes for the header, the other 184 bytes might be filled in three differnt ways:
+In this section is described the MPEG2 Transport Stream along with its PSI tables. The Picture \ref{fig:TS_iso13818}, copied from the standard as is, presents a schema of the construction of a TS packet. From the picture, it can be seen that a packet is roughly formed with 188 bytes of data. The mandatory header has 4 bytes, and goes from the \textit{sync byte} to the \textit{continuity counter}. The packet data might also contain the  \textit{Adaptation Field}, a sort of header extension, with aditional data that helps the decoder to decode and preset data more optimally. The elementary streams, or \textit{ES}, are split into packets of variable length and together constitute a PES ('P' for packetized). Apart from the 4 mandatory bytes for the header, the other 184 bytes might be filled in three differnt ways:
 
 \begin{itemize}
 
@@ -604,36 +607,33 @@ In this section the MPEG2 TS, along with its PSI tables, is described. The Pictu
 
 \end{itemize}
 
-Na presente seção é descrito o Transport Stream do MPEG2 com suas tabelas PSI. A seguir, na figura 
-\ref{fig:TS_iso13818}, retirada da norma ISO13818 tal qual, é apresentado um esquema da construção de
-um pacote do TS. Da figura, vê-se que um pacote de TS é formado por 188 bytes de dados. O cabeçalho
-obrigatório tem 4 bytes, e vai até o campo \textit{continuity counter}. Os dados do pacote podem ainda
-incluir o \textit{Adaptation Field}, espécie de extensão do cabeçalho, e com informções adicionais para
-a decodificação do TS. Os fluxos elementares de mídia, os ES, são divididos em pacotes de comprimento variável e formam um PES. Um pacote de TS deve conter o cabeçalho obrigatório com 4 bytes, e a ele devem suceder 184 bytes de dados. Esses bytes restantes podem ser preenchidos de diferentes maneiras:
+%Na presente seção é descrito o Transport Stream do MPEG2 com suas tabelas PSI. A seguir, na figura \ref{fig:TS_iso13818}, retirada da norma ISO13818 tal qual, é apresentado um esquema da construção de um pacote do TS. Da figura, vê-se que um pacote de TS é formado por 188 bytes de dados. O cabeçalho obrigatório tem 4 bytes, e vai até o campo \textit{continuity counter}. Os dados do pacote podem ainda incluir o \textit{Adaptation Field}, espécie de extensão do cabeçalho, e com informções adicionais para a decodificação do TS. Os fluxos elementares de mídia, os ES, são divididos em pacotes de comprimento variável e formam um PES. Um pacote de TS deve conter o cabeçalho obrigatório com 4 bytes, e a ele devem suceder 184 bytes de dados. Esses bytes restantes podem ser preenchidos de diferentes maneiras:
 
-\begin{itemize}
+%\begin{itemize}
 
-\item{ somente com o \textit{Adaptation Field};}
+%\item{ somente com o \textit{Adaptation Field};}
 
-\item{ ou com este e mais dados de pacotes PES , que são os fluxos elementares de mídia separados em pacotes;}
+%\item{ ou com este e mais dados de pacotes PES , que são os fluxos elementares de mídia separados em pacotes;}
 
-\item{ou ainda com sessões de tabelas de dados complementares aos fluxos, fundamentais para a parametrização do decodificador.}
+%\item{ou ainda com sessões de tabelas de dados complementares aos fluxos, fundamentais para a parametrização do decodificador.}
 
-\end{itemize}
+%\end{itemize}
 
-The ISO13818 standard reccomends the TS bitrate to be constant, according to \ref{ISO_constant_bitrate}. However, the output of the video and audio encoders is necessarily variable, to increase their performance, and therefore stuffing bits must be added to the transport strems whenever there is no useful information to be transmitted. It can be better explained by taking the video encoder as an example: the frame rate is constant and equal to 29.97 frames per second. Since the frames are coded according to the H.264 standard with motion compensation and prediction techniques, the I-frames have necessarily more information than P-frames or even more than B-frames. Therefore, during the transmission of an I-frame, the amount of useful information in the output stream is higher than if a B-frame is being processed. To illustrate this variation of rates, a graphic representation of the transitions is presented in Figure \ref{fig:rate_transitions}.
+The ISO13818 standard reccomends the TS bitrate to be constant, according to \ref{ISO_constant_bitrate}. However, the output of the video and audio encoders is necessarily variable, to increase their performance, and therefore stuffing bits must be added to the transport strems whenever there is no useful information to be transmitted. To better understand this, take the video encoder as an example: consider that the frame rate is constant and equal to 29.97 frames per second. Since the frames are coded according to the H.264 standard with motion compensation and prediction techniques, the I-frames have necessarily more information than P-frames or even more than B-frames. Therefore, during the transmission of an I-frame, the amount of useful information in the output stream is higher than if a B-frame is being processed. To illustrate this variation of rates, a graphic representation of the transitions is presented in Figure \ref{fig:rate_transitions}. It is up to the muxer to handle this variable to constant transformation, as will be discussed in the following sections.
 
 \begin{figure}
 \centering
 \caption{Variation of rates among the transport stream formation.}
 \includegraphics[width=1\linewidth]{figuras/rate_transitions.png}
+\\Source: The author.
 \label{fig:rate_transitions}
 \end{figure}
 
 \begin{figure}
 \centering
-\includegraphics[width=0.6\linewidth]{figuras/TS_iso13818.png}
-\caption{Esquema de formação de um pacote de TS.}
+\caption{Formation scheme of a TS packet.}
+\includegraphics[width=1\linewidth]{figuras/TS_iso13818.png}
+\\Source: ISO/IEC13818-1.
 \label{fig:TS_iso13818}
 \end{figure}
 
@@ -641,21 +641,16 @@ The ISO13818 standard reccomends the TS bitrate to be constant, according to \re
 
 \section{PSI}
 
-O PSI é o conjunto de informações especificas ao programa, ou \textit{Program Specific information}, em inglês,
-e serve para organizar as informações de transmissão, sincronismo, decodificação e apresentação dos
-fluxos de áudio, vídeo e dados. O PSI é organizado em forma de tabelas, cada uma com uma função específica no
-padrão. As tabelas que servem a indicar ao decodificador onde estão no TS os fluxos de vídeo e áudio, chamadas
-de PAT( Tabela de associação de programas) e PMT (Tabela de Mapeamento de Programas), são obrigatórias,
-Há ainda um conjunto grande de tabelas que servem a outros fins, e que não são obrigatórias segundo a ISO13818,
-mas que a ABNT NBR15603 define como obrigatórias.
+PSI stands for Program Specific Information and serves to organize transmission, timing, decoding and presentation information of audio, video and data streams. The PSI set is organized in tables, each with a specific function in the standard. The tables that serve to indicate the decoder where are the streams of video and audio, called PAT (Program Association Table) and PMT (Table Mapping Program) are mandatory. There is another set of tables that are not mandatory according to ISO13818, but ABNT NBR15603 defines as mandatory.
 
-A norma ISO define que as tabelas do PSI devem ser enviadas em seções e as seções podem ser segmentadas para
-caberem nos pacotes de TS. As seções não podem ter mais de 1024 bytes, embora na prática o número de bytes 
-para uma tabela obrigatória fique bem abaixo.
 
-A sintaxe das tabelas é padronizada. Um campo no início da tabela (table\_ID) define qual o seu tipo
-(PAT,PMT, etc.) e o campo section number serve como um contador caso a tabela seja dividida em diversas
-seções. O campo version umos campos que seguem são personalizados version, section number, program number 
+%O PSI é o conjunto de informações especificas ao programa, ou \textit{Program Specific information}, em inglês, e serve para organizar as informações de transmissão, sincronismo, decodificação e apresentação dos fluxos de áudio, vídeo e dados. O PSI é organizado em forma de tabelas, cada uma com uma função específica no padrão. As tabelas que servem a indicar ao decodificador onde estão no TS os fluxos de vídeo e áudio, chamadas de PAT( Tabela de associação de programas) e PMT (Tabela de Mapeamento de Programas), são obrigatórias, Há ainda um conjunto grande de tabelas que servem a outros fins, e que não são obrigatórias segundo a ISO13818, mas que a ABNT NBR15603 define como obrigatórias.
+
+The ISO standard defines that the PSI tables must be sent in sections and that the sections can be segmented to fit the TS packets. Sections can not be longer than 1024 bytes, although in practice the number of bytes for the mandatory tables is well below that . The syntax of the tables is standardized. A field at the beginning of the table (table\_ID) defines what is its type (PAT, PMT, etc..) and section number field serves as a counter if the table is divided into several sections.
+
+TODO TODO The field version Umos fields that follow are customized version, section number, program number
+
+%A norma ISO define que as tabelas do PSI devem ser enviadas em seções e as seções podem ser segmentadas para caberem nos pacotes de TS. As seções não podem ter mais de 1024 bytes, embora na prática o número de bytes para uma tabela obrigatória fique bem abaixo. A sintaxe das tabelas é padronizada. Um campo no início da tabela (table\_ID) define qual o seu tipo (PAT,PMT, etc.) e o campo section number serve como um contador caso a tabela seja dividida em diversas seções. O campo version umos campos que seguem são personalizados version, section number, program number.
 
 \subsection{PAT}
 
@@ -937,7 +932,7 @@ By knowing the few information about FFMPEG muxer structures presented so far, o
 \label{fig:diagrama_estruturas_ffmpeg}
 \end{figure}
 
-The following paragraph is a free adaptation of FFMPEG documentation for general muxing processes. The main functions related to the muxing process are avformat\_write\_header() for writing the TS stream header, av\_write\_frame() for writing the packets and av\_write\_trailer() for writting the stream end. After setting up the muxer environment, a call to the write\_header() function starts the transport stream output. After that, sucessive calls to write\_frame() and write\_section() fill in the output stream with video and audio streams or table sections, respectively. Finally, the stream is ended by calling write\_trailler().
+This paragraph is a free adaptation of FFMPEG documentation for general muxing processes. The main functions related to the muxing process are avformat\_write\_header() for writing the TS stream header, av\_write\_frame() for writing the packets and av\_write\_trailer() for writting the stream end. After setting up the muxer environment, a call to the write\_header() function starts the transport stream output. After that, sucessive calls to write\_frame() and write\_section() fill in the output stream with video and audio streams or table sections, respectively. Finally, the stream is ended by calling write\_trailler().
 
 
 % ----------------------------------------------------------
