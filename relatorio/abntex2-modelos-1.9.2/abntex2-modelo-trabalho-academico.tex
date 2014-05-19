@@ -505,8 +505,8 @@ As a solution to this difficulty, ISO/IEC developed the digital transmission sys
 Since 1994 , private companies and government funded research and technical tests to compare the performance of three digital television systems that were known to be efficient in their countries of origin at that time: ATSC \cite{ATSC}, developed in the United States; DVB-T \cite{DVB}, developed by a consortium of companies for use in European countries; and ISDB , developed in Japan by ARIB\cite{ARIB}. The three systems have similarities and differences regarding the encoding of video and audio: for example, both the DVB and ISDB use the transport infrastructure of MPEG2 standard, but differ in the modulation schemes. After the evaluations , it was determined that the system with the best performance for Brazilian territory would be based on the Japanese ISDB with some modifications, such as pointed in \cite{SBTVD_diff_ISDB}.
 
 The differences between the original ISDB and the modified standard used in Brazil mainly relate to video encoding and interactivity platform. In order to promote the development of national industry , the government decided to adopt an open source interactive platform, developed mainly with Ginga, a technology developed mainly by PUC-RJ\cite{PUCRJ}. Through this tool the broadcaster can, for example, deliver useful information to the low-income population without access to the \textit{Internet}, as an application sugested by one Brazilian Bank in 2010 \cite{caixa}. Another application is a project recently developed by the brazilian public comunication company (EBC), called "Brasil 4D" \cite{consultas}. The users can make appointments with doctors or schedule meetings to solve social security issues, or yet check job offers in real time, all this through the TV remote control. However , the similarity of the Brazilian system with the international standard and the fact that interactive interfaces will not be mandatory until 2015 led to the lack of interest of many broadcasters in the development of applications, so that currently very little is invested in the creation of interactive digital television in Brazilian territory.
- 
- A digital television system is composed basically by the group of equipments presented in Picture \ref{fig:diagrama_blocos_tvd}. At the beggining of the dignal flow, there are the video and audio capturing elements, such as cameras and microphones, and the signal may be analog or digital depending on the capture technology used. Once captured, the video and audio are passed through the H264 and AAC encoders, respectively, which have input interfaces compatible to the capture equipments. The output of the H264 or AAC encoders are standardized bitstreams known as Elementary Streams. Once the elementary streams leave the encoders, they enter the muxer, where all the streams are packetized and embedded into one single stream, the Transport Stream. What follows is one key process for the system robustness: the Transport Stream receives a layer of Error Correction Code to resist to the noisy, multipath channel between the broadcaster and the receiver, becoming the Broadcast Transport Stream (BTS). Finally, a digital modulation is applied to the BTS and than it is sent to the antenna.
+
+A digital television system is composed basically by the group of equipments presented in Picture \ref{fig:diagrama_blocos_tvd}. At the beggining of the signal flow, there are the video and audio capturing elements, such as cameras and microphones, and the raw signal may be analog or digital depending on the capture technology used. Once captured, the video and audio are compressed and coded through corresponding encoders. The output of the encoders are standardized bitstreams called Elementary Streams. Once the elementary streams leave the encoders, they enter the multiplexer, where all the streams are packetized and embedded into one single stream, which is the main objective of the MPEG2 systems layer. What follows is one key process for the system robustness: the stream receives a wrapping of error correction code to resist to the noisy, multipath channel between the broadcaster and the receiver. Finally, a digital modulation is applied and the modulated stream is sent to the antenna.
  
  \begin{figure}
 \centering
@@ -515,8 +515,8 @@ The differences between the original ISDB and the modified standard used in Braz
 \label{fig:diagrama_blocos_tvd}
 \end{figure}
  
- The main difference between analog and digital TV broadcasting systems, at the modulation level, is that in analog TV the multiplexing is frequential, i.e., the video signal is sent in a frequency interval within the channel bandwidth and the audio in another frequency interval. In digital technology, this multiplexing happens in time domain: the muxer output has constant bitrate, and for fractions of second only one packet from one of the Packetized Elementary Streams is sent to the transmitter. In the other side of the channel, the receiver is conceived in such a way that after passing the error correction layer, a \textit{demuxer} takes the Transport Stream and splits it back into separate Elementary Streams. They are then sent to the decoders and to audiovisual output devices. One challenge succesfully accomplished in the time domain multiplexing scheme used here is to synchronize the reproduction of all the streams of one channel. It is certanly disturbing to the viewer to watch delayed video or audio outputs, so presentation time stamps were added periodically into the streams so they can be reproduced in sync.
- 
+The main difference between analog and digital TV broadcasting systems, at the modulation level, is that in analog TV the multiplexing is frequential, i.e., the video signal is sent in a frequency band within the channel bandwidth and the audio in another frequency band. In digital technology, this multiplexing happens in time domain: the multiplexer output has constant bitrate, and for fractions of second only one packet from one of the media sources is sent to the transmitter. In the other side of the channel, the receiver is conceived in such a way that after passing the error correction layer, a \textit{demultiplexer} takes the compound stream and splits it back into elemental bitstreams. They are then sent to the decoders and to audiovisual output devices. It would be certainly disturbing to the viewer to watch delayed video or audio outputs, so one challenge of this multiplexing scheme is to synchronize the reproduction of all the streams. To ensure this, presentation time stamps are added periodically into the streams so they can be reproduced in sync.
+
 %O sistema de transmissão de televisão digital funciona, basicamente, coordenando a entrada de fluxos elementares de vídeo, áudio e dados no fluxo de transmissão. Na televisão analógica, a multiplexação é frequencial, ou seja, o sinal de vídeo é enviado em um intervalo de frequências dentro do canal e o sinal de áudio em outro intervalo. Na tecnologia digital, essa multiplexação é feita no tempo: por frações de segundo, apenas um dos sinais é enviado no canal e o receptor armazena os sinais independentemente para depois fazer a decodificação. No momento da reprodução dos sinais, é preciso que haja sincronismo nos fluxos de vídeo e áudio.
 
 The Presitential Act number 8061\cite{decreto8061}, from july 29, 2013, establishes the chronogram of analog brodcasts shutdown. Until december 31, 2018, all analog transmitters shall be deactivated and the channels shall be vacated. The grants will then be returned to the government, that plans to use the 700MHz band to the 4G mobile telephone service, LTE.
@@ -589,45 +589,57 @@ The main challenges to accomplish in the project are provide a tool that has fou
 % ---
 % Capitulo de revisão de literatura
 % ---
+
+\chapter{Audiovisual codecs used in SBTVD}
+
+The codecs chosen to used in SBTVD are H.264 for video and AAC for the audio. This overview is useful to understand the synchronization methods adopted in the systems layer.
+
+\section{H.264}
+
+The H.264 video coding standard is also known as the MPEG-4 Part 10 standard, and was published as the evolution of the existing video coding standards (ITU-T H.261 / MPEG1, ITU-T H.262 / MPEG2). The main applications for this standard, as described by the publisher itself, are videoconferencing, digital storage media, television broadcasting, Internet streaming and Internet communication. It was developed to provide a solution that has higher compression rates than the former standards, and yet improved subjective quality. To the television broadcast market, it suits perfectly the transmission of high definition video. Technically, the encoder takes the raw video frames and performs sequentially prediction, transform and entropy encoding processes to produce a compressed bitstream.
+
+In the first step, prediction, two types of redundancy in pixel values are exploited: the spatial and the temporal. To do so, the encoder splits one frame into square or rectangular blocks of pixels, called macroblocks, and predicts the values of pixels in the current macroblock based on information from previously analysed macroblocks either in the current frame or in previously coded frames. Then, instead of transmitting the pixel values, is transmits the difference between the original and the predicted frame (which should have less information if the encoder is efficient) along with pointers to the macroblocks that must be used to recreate that region. These pointers are called motion vectors. There are three different types of prediction schemes, that lead to different kinds of frames:
+
+\begin{itemize}
+\item{an I-frame is constructed by predicting pixel values only from macroblocks within the same frame, this is the intra-frame prediction;}
+\item{a P-frame is composed of predictions from the current source frame and also of the previously coded I-frame, this is the inter-frame prediction;}
+\item{a B-frame is made by predicting the output frame from the current input, the earlier inputs or yet the later input frames, and is known as the bidirectional inter-frame prediction.}
+\end{itemize}
+
+The decrease in amount of information can be noticed in Figure \ref{fig:motion_compensation}, adapted from \cite{richardson}. The first frame is marked as (a) and coded with intra prediction. The following frame is (b), which is coded as a P-frame. When generic motion compensation coding is applied, the residual frame is the one in (c). Knowing that these frames have differential pixel values \footnote{Differential pixel values means that a black pixel is the negative threshold, a white pixel is the positive threshold and gray is zero.}, it can be noticed that most of the pixels have a value close to zero in (c), which means a residual with very little information. The number of bytes needed to code one I frame is therefore much higher than the necessary to code a P frame, since there is no motion compensation in the first one.
+
+\begin{figure}
+\centering
+\caption{Visualization of motion compensation encoder working.}
+\includegraphics[width=1\linewidth]{figuras/motion_compensation.png}
+\\Source: \cite{richardson}.
+\label{fig:motion_compensation}
+\end{figure}
+
+Although there is a substantial decrease in amount of information with inter-frame prediction, the video quality may degenerate catastrophically if too many P and B frames are used between two I frames. This leads to a compromise of quality and bitrate and the usual frame arrangement is the one shown in Figure \ref{fig:IBBPBBP}, that places at most two B frames between one I and one P, or between two P frames, and at most two P frames between consecutive I frames. This arrangement is called a Group of Pictures, or GOP as referenced in MPEG4 standard.
+
+\begin{figure}
+\centering
+\caption{.}
+\includegraphics[width=1\linewidth]{figuras/IBBPBBP.png}
+\\Source: The Author.
+\label{fig:IBBPBBP}
+\end{figure}
+
+The next encoder step is to transform the residual frame from prediction with an integer approximation of the Discrete Cosine Transform, or DCT, so that the pixel values become a set of frequency domain coefficients. These coefficients are then quantized, which reduce their precision and make many of them to be equal to zero. Finally, the coefficients are reordered to align most of the zero-valued ones consecutively, and an entropy encoder reduces the redundancy of the sequences of repetitions, hence reducing the amount of data. The output of the H.264 encoder is formed of the quantized coefficients and the motion vectors arranged in a structured bitstream, that constitutes the video Elementary Stream. Further information can be found in \cite{vcodex} or \cite{richardson}.
+
+\section{AAC}
+
+
+
 \chapter{ISO/IEC 13818-1 Standard}
 % ---
+The main objective of the ISO/IEC13818-1 standard is to describe the conversion of multiple bitstreams into one single stream carrying wrapped video and audio data, as well as additional information responsible to unwrap the streams. Similarly to other ISO/IEC standards, the text only specifies the decoding / demultiplexing side of the transmission chain, leaving the architectures of encoding / multiplexing stages to the manufacturers decision. The standard defines two different architectures that should be applied in oposing situations, both of them based on the transmission of packets of data. The first is the Program Stream, defined to be used in error free situations, such as storage in digital discs: the streams of this type are composed of long packets of variable length, the Packetized Elementary Streams (PES) packets. To demonstrate the variable length characteristic, consider the video elementary stream as an example: the common size for one PES packet is one video frame, since there are considerable size differences in I-frames and B-frames, the PES packet size may vary. The other architecture, suitable for faulty, error prone transmission channels, is the Transport Stream. The stream packet has fixed length and is much smaller than the PES packets, which makes it easier to error correction codes to ensure the transmission through the faulty channels. In fact, one PES packet size can be hundreds of times bigger than one TS packet, because the multiplexer breaks the PES packets to fit them inside the TS packets. Since the second architecture is much more suitable to broadcasting situations, the following text will be focused only on it.
 
 % ---
 \section{Transport Stream}
 % ---
-In this section is described the MPEG2 Transport Stream along with its PSI tables. The Picture \ref{fig:TS_iso13818}, copied from the standard as is, presents a schema of the construction of a TS packet. From the picture, it can be seen that a packet is roughly formed with 188 bytes of data. The mandatory header has 4 bytes, and goes from the \textit{sync byte} to the \textit{continuity counter}. The packet data might also contain the  \textit{Adaptation Field}, a sort of header extension, with aditional data that helps the decoder to decode and preset data more optimally. The elementary streams, or \textit{ES}, are split into packets of variable length and together constitute a PES ('P' for packetized). Apart from the 4 mandatory bytes for the header, the other 184 bytes might be filled in three differnt ways:
-
-\begin{itemize}
-
-\item{ with the \textit{Adaptation Field} only;}
-
-\item{ with both the Adaptation Field and PES data;}
-
-\item{or finally with sections of data tables.}
-
-\end{itemize}
-
-%Na presente seção é descrito o Transport Stream do MPEG2 com suas tabelas PSI. A seguir, na figura \ref{fig:TS_iso13818}, retirada da norma ISO13818 tal qual, é apresentado um esquema da construção de um pacote do TS. Da figura, vê-se que um pacote de TS é formado por 188 bytes de dados. O cabeçalho obrigatório tem 4 bytes, e vai até o campo \textit{continuity counter}. Os dados do pacote podem ainda incluir o \textit{Adaptation Field}, espécie de extensão do cabeçalho, e com informções adicionais para a decodificação do TS. Os fluxos elementares de mídia, os ES, são divididos em pacotes de comprimento variável e formam um PES. Um pacote de TS deve conter o cabeçalho obrigatório com 4 bytes, e a ele devem suceder 184 bytes de dados. Esses bytes restantes podem ser preenchidos de diferentes maneiras:
-
-%\begin{itemize}
-
-%\item{ somente com o \textit{Adaptation Field};}
-
-%\item{ ou com este e mais dados de pacotes PES , que são os fluxos elementares de mídia separados em pacotes;}
-
-%\item{ou ainda com sessões de tabelas de dados complementares aos fluxos, fundamentais para a parametrização do decodificador.}
-
-%\end{itemize}
-
-The ISO13818 standard reccomends the TS bitrate to be constant, according to \ref{ISO_constant_bitrate}. However, the output of the video and audio encoders is necessarily variable, to increase their performance, and therefore stuffing bits must be added to the transport strems whenever there is no useful information to be transmitted. To better understand this, take the video encoder as an example: consider that the frame rate is constant and equal to 29.97 frames per second. Since the frames are coded according to the H.264 standard with motion compensation and prediction techniques, the I-frames have necessarily more information than P-frames or even more than B-frames. Therefore, during the transmission of an I-frame, the amount of useful information in the output stream is higher than if a B-frame is being processed. To illustrate this variation of rates, a graphic representation of the transitions is presented in Figure \ref{fig:rate_transitions}. It is up to the muxer to handle this variable to constant transformation, as will be discussed in the following sections.
-
-\begin{figure}
-\centering
-\caption{Variation of rates among the transport stream formation.}
-\includegraphics[width=1\linewidth]{figuras/rate_transitions.png}
-\\Source: The author.
-\label{fig:rate_transitions}
-\end{figure}
+The main structure of the MPEG2 Transport Stream is its constant size packet. The stream is made of many packets concatenated. The Picture \ref{fig:TS_iso13818} shows the basic elements that are present in one packet, the value under each field is its length in bits. From the picture, it can be seen that a packet is roughly formed with 188 bytes of data. The mandatory header has 4 bytes, and goes from the \textit{sync byte} to the \textit{continuity counter}. The packet payload might also contain the \textit{Adaptation Field}, a sort of header extension, with additional data that helps to decode and present the streams more efficiently.  Apart from the 4 mandatory bytes for the header, the other 184 bytes may be filled in three different ways: with the Adaptation Field, with PES data or with information tables. The Adaptation Field presence is optional, and it is commonly used to fill with stuffing bits the last TS packets from one PES packet.
 
 \begin{figure}
 \centering
@@ -635,6 +647,24 @@ The ISO13818 standard reccomends the TS bitrate to be constant, according to \re
 \includegraphics[width=1\linewidth]{figuras/TS_iso13818.png}
 \\Source: ISO/IEC13818-1.
 \label{fig:TS_iso13818}
+\end{figure}
+
+%Na presente seção é descrito o Transport Stream do MPEG2 com suas tabelas PSI. A seguir, na figura \ref{fig:TS_iso13818}, retirada da norma ISO13818 tal qual, é apresentado um esquema da construção de um pacote do TS. Da figura, vê-se que um pacote de TS é formado por 188 bytes de dados. O cabeçalho obrigatório tem 4 bytes, e vai até o campo \textit{continuity counter}. Os dados do pacote podem ainda incluir o \textit{Adaptation Field}, espécie de extensão do cabeçalho, e com informções adicionais para a decodificação do TS. Os fluxos elementares de mídia, os ES, são divididos em pacotes de comprimento variável e formam um PES. Um pacote de TS deve conter o cabeçalho obrigatório com 4 bytes, e a ele devem suceder 184 bytes de dados. Esses bytes restantes podem ser preenchidos de diferentes maneiras:
+
+%\begin{itemize}
+%\item{ somente com o \textit{Adaptation Field};}
+%\item{ ou com este e mais dados de pacotes PES , que são os fluxos elementares de mídia separados em pacotes;}
+%\item{ou ainda com sessões de tabelas de dados complementares aos fluxos, fundamentais para a parametrização do decodificador.}
+%\end{itemize}
+
+The ISO13818 standard recommends the TS bitrate to be constant, according to \ref{ISO_constant_bitrate}. However, to increase the codecs performance, their output  is necessarily variable, and therefore stuffing bits must be added to the transport streams whenever there is no useful information to be transmitted. To better understand this, take the video encoder as an example: consider that the frame rate is constant and equal to 29.97 frames per second. Since the frames are coded according to the H.264 standard with motion compensation and prediction techniques, the I-frames have necessarily more information than P-frames or even more than B-frames. Therefore, during the transmission of an I-frame, the amount of useful information in the output stream is higher than if a B-frame is being processed. To illustrate this variation of rates, a graphic representation of the transitions is presented in Figure \ref{fig:rate_transitions}. It is up to the muxer to handle this variable to constant transformation, as will be discussed in the following sections.
+
+\begin{figure}
+\centering
+\caption{Variation of rates among the transport stream formation.}
+\includegraphics[width=1\linewidth]{figuras/rate_transitions.png}
+\\Source: The author.
+\label{fig:rate_transitions}
 \end{figure}
 
 % ---
@@ -715,21 +745,11 @@ By analyzing both Table \ref{tab_ISOESTypes} and Picture \ref{fig:TSAnalyser_clo
 
 \section{Sincronismo}
 
-O sincronismo é fundamental para o funcionamento de um sistema de transmissão de televisão, pois é
-preciso garantir a reprodução do vídeo e do áudio simultaneamente e com a mesma referência temporal.
-Para possibilitar tal sincronismo, um complexo sistema de sincronismo existe no padrão. O conceito
-fundamental é a transmissão de um sinal de clock codificado nos pacotes do TS, o PCR, explicado a seguir.
-Esse sinal é decodificado
-e alimenta um sistema PLL no decodificador, para então ser utilizado nos fluxos de áudio e vídeo.
-Os fluxos elementares, por sua vez, transportam referências temporais ao PCR nos campos PTS e DTS, explicados
-a seguir, e assim são reproduzidos com base em uma mesma referência temporal.
+O sincronismo é fundamental para o funcionamento de um sistema de transmissão de televisão, pois é preciso garantir a reprodução do vídeo e do áudio simultaneamente e com a mesma referência temporal. Para possibilitar tal sincronismo, um complexo sistema de sincronismo existe no padrão. O conceito
+fundamental é a transmissão de um sinal de clock codificado nos pacotes do TS, o PCR, explicado a seguir. Esse sinal é decodificado e alimenta um sistema PLL no decodificador, para então ser utilizado nos fluxos de áudio e vídeo. Os fluxos elementares, por sua vez, transportam referências temporais ao PCR nos campos PTS e DTS, explicados a seguir, e assim são reproduzidos com base em uma mesma referência temporal.
 
 \subsection{PCR}
-O valor do PCR é uma espécie de amostragem do clock do encoder de vídeo ou áudio em um momento específico
-da geração da unidade fundamental, seja um quadro de áudio ou vídeo, se o sistema trabalhar em tempo real.
-Como no caso desde multiplexador não é, só é preciso definir
-a frequência, que é definida pela norma em 27MHz, e calcular os valores sequenciais do PCR baseando-se 
-na taxa de bits por segundo de cada um dos sinais de vídeo, ou áudio.
+O valor do PCR é uma espécie de amostragem do clock do encoder de vídeo ou áudio em um momento específico da geração da unidade fundamental, seja um quadro de áudio ou vídeo, se o sistema trabalhar em tempo real. Como no caso desde multiplexador não é, só é preciso definir a frequência, que é definida pela norma em 27MHz, e calcular os valores sequenciais do PCR baseando-se na taxa de bits por segundo de cada um dos sinais de vídeo, ou áudio.
 
 \begin{equation}
 $$ PCR = F*ES_{BR}  $$
