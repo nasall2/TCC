@@ -596,7 +596,7 @@ The codecs chosen to used in SBTVD are H.264 for video and AAC for the audio. Th
 
 \section{H.264}
 
-The H.264 video coding standard is also known as the MPEG-4 Part 10 standard, and was published as the evolution of the existing video coding standards (ITU-T H.261 / MPEG1, ITU-T H.262 / MPEG2). The main applications for this standard, as described by the publisher itself, are videoconferencing, digital storage media, television broadcasting, Internet streaming and Internet communication. It was developed to provide a solution that has higher compression rates than the former standards, and yet improved subjective quality. To the television broadcast market, it suits perfectly the transmission of high definition video. Technically, the encoder takes the raw video frames and performs sequentially prediction, transform and entropy encoding processes to produce a compressed bitstream.
+The H.264 video coding standard is also known as the MPEG-4 Part 10 standard, and was published as the evolution of the existing video coding standards (ITU-T H.261 / MPEG1, ITU-T H.262 / MPEG2). The main applications for this standard, as described by the publisher itself, are video-conferencing, digital storage media, television broadcasting, Internet streaming and Internet communication. It was developed to provide a solution that has higher compression rates than the former standards, and yet improved subjective quality. To the television broadcast market, it suits perfectly the transmission of high definition video. Technically, the encoder takes the raw video frames and performs sequentially prediction, transform and entropy encoding processes to produce a compressed bitstream. The codec features are organized in profiles and levels, the \textit{high} profile suits the HDTV video transmission characteristics on the Full Segment transmission, while the \textit{baseline} profile fits the needs for mobile, 1-Segment broadcasts.
 
 In the first step, prediction, two types of redundancy in pixel values are exploited: the spatial and the temporal. To do so, the encoder splits one frame into square or rectangular blocks of pixels, called macroblocks, and predicts the values of pixels in the current macroblock based on information from previously analysed macroblocks either in the current frame or in previously coded frames. Then, instead of transmitting the pixel values, is transmits the difference between the original and the predicted frame (which should have less information if the encoder is efficient) along with pointers to the macroblocks that must be used to recreate that region. These pointers are called motion vectors. There are three different types of prediction schemes, that lead to different kinds of frames:
 
@@ -630,7 +630,19 @@ The next encoder step is to transform the residual frame from prediction with an
 
 \section{AAC}
 
+The audio codec chosen to incorporate the SBTVD, developed by Fraunhofer IIS along with AT\&T, Dolby and Sony, is called Advanced Audio Coding, or AAC. Since the beggining of the dewvelopment in 1994, the successive evolutions in the codec gave place to profiles that assemble the main features. Three different profiles are the mostly used in digital television broadcast: AAC-LC, HE-AAC, HE-AACv2. According to the main developer(\cite{fraunhofer}), even the simplest profile, AAC-LC (LC for low complexity) provides \textit{an audio whose quality even for expert listeners, so-called “golden ears”, is indistinguishable from the original}.
 
+The codec supports encoding of ancillary data along with the audio samples, and all with typically 192Kbps for broadcast quality stereo streams in AAC-LC profile. If the HE-AAC profile is chosen, the Spectral Band Replication(SBR) feature is applied and for the same audio quality in the output, a 30\% bitrate reduction is observed. In HE-AAC the lower part of the audio spectrum is sampled at half the frequency of the remaining signal using AAC-LC, and the high frequency band is coded with SBR. SBR exploits the relationship of upper and lower sides of the spectrum to produce a parametric recreation of the upper band, thus reducing the total bitrate. HE-AAC achieves typical 48 to 64 kbps for stereo streams.
+
+The chosen profile to integrate the SBTVD is HE-AACv2. Additionally to the already described features, it includes the Parametric Stereo (PS) tool. Rather than encoding two separate channels without any relationship between them, PS creates a monaural downmix of the two stereo samples and a set of parametric coefficients. The mono stream is then encoded with HE-AAC and sent along with the coefficients to recreate stereo sound in the receiver side. Finally, with both PS and SBR, the bitrate is reduced even more, to up to 24 Kbps for stereo audio. \autoref{fig:he_aac_v2} presents the encoding and decoding processes for HE-AACv2 profile. The audio stream enters the encoder and reaches first the Parametric Stereo step. The set of coefficients are extracted, injected as ancillary data and the residual enters both the SBR encoder and the downsampler. The SBR coefficients are calculated and added to the ancillary data, and the final residual is coded with AAC-LC.
+
+\begin{figure}
+\centering
+\caption{Block diagram of HE-AACv2 profile encoding and decoding steps.}
+\includegraphics[width=1\linewidth]{figuras/he_aac_v2.png}
+\\Source and Copyright: \cite{fraunhofer}.
+\label{fig:he_aac_v2}
+\end{figure}
 
 \chapter{ISO/IEC 13818-1 Standard}
 % ---
@@ -668,6 +680,54 @@ The ISO13818 standard recommends the TS bitrate to be constant, according to \re
 \end{figure}
 
 % ---
+
+\section{Synchronism}
+
+%O sincronismo é fundamental para o funcionamento de um sistema de transmissão de televisão, pois é preciso garantir a reprodução do vídeo e do áudio simultaneamente e com a mesma referência temporal. Para possibilitar tal sincronismo, um complexo sistema de sincronismo existe no padrão. O conceito
+fundamental é a transmissão de um sinal de clock codificado nos pacotes do TS, o PCR, explicado a seguir. Esse sinal é decodificado e alimenta um sistema PLL no decodificador, para então ser utilizado nos fluxos de áudio e vídeo. Os fluxos elementares, por sua vez, transportam referências temporais ao PCR nos campos PTS e DTS, explicados a seguir, e assim são reproduzidos com base em uma mesma referência temporal.
+
+Timing is crucial to the functioning of a television broadcasting system, because it is necessary to guarantee the reproduction of video and audio simultaneously. To enable such a timing, a complex system is defined in the standard. The key concept is to define a System-wide Time Clock, sample this clock and transmit it encoded in the TS packets. The field that carries the samples is the PCR, detailed below. In the decoder side, the PCR feeds a PLL module that recreates the original STC which then is used in the audio and video streams sync process. Elementary streams, in their turn, carry temporal references to the STC in PTS and DTS fields, explained below, and so are played based on the same time reference as the encoder.
+
+
+\subsection{PCR}
+O valor do PCR é uma espécie de amostragem do clock do encoder de vídeo ou áudio em um momento específico da geração da unidade fundamental, seja um quadro de áudio ou vídeo, se o sistema trabalhar em tempo real. Como no caso desde multiplexador não é, só é preciso definir a frequência, que é definida pela norma em 27MHz, e calcular os valores sequenciais do PCR baseando-se na taxa de bits por segundo de cada um dos sinais de vídeo, ou áudio.
+
+\begin{equation}
+$$ PCR = F*ES_{BR}  $$
+\end{equation}
+
+O PCR é enviado em  um campo do cabeçalho do TS, e está dentro do adaptation field. Embora seja opcional enviá-lo,
+nota-se pela leitura que é possível enviar o PCR em poucas repetições. Não é necessário enviá-lo junto
+com todos os pacotes de TS. Pode-se enviar um pacote apenas com o PCR, utilizando um PCR\_ID, para resincronizar o
+PLL do receptor a cada N segundos, N a definir.
+
+
+\subsection{PTS / DTS}
+
+Os campos Decoding Time Stamp \(DTS\) e Presentation Time Stamp \(PTS\) são outros dois referenciais de tempo,
+derivados do PCR, e que servem a informar ao decodificador o instante de tempo em que devem ser decodificadas
+e exibidas, respectivamente, as Access Units de vídeo e áudio. Uma Presentation Unit \(PU\) é definida pela
+norma como sendo um quadro de áudio ou de vídeo, e uma Access Unit \(AU\) é a representação codificada 
+da Presentation Unit.
+
+A norma define claramente qual instante de tempo deve ser considerado para gerar o PTS ou o DTS:
+\quotation{No caso do áudio, se um PTS está presente num cabeçalho de PES, este deve fazer referência à
+primeira AU que comece no pacote. Uma AU de áudio começa em um pacote se o primeiro byte da AU de áudio
+estiver presente no pacote. No caso do vídeo, se um PTS está presente no cabeçalho do pacote PES, este
+deve se referir à AU que cujo primeiro \textit{start\_code} está neste pacote.}
+
+% ---
+
+An example of an hypothetical decoder initial operation is shown in Figure \ref{fig:funcionamento_inicial_decoder}. Utility of retransmission of PSI tables from time to time 
+
+\begin{figure}[!hb]
+\centering
+\caption{Hypothetical decoder initial operation.}
+\includegraphics[width=1*\linewidth]{figuras/funcionamento_inicial_decoder.png}
+\\Source and Copyright: \cite{nhk}.
+\label{fig:funcionamento_inicial_decoder}
+\end{figure}
+
 
 \section{PSI}
 
@@ -742,50 +802,6 @@ By analyzing both Table \ref{tab_ISOESTypes} and Picture \ref{fig:TSAnalyser_clo
 \end{figure}
 
 \subsection{NIT}
-
-\section{Sincronismo}
-
-O sincronismo é fundamental para o funcionamento de um sistema de transmissão de televisão, pois é preciso garantir a reprodução do vídeo e do áudio simultaneamente e com a mesma referência temporal. Para possibilitar tal sincronismo, um complexo sistema de sincronismo existe no padrão. O conceito
-fundamental é a transmissão de um sinal de clock codificado nos pacotes do TS, o PCR, explicado a seguir. Esse sinal é decodificado e alimenta um sistema PLL no decodificador, para então ser utilizado nos fluxos de áudio e vídeo. Os fluxos elementares, por sua vez, transportam referências temporais ao PCR nos campos PTS e DTS, explicados a seguir, e assim são reproduzidos com base em uma mesma referência temporal.
-
-\subsection{PCR}
-O valor do PCR é uma espécie de amostragem do clock do encoder de vídeo ou áudio em um momento específico da geração da unidade fundamental, seja um quadro de áudio ou vídeo, se o sistema trabalhar em tempo real. Como no caso desde multiplexador não é, só é preciso definir a frequência, que é definida pela norma em 27MHz, e calcular os valores sequenciais do PCR baseando-se na taxa de bits por segundo de cada um dos sinais de vídeo, ou áudio.
-
-\begin{equation}
-$$ PCR = F*ES_{BR}  $$
-\end{equation}
-
-O PCR é enviado em  um campo do cabeçalho do TS, e está dentro do adaptation field. Embora seja opcional enviá-lo,
-nota-se pela leitura que é possível enviar o PCR em poucas repetições. Não é necessário enviá-lo junto
-com todos os pacotes de TS. Pode-se enviar um pacote apenas com o PCR, utilizando um PCR\_ID, para resincronizar o
-PLL do receptor a cada N segundos, N a definir.
-
-
-\subsection{PTS / DTS}
-
-Os campos Decoding Time Stamp \(DTS\) e Presentation Time Stamp \(PTS\) são outros dois referenciais de tempo,
-derivados do PCR, e que servem a informar ao decodificador o instante de tempo em que devem ser decodificadas
-e exibidas, respectivamente, as Access Units de vídeo e áudio. Uma Presentation Unit \(PU\) é definida pela
-norma como sendo um quadro de áudio ou de vídeo, e uma Access Unit \(AU\) é a representação codificada 
-da Presentation Unit.
-
-A norma define claramente qual instante de tempo deve ser considerado para gerar o PTS ou o DTS:
-\quotation{No caso do áudio, se um PTS está presente num cabeçalho de PES, este deve fazer referência à
-primeira AU que comece no pacote. Uma AU de áudio começa em um pacote se o primeiro byte da AU de áudio
-estiver presente no pacote. No caso do vídeo, se um PTS está presente no cabeçalho do pacote PES, este
-deve se referir à AU que cujo primeiro \textit{start\_code} está neste pacote.}
-
-% ---
-
-An example of an hypothetical decoder initial operation is shown in Figure \ref{fig:funcionamento_inicial_decoder}. Utility of retransmission of PSI tables from time to time 
-
-\begin{figure}[!hb]
-\centering
-\caption{Hypothetical decoder initial operation.}
-\includegraphics[width=1*\linewidth]{figuras/funcionamento_inicial_decoder.png}
-\\Source and Copyright: \cite{nhk}.
-\label{fig:funcionamento_inicial_decoder}
-\end{figure}
 
 \chapter{Soluções existentes e limitaçoes}
 
