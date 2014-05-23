@@ -686,8 +686,15 @@ The ISO13818 standard recommends the TS bitrate to be constant, according to \re
 %O sincronismo é fundamental para o funcionamento de um sistema de transmissão de televisão, pois é preciso garantir a reprodução do vídeo e do áudio simultaneamente e com a mesma referência temporal. Para possibilitar tal sincronismo, um complexo sistema de sincronismo existe no padrão. O conceito
 fundamental é a transmissão de um sinal de clock codificado nos pacotes do TS, o PCR, explicado a seguir. Esse sinal é decodificado e alimenta um sistema PLL no decodificador, para então ser utilizado nos fluxos de áudio e vídeo. Os fluxos elementares, por sua vez, transportam referências temporais ao PCR nos campos PTS e DTS, explicados a seguir, e assim são reproduzidos com base em uma mesma referência temporal.
 
-Timing is crucial to the functioning of a television broadcasting system, because it is necessary to guarantee the reproduction of video and audio simultaneously. To enable such a timing, a complex system is defined in the standard. The key concept is to define a System-wide Time Clock, sample this clock and transmit it encoded in the TS packets. The field that carries the samples is the PCR, detailed below. In the decoder side, the PCR feeds a PLL module that recreates the original STC which then is used in the audio and video streams sync process. Elementary streams, in their turn, carry temporal references to the STC in PTS and DTS fields, explained below, and so are played based on the same time reference as the encoder.
+Timing is crucial to the functioning of a television broadcasting system, because it is necessary to guarantee the reproduction of video and multiple audio streams simultaneously. To enable such a timing, a complex system is defined in the standard. The key concept is to define a System Time Clock, sample this clock and transmit it encoded in the TS packets. The STC uses the NLL (Numerically Locked Loop) technology, equivalent to PLL, but digital. In the decoder side, a PLL module recreates the original STC which then is used in the audio and video streams sync process. Elementary streams, in their turn, carry temporal references to the STC and are played based on the same time reference as the encoder. The field that carries the STC samples is the PCR, detailed below. Elementary Streams carry timing information in the PTS and DTS fields.
 
+\begin{figure}[!hb]
+\centering
+\caption{PCR Sampling block diagram.}
+\includegraphics[width=1*\linewidth]{figuras/pcr_sampling.png}
+\\Source and Copyright: The Author.
+\label{fig:pcr_sampling}
+\end{figure}
 
 \subsection{PCR}
 O valor do PCR é uma espécie de amostragem do clock do encoder de vídeo ou áudio em um momento específico da geração da unidade fundamental, seja um quadro de áudio ou vídeo, se o sistema trabalhar em tempo real. Como no caso desde multiplexador não é, só é preciso definir a frequência, que é definida pela norma em 27MHz, e calcular os valores sequenciais do PCR baseando-se na taxa de bits por segundo de cada um dos sinais de vídeo, ou áudio.
