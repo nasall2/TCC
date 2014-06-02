@@ -681,12 +681,19 @@ The ISO13818 standard recommends the TS bitrate to be constant, according to \re
 
 % ---
 
-\section{Synchronism}
+\section{Timing}
 
 %O sincronismo é fundamental para o funcionamento de um sistema de transmissão de televisão, pois é preciso garantir a reprodução do vídeo e do áudio simultaneamente e com a mesma referência temporal. Para possibilitar tal sincronismo, um complexo sistema de sincronismo existe no padrão. O conceito
 fundamental é a transmissão de um sinal de clock codificado nos pacotes do TS, o PCR, explicado a seguir. Esse sinal é decodificado e alimenta um sistema PLL no decodificador, para então ser utilizado nos fluxos de áudio e vídeo. Os fluxos elementares, por sua vez, transportam referências temporais ao PCR nos campos PTS e DTS, explicados a seguir, e assim são reproduzidos com base em uma mesma referência temporal.
 
-Timing is crucial to the functioning of a television broadcasting system, because it is necessary to guarantee the reproduction of video and multiple audio streams simultaneously. To enable such a timing, a complex system is defined in the standard. The key concept is to define a System Time Clock, sample this clock and transmit it encoded in the TS packets. The STC uses the NLL (Numerically Locked Loop) technology, equivalent to PLL, but digital. In the decoder side, a PLL module recreates the original STC which then is used in the audio and video streams sync process. Elementary streams, in their turn, carry temporal references to the STC and are played based on the same time reference as the encoder. The field that carries the STC samples is the PCR, detailed below. Elementary Streams carry timing information in the PTS and DTS fields.
+
+Video and audio information are transported in separate streams that need to be reproduced simultaneously on the receiver side. This is why timing is crucial to the operation of a television broadcasting system. 
+
+The key concept introduced in the ISO standard is the System Time Clock (STC) module, which is a reference time base for all the streams within a program. The STC is encoded in the two PCR fields, one in terms of units of 90KHz and the other in parts of 27MHz, which are incremented by a clock signal derived from a 27MHz reference oscillator. This reference may be a GPS satellite sync method or an atomic clock oscillator \cite{}.
+
+In the decoder, a digital PLL (Phase Locked Loop) mechanism synchronizes the local time reference to one in the encoder side. At the moment that each PCR arrives at the decoder, the value is compared with the current local STC value 
+
+Elementary streams, in their turn, carry temporal references to the STC and are played based on the same time reference as the encoder. The field that carries the STC samples is the PCR, detailed below. Elementary Streams carry timing information in the PTS and DTS fields.
 
 \begin{figure}[!hb]
 \centering
