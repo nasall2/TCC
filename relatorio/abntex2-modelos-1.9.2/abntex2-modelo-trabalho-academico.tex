@@ -897,33 +897,15 @@ The ISO standard defines that the PSI tables must be sent in sections and that t
 \item{The field \textit{section\_syntax\_indicator} is a 1-bit field which shall always be set to '1';}
 \item{The field \textit{section\_length} has 12 bits, the first most significant two shall be '00' and the other 10 bits are the length of the section, starting at the first bit after the length field and including the CRC;}
 \item{The field \textit{transport\_stream\_ID} has 16 bits, the first most significant two shall be '00' and the other 10 bits are the length of the section, starting at the first bit after the length field and including the CRC;}
-\item{The field \textit{version\_number} has 5 bits,
-\item{The field \textit{current\_next\_indicator} has 1 bit,
-\item{The field \textit{section\_number} has 8 bits,
-\item{The field \textit{last\_section\_number} has 8 bits,
-
-\item{.}
+\item{The field \textit{version\_number} has 5 bits,}
+\item{The field \textit{current\_next\_indicator} has 1 bit,}
+\item{The field \textit{section\_number} has 8 bits,}
+\item{The field \textit{last\_section\_number} has 8 bits,}
 \end{itemize}
 
 A field at the beginning of the table ()  and section number field serves as a counter if the table is divided into several sections.
 
 TODO TODO The field version Umos fields that follow are customized version, section number, program number
-
-\begin{figure}[!hb]
-\centering
-\caption{PSI tables names, PID numbers and contents description.}
-\includegraphics[width=1\linewidth]{figuras/tab_psi_tables_names_pids.png}
-\\Source and Copyright: .\citeonline[2.4.4]{ISO}
-\label{fig:tab_psi_tables_names_pids}
-\end{figure}
-
-\begin{figure}[!hb]
-\centering
-\caption{PSI tables IDs.}
-\includegraphics[width=1\linewidth]{figuras/tab_psi_tables_ids.png}
-\\Source and Copyright: .\citeonline[2.4.4.4]{ISO}
-\label{fig:tab_psi_tables_ids}
-\end{figure}
 
 %O PSI é o conjunto de informações especificas ao programa, ou \textit{Program Specific information}, em inglês, e serve para organizar as informações de transmissão, sincronismo, decodificação e apresentação dos fluxos de áudio, vídeo e dados. O PSI é organizado em forma de tabelas, cada uma com uma função específica no padrão. As tabelas que servem a indicar ao decodificador onde estão no TS os fluxos de vídeo e áudio, chamadas de PAT( Tabela de associação de programas) e PMT (Tabela de Mapeamento de Programas), são obrigatórias, Há ainda um conjunto grande de tabelas que servem a outros fins, e que não são obrigatórias segundo a ISO13818, mas que a ABNT NBR15603 define como obrigatórias.
 %A norma ISO define que as tabelas do PSI devem ser enviadas em seções e as seções podem ser segmentadas para caberem nos pacotes de TS. As seções não podem ter mais de 1024 bytes, embora na prática o número de bytes para uma tabela obrigatória fique bem abaixo. A sintaxe das tabelas é padronizada. Um campo no início da tabela (table\_ID) define qual o seu tipo (PAT,PMT, etc.) e o campo section number serve como um contador caso a tabela seja dividida em diversas seções. O campo version umos campos que seguem são personalizados version, section number, program number.
@@ -1389,8 +1371,24 @@ TODO Referências!!!
 %\lipsum[31]
 
 % ---
-%\chapter{Fusce facilisis lacinia dui}
+\chapter{Tables from ISO/IEC13818-1}
 % ---
+
+\begin{figure}[!hb]
+\centering
+\caption{PSI tables names, PID numbers and contents description.}
+\includegraphics[width=1\linewidth]{figuras/tab_psi_tables_names_pids.png}
+\\Source and Copyright: \citeonline[2.4.4]{ISO}
+\label{fig:tab_psi_tables_names_pids}
+\end{figure}
+
+\begin{figure}[!hb]
+\centering
+\caption{PSI tables IDs.}
+\includegraphics[width=1\linewidth]{figuras/tab_psi_tables_ids.png}
+\\Source and Copyright: \citeonline[2.4.4.4]{ISO}
+\label{fig:tab_psi_tables_ids}
+\end{figure}
 
 %\lipsum[32]
 
