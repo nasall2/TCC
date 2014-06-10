@@ -688,6 +688,7 @@ The chosen profile to integrate the SBTVD is HE-AACv2. Additionally to the alrea
 TODO Explain what is LATM
 
 \chapter{ISO/IEC 13818-1 Standard}
+\label{iso13818}
 % ---
 The main objective of the ISO/IEC13818-1 standard is to describe the conversion of multiple bitstreams into one single stream carrying wrapped video and audio data, as well as additional information responsible to unwrap the streams. Similarly to other ISO/IEC standards, the text only specifies the decoding/demultiplexing side of the transmission chain, leaving the architectures of encoding/multiplexing stages to the manufacturers decision.
 
@@ -891,67 +892,67 @@ PTS(k) = ((system\_clock\_frequency * t_p(k)) DIV 300) \% 2^{33}\\
 
 Program Specific Information(PSI) is a set of normative data useful to transmission, demultiplexing and presentation of audio, video and data streams. The PSI set is organized in tables, each with a specific function in the standard. The tables that carry information of the PIDs that carry the video and audio streams, called PAT (Program Association Table) and PMT (Table Mapping Program) are mandatory and their syntax is defined by the ISO/IEC13818-1 standard. The Network Information Table is also mandatory according to the same standard, but its syntax is not defined by ISO/IEC. There is another set of tables that are not mandatory according to ISO13818, but ABNT NBR15603 defines as mandatory, as will be seen in \autoref{}.
 
+Since programs may change of structure during transmission, for example a movie with multiple audio streams starts playout right after the local news with a single audio stream , PSI tables must be changed too. To inform the decoder whether a table been transmitted is valid at the moment or not, there are two fields in each section of the tables, the \textit{version\_number} and the \textit{current\_next\_indicator}.
+
+The Conditional Access Table must be present only if scrambling is employed. The Network Information Table is optional and its contents are not specified by ISO/IEC13818-1. The NIT used in SBTVD is defined by ABNT NBR15603.
+
 The ISO standard defines that the PSI tables must be sent in sections and that the sections can be segmented to fit the TS packets. Sections can not be longer than 1024 bytes, although in practice the number of bytes for the mandatory tables is very below that. There are several common fields to all PSI tables, they may vary of value but their syntax is the same:
 \begin{itemize}
 \item{The field \textit{table\_ID} has 8 bits and defines what is the table's type, according to \autoref{fig:tab_psi_tables_ids};}
 \item{The field \textit{section\_syntax\_indicator} is a 1-bit field which shall always be set to '1';}
 \item{The field \textit{section\_length} has 12 bits, the first most significant two shall be '00' and the other 10 bits are the length of the section, starting at the first bit after the length field and including the CRC;}
-\item{The field \textit{transport\_stream\_ID} has 16 bits, the first most significant two shall be '00' and the other 10 bits are the length of the section, starting at the first bit after the length field and including the CRC;}
-\item{The field \textit{version\_number} has 5 bits,}
-\item{The field \textit{current\_next\_indicator} has 1 bit,}
-\item{The field \textit{section\_number} has 8 bits,}
-\item{The field \textit{last\_section\_number} has 8 bits,}
+\item{The field \textit{version\_number} has 5 bits, and should be incremented by one every time any information in the respective table changes;}
+\item{The field \textit{current\_next\_indicator} has 1 bit, and identifies whether the respective table is valid at the moment of transmission or will be valid later;}
+\item{The field \textit{section\_number} has 8 bits, and is used to order long, multiple section, tables. In practice, tables usually fit in a single section and this value is set to \texttt{0x00}}
+\item{The field \textit{last\_section\_number} has 8 bits, and is used to inform which was the \textit{section\_number} of the previous transmitted section. In practice, since tables only fill one section, this field is set to \texttt{0x00}, too.}
 \end{itemize}
 
-A field at the beginning of the table ()  and section number field serves as a counter if the table is divided into several sections.
+TODO SDT has smth different in this common fields?
 
-TODO TODO The field version Umos fields that follow are customized version, section number, program number
+Descriptors are structures used to extend the definitions of services and their elements. All descriptors have the same format: they begin with an 8-bit tag value, then there is an 8-bit length field and variable length data bytes. The standard defines a considerable amount of descriptors, but not all of them are used in practical applications. A selection of the descriptors used in the project are presented in \autoref{descriptors}.
 
 %O PSI é o conjunto de informações especificas ao programa, ou \textit{Program Specific information}, em inglês, e serve para organizar as informações de transmissão, sincronismo, decodificação e apresentação dos fluxos de áudio, vídeo e dados. O PSI é organizado em forma de tabelas, cada uma com uma função específica no padrão. As tabelas que servem a indicar ao decodificador onde estão no TS os fluxos de vídeo e áudio, chamadas de PAT( Tabela de associação de programas) e PMT (Tabela de Mapeamento de Programas), são obrigatórias, Há ainda um conjunto grande de tabelas que servem a outros fins, e que não são obrigatórias segundo a ISO13818, mas que a ABNT NBR15603 define como obrigatórias.
 %A norma ISO define que as tabelas do PSI devem ser enviadas em seções e as seções podem ser segmentadas para caberem nos pacotes de TS. As seções não podem ter mais de 1024 bytes, embora na prática o número de bytes para uma tabela obrigatória fique bem abaixo. A sintaxe das tabelas é padronizada. Um campo no início da tabela (table\_ID) define qual o seu tipo (PAT,PMT, etc.) e o campo section number serve como um contador caso a tabela seja dividida em diversas seções. O campo version umos campos que seguem são personalizados version, section number, program number.
 
-\subsection{PAT}
+\subsection{Program Association Table}
 
-The Program Association Table (PAT) indicates the PID of the corresponding Program Map Table (PMT) for each service in the multiplexer. Technically, it links a \textit{program number}, which is the numeric identification of a service, to the PID of that program's PMT, the \textit{program map PID}. Also, it must contain the information for the Network Information Table (NIT). Figure \ref{fig:TSAnalyser_close_PAT}, that follows, shows the output of the MPEG TS Analyser when a PAT table section is analysed. The field \textit{table id} indicates 0x0, which is the PAT code. The pair \textit{program\_number} 0 and \textit{program\_map\_PID} 16 is unique and its presence indicates that the NIT table is present and is carried in the PID 16. It's unique because, according to the ISO standard, a program number 0 always indicates the NIT PID, and the NIT table shall always use the PID 16. The other pairs indicate that there are two programs in the transport stream, with program numbers 23104 and 23129. Each of these programs have their PMTs allocated in the PIDs 257 and 8136, respectively. In the PMT section, it will be seen that these values are considered. <<< TODO TODO
+The Program Association Table (PAT) indicates the PID of the corresponding Program Map Table (PMT) for each service in the multiplexer. It lists, for every program on the stream, its unique \textbf{program number} and the PID of that program's PMT, the \textbf{program map PID}. The PAT is assigned to a fixed PID of \texttt{0x0000}, so the decoder may look for this PID first and then find the PMT of each service in the PIDs pointed by the PAT. The field \textit{table\_ID}is always \texttt{0x00} for PAT. The field \textit{transport\_stream\_ID} has 16 bits and represents a unique ID to differentiate this Transport Stream from all streams in a network. In SBTVD, this value is calculated based on geographic position of the transmitter and the broadcaster's call signs \footnote{A call sign, is a unique designation for a transmitting station. In Brazil, the range assigned by ITU for broadcast stations is ZV-ZZ\cite{anatel}.}. Additionally to the common fields, this table also carry the following fields, in a loop, right after \textit{last\_section\_number}:
+
+\begin{itemize}
+\item{first a \textit{program\_number} field, with 16 bits, names the first program in the TS;}
+\item{ then a 13-bit field, \textit{program\_map\_PID} points the PID value of the corresponding PMT;}
+\item{if the \textit{program\_number} is \texttt{0x00}, instead of the above definition, ISO specifies that the PID pointed to is the one of the NIT, and the field is called \textit{network\_PID}.}
+\end{itemize}
+
+As an example, consider \autoref{fig:TSAnalyser_close_PAT}, that shows the display of a TS Analyser when a PAT table section is analysed. The field \textit{table id} indicates \texttt{0x00}, which is the PAT code according to \autoref{fig:tab_psi_tables_ids}. The pair \textit{program\_number} \texttt{0} and \textit{program\_map\_PID} \texttt{16} is unique and its presence indicates that the NIT table is present and is carried in the PID \texttt{16}. It's unique because, according to the ISO standard, a program number \texttt{0} always indicates the NIT PID, and the NIT table shall always use the PID \texttt{16}, \citeonline[2.4.4.3]{ISO}. The other pairs indicate that there are two programs in the transport stream, with program numbers \texttt{23104} and \texttt{23129}. Each of these programs have their PMTs allocated in the PIDs \texttt{257} and \texttt{8136}, respectively. In the \autoref{PMT}, it will be seen how these values are taken into account.
 
 \begin{figure}[!hb]
 \centering
 \caption{TS Analyser output showing a PAT Table.}
 \includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PAT.png}
-\\Source: Reproduction of the MPEG TS Analyser software.
+\\Source: Reproduction of the MPEG TS Analyser software, \cite{TS_analyser}.
 \label{fig:TSAnalyser_close_PAT}
 \end{figure}
 
-\subsection{PMT}
+\subsection{Program Map Table}
+\label{PMT}
 
-The Program Map Table (PMT) indicates the PID of the elementary streams corresponding to its service. Technicaly, it links a \textit{program number} to several \textit{elementary PIDs}. Each elementary stream must have a \textit{type} identification, which designate the nature of the stream, according to ISO13818, and defines roughly whether it is a video, audio or data stream. Table \ref{tab_ISOESTypes}, that follows, is an excerpt of the standardized types.
+One Transport Stream must have as many Program Map Tables as services. Each Program Map Table (PMT) in the TS indicates which PIDs contain the elementary streams corresponding to one service. It links a \textbf{program number} to several \textbf{elementary PIDs}. Each elementary stream must have a \textbf{type} identification, which designate the nature of the stream, according to ISO13818-1, and defines roughly whether it is a video, audio or data stream. \autoref{tab_ISOESTypes} is an excerpt of the standardized types. Apart from the common fields already presented, the PMT also has the following fields:
 
-\begin{table}[!htpd]
-\caption{Some Standardized Elementary Stream Types.}
-\begin{center}
-\begin{tabular}{|c|c|c|}
-\hline
-Decimal & Hex & Description \\
-Value & Value & \\
-\hline
-6 & 0x06 & ITU-T Rec. H.222 and ISO/IEC 13818-1 (MPEG-2 packetized data)\\
- & & privately defined (ie, DVB subtitles/VBI and AC-3)\\
- \hline
-17 & 0x11 & ISO/IEC 14496-3 (MPEG-4 LOAS multi-format framed audio)\\
- & & in a packetized stream \\
- \hline
-27 & 0x1B & ITU-T Rec. H.264 and ISO/IEC 14496-10 (lower bit-rate video)\\
- & & in a packetized stream \\
-\hline
-\end{tabular}
-\label{tab_ISOESTypes}
-\\Source: \cite{ISOESTypes}
-\end{center}
-\end{table}
+\begin{itemize}
+\item{a \textit{program\_number} field, with 16 bits, designates the program specified by this section;}
+\item{then a 13-bit field, the \textit{PCR\_PID} points the PID whose adaptation field contains the PCR that should be used to sync this service ;}
+\item{if the \textit{program\_number} is \texttt{0x00}, instead of the above definition, ISO specifies that the PID pointed to is the one of the NIT, and the field is called \textit{network\_PID}.}
+\item{The field \textit{program\_info\_length} has 12 bits, the first most significant two shall be '00' and the other 10 bits represent the length of the section descriptors, in bytes;}
+\item{the \textit{stream\_type} field has 8 bits, and as already discussed, should be filled with the standardized designation of a stream according to \autoref{tab_ISOESTypes};}
+\item{the \textit{elementary\_PID} field has 13 bits and make reference to the PID with the stream whose type is in \textit{stream\_type};}
+\item{the \textit{ES\_info\_length} has 12 bits, the first most significant two shall be '00' and the other 10 bits represent the length of the ES descriptors;}
+\item{what follows are a variable number of descriptors, whose syntax will be discussed in \autoref{descriptors}.}
+\end{itemize}
 
-Figure \ref{fig:TSAnalyser_close_PMT}, that follows, shows a snapshot of the analyser output for a PMT table. In the example, the \textit{program number} is 23104, the table ID corresponding to the PMT is 0x02 (as defined by ISO13818-1) and the PCR information is carried in the PID (PCR\_PID) 256d \footnote{The \textit{d} indicates a decimal number.}. Yet, from Picture \ref{fig:TSAnalyser_close_PMT_TS_Header}, it can be seen at the TS Header that the PID carying the PMT table is number 257, as indicated by the PAT table analysed before.
+Figure \ref{fig:TSAnalyser_close_PMT}, that follows, shows a snapshot of the analyser output for a PMT table. In the example, the \textit{program number} is \texttt{23104}, the table ID corresponding to the PMT is \texttt{0x02} (as defined by ISO13818-1) and the PCR information is carried in the PID (PCR\_PID) \texttt{256d} \footnote{The \textit{d} indicates a decimal number.}. Yet, from Picture \ref{fig:TSAnalyser_close_PMT_TS_Header}, it can be seen at the TS Header that the PID carrying the PMT table is number \texttt{257}, as indicated by the PAT table analysed before.
 
-By analyzing both Table \ref{tab_ISOESTypes} and Picture \ref{fig:TSAnalyser_close_PMT}, one may notice that the stream types and PIDs that come after the PCR information match: the ES with PID 273 is H.264 video and the ESs with PIDs 274 and 275 are AAC/LATM audio streams, which means that there are two audio streams. The stream with type 6d and PID 288 is the subtitle / closed captions stream. Later on this chapter the descriptors shown here will be discussed.
+By analysing both \autoref{tab_ISOESTypes} and \autoref{fig:TSAnalyser_close_PMT}, one may notice that the stream types and PIDs that come after the PCR information match: the ES with PID \texttt{273} is H.264 video and the ESs with PIDs \texttt{274} and \texttt{275} are AAC/LATM audio streams, which means that there are two audio streams. The stream with type \texttt{6d} and PID \texttt{288} is the subtitle / closed captions stream. Later on this chapter the descriptors shown here will be discussed.
 
 \begin{figure}[!hb]
 \centering
@@ -969,11 +970,53 @@ By analyzing both Table \ref{tab_ISOESTypes} and Picture \ref{fig:TSAnalyser_clo
 \label{fig:TSAnalyser_close_PMT_TS_Header}
 \end{figure}
 
-\subsection{NIT}
+\subsection{Further Considerations}
+
+Although ISO/IEC13818-1 defines other tables, such as the Conditional Access Table, these are not commonly used in free to air television broadcasting systems\cite{} and were left off the scope of the project.
+
+\chapter{ABNT NBR15603 Standard}
+\label{nbr15603}
+
+The ABNT NBR15603 standard is divided into three parts, each one describes a portion of the SBTVD Systems Layer. Most of the content is an adaptation of the original ISO/IEC13818-1 standard, and there is no reason to be reproduced, but some peculiarities are worth to be detailed. Also, some contents were defined based on the ARIB STD-B10. There is a set of tables not defined in MPEG2 Systems, among them the Network Information Table, that are mandatory in SBTVD. The PIDs that must be used to transmit the Tables are slightly different than what is defined on ISO/IEC13818-1. \autoref{fig:tab_psi_tables_names_pids_abnt} in \autoref{tables_abnt} shows the modified values. \autoref{fig:tab_psi_tables_ids_level_frequency} also in \autoref{tables_abnt} brings other two important information: first, the transmission level of each table, whether it is mandatory( \textit{obrigatório} means mandatory) or optional its transmission; and second the repetition rate of each table transmission, in units of repetitions per milliseconds. The following is a brief description of the mandatory tables that have not yet been discussed in \autoref{iso13818}.
+
+\subsection{Service Description Table}
+\label{SDT}
+The Service Description Table brings useful information to describe the services contained in the TS. Multiple SDTs can be transmitted, corresponding to different Transport Streams, but in practical broadcast implementations this feature is not used. Services information is coded into SDT in a loop. For every service, it carries flags signalling the presence of another mandatory table, the EIT, which is described in \autoref{EIT}, a \textit{running\_status} flag with 3 bits informs to the decoder if the service is currently running; and other flags as described in \citeonline[7.2.6.1]{NBR}.
+
+\subsection{Network Information Table}
+\label{NIT}
+The Network Information Table carries information about the physical organization of the network, such as the network ID, and all the characteristics about the transmission channel, such as modulation method, frequency and channels. Most of the useful information of the NIT is carried in descriptors, discussed in \autoref{nit_descriptors}. The fields in the NIT section apart from the common fields are the following:
+\begin{itemize}
+\item{\textit{network\_ID} field, with 16 bits, contains a unique network identification, calculated from the broadcaster call sign;}
+\item{\textit{network\_descriptors\_length} contains the byte number of all the network descriptors;}
+\item{\textit{transport\_stream\_loop\_length} contains the byte number of all the transport stream loop descriptors;}
+\item{\textit{transport\_stream\_ID} contains the unique TS ID, the same that is in PAT;}
+\item{\textit{original\_network\_ID}  contains the same value of \textit{network\_ID} field;}
+\item{\textit{transport\_descriptors\_length} contains the byte number of all the transport descriptors.}
+\end{itemize}
 
 
+\subsection{Time Offset Table}
+\label{TOT}
+TODO
 
-An example of an hypothetical decoder start-up operation is shown in \autoref{fig:funcionamento_inicial_decoder}. TODO Utility of retransmission of PSI tables from time to time 
+\subsection{Event Information Table}
+\label{EIT}
+TODO
+
+\section{Program and System Descriptors}
+\label{descriptors}
+TODO 
+
+\subsection{NIT Descriptors}
+\label{nit_descriptors}
+TODO
+
+\subsection{SDT Descriptors}
+\label{nit_descriptors}
+TODO
+
+An example of an hypothetical decoder start-up operation is shown in \autoref{fig:funcionamento_inicial_decoder}.
 
 \begin{figure}[!hb]
 \centering
@@ -983,28 +1026,24 @@ An example of an hypothetical decoder start-up operation is shown in \autoref{fi
 \label{fig:funcionamento_inicial_decoder}
 \end{figure}
 
-TODO What are the descriptors??
 
+\chapter{Current Structure available in the Lab}
 
-\chapter{Current Structure installed in the Lab}
+A Small Digital TV Station is currently set up at the Laboratory. It is an EiTV Playout Laboratory, as described in detail by the manufacturer \cite{eitv}, and comprises the PSI/SI server, the multiplexer, the modulator and the transmitter. It is a commercial solution, that meets the technical requirements of the SBTVD but its source code is not open to contribution. As inputs, one may supply one or more single-service TS streams as binary files containing video and audio ESs and fill data to be added to the PSI and SI tables. As output, the multiplexer produces either a single service or a multi service stream, which is sent in real-time to the modulator and the transmitter. When a TS file reaches its end, the multiplexer wraps around the file and repeats it. It does not allow input TS files to contain multiple services, so to broadcast a multi-service stream one may only use the internal multiplexer. This solution is not adapted to the project, since it does not allow multiple services in the same TS.
 
-A Small Digital TV Station is avaliable at the Laboratory. It is an EiTV Playout Laboratory, as described in detail by \cite{eitv}, and comprises the PSI/SI server, the multiplexer, the modulator and the transmitter. It is a commercial solution, that meets the technical requirements of the SBTVD but its source code is not open to contribution. As inputs, one must supply one or multiple single-service TS streams as files (containing video and audio ESs), and fill data to be added to the PSI and SI tables. As output, the multiplexer produces either a single service or a multi service stream, which is sent in real-time to the modulator and the transmitter. When a TS file reaches its end, the multiplexer wraps around the file and repeats it. It does not allow input TS files to contain multiple services, so to broadcast a multi-service stream one may only use the internal multiplexer.
+There is also a Dektec DTA-115 PCI modulator board Installed in a workstation. A complete description of the board is available in the manufacturer's website \cite{dektec}. This device is much more adapted to the project goals, since it accepts to receive a multi-service stream and performs only the modulation and transmission stages on the chain. The board is being used in the project with a TS binary file as its input. When it reaches the end of the file, it wraps around and repeat the stream.
 
-There is also a Dektec DTA-115 PCI modulator board Installed in a workstation. A complete description of the board is available in \cite{dektec}. This device is much more adapted to the project goals, since it accepts to receive a multi-service stream and does only the modulation and transmission stages. As it is being used in the project, its input is a TS binary file. When is reaches the end of the file, it wraps around and repeat the stream.
-
-The scope of operation of each device described here can be distinguished in the \autoref{fig:scope_eitv_dektec}, which is an overlay on top of the diagram shown in \autoref{fig:diagrama_blocos_tvd}. In fact, the EiTV Playout Lab solution contains a modulator board similar to the Dektec DTA-115, as can be seen on its rear panel.
+The scope of operation of each device described here in the broadcast system can be distinguished in the \autoref{fig:scope_eitv_dektec}, which is an overlay on top of the diagram shown in \autoref{fig:diagrama_blocos_tvd}. In fact, the EiTV Playout Lab solution contains a modulator board similar to the Dektec DTA-115, as can be seen on its rear panel.
 
 \begin{figure}[!hb]
 \centering
-\caption{Scope of the two devices available in the Laboratory.}
+\caption{Scope of orperation of the two devices available in the Laboratory.}
 \includegraphics[width=1\linewidth]{figuras/scope_eitv_dektec.png}
 \\Source: The author.
 \label{fig:scope_eitv_dektec}
 \end{figure}
 
 \chapter{Available Solutions and Limitations}
-
-
 
 A quick search on a search engine for the keywords \textit{MPEG2 TS multiplexer} returns a long list of commercial solutions for multiplexing media files of most different formats in MPEG2 standard. The commercial solutions are usually associated with dedicated hardware, such as the solution presented by \cite{harris}, which are targeted for broadcasters and are expensive, of the order of a few thousand dollars. The main customers of these solutions are television broadcasters, producing live content and need low latency for signal encoding. These devices operate in real time, receiving streams of video, audio and data across multiple ASI interfaces and delivering output in a multiplexed stream in MPEG2 standard. The free solutions are \ textit {} software compatible with Windows and Linux platforms, mostly. Some have graphics and pattern to aid its use by users unfamiliar with the standard interface configurations. The main difference is that the goal is not the user of the system in real time, so that the specification for the processing and memory of personal computers are usually sufficient to run the tools. The input and output interfaces are commonly files that store binary data streams in a sequential manner.
 
@@ -1080,7 +1119,15 @@ Even though FFMPEG doesn't provide native support for multiple MPEG services, it
 
 \chapter{Architecture of the chosen solution}
 
-FFMPEG is organized in the following structure: there are four executable applications that result from the package compilation: \textit{ffmpeg, ffprobe, ffplay} and \textit{ffserver}. These four applications run based on seven libraries that are shared among the applications, and can be also used outside FFMPEG via an API. The \textit{libavformat} library is responsible for the muxing and demuxing functionalities, and therefore includes a ISO/IEC 13818-1 compatible muxer.
+The source code for the entire application can be downloaded for free from the project website \cite{ffmpeg}. Once downloaded, what the developer encounters is a set of directories and files. In the root directory, there are many text files describing in detail the licences, the configuration, the compilation and the installation of the tool. FFMPEG is organized in the following structure: there are four executable applications that result from the package compilation and installation: \textit{ffmpeg, ffprobe, ffplay} and \textit{ffserver}. These four applications run based on seven libraries that are shared among the applications, and can be also used outside FFMPEG via a public API. The libraries handle the functionalities of the tool, which are basically encoding, decoding, filtering, multiplexing and demultiplexing media streams. The \textit{libavformat} library is responsible for the multiplexing functionalities, it includes a ISO/IEC 13818-1 compatible multiplexer. What follows is a detailed description of the tool, at source-code level. All the code is in C programming language, unless otherwise noted. References for the C language notations used here are widely available on the Internet \cite{cpp_reference} or on books \cite{ritchie}.
+
+Once the user calls \textit{ffmpeg} with a set of input files, options and an output file, the first step it does is to parse the parameters and initialize the structures that carry streams and system information. The main libavformat structure used for both multiplexing and demultiplexing is \texttt{AVFormatContext}, which exports all information about the file being written (or read, when demultiplexing). When multiplexing, the most important variable this structure carries is an \texttt{AVOutputFormat} pointer to the output format handler. It also contains an array of \texttt{AVStreams}, all the streams identified during parsing step. Any libavformat multiplexer accepts a set of options, which can be passed as command-line arguments and are checked against a set of preset values during parsing step.
+
+While parsing the output file name, if it identifies an \textit{.ts} extension, the MPEG2 multiplexer inside the \textit{libavformat} library  is assigned to handle the output. 
+
+Even if an application could be developed using the functions in the public API, the development of the tool is made with object-oriented programming concepts, in a way that interactions between modules are easily understood even for a first-time reader of the code.
+
+Exploring the libavformat folder, one finds the \textit{mpegtsenc.c} file. Here lies the source code for most of the multiplexer functions. 
 
 The main MPEG2 muxer structure is \textit{MpegTSWrite}, which has a excerpt presented in \ref{tab_MpegTSWrite}. The structure contains many control variables, as well as the PSI tables PAT and SDT as \textit{MpegTSSection} structs, a dynamic array \textit{services} and a counter \textit{nb\_services} with respect to the services contained in the TS, the output muxing rate \( \textit{mux\_rate} \) and the PIDs for tables and elementary streams \( \textit{service\_id} and \textit{pmt\_start\_pid} \) .
 
@@ -1372,12 +1419,13 @@ TODO Referências!!!
 
 % ---
 \chapter{Tables from ISO/IEC13818-1}
+\label{tables_iso}
 % ---
 
 \begin{figure}[!hb]
 \centering
 \caption{PSI tables names, PID numbers and contents description.}
-\includegraphics[width=1\linewidth]{figuras/tab_psi_tables_names_pids.png}
+\includegraphics[width=0.7\linewidth]{figuras/tab_psi_tables_names_pids.png}
 \\Source and Copyright: \citeonline[2.4.4]{ISO}
 \label{fig:tab_psi_tables_names_pids}
 \end{figure}
@@ -1385,12 +1433,56 @@ TODO Referências!!!
 \begin{figure}[!hb]
 \centering
 \caption{PSI tables IDs.}
-\includegraphics[width=1\linewidth]{figuras/tab_psi_tables_ids.png}
+\includegraphics[width=0.7\linewidth]{figuras/tab_psi_tables_ids.png}
 \\Source and Copyright: \citeonline[2.4.4.4]{ISO}
 \label{fig:tab_psi_tables_ids}
 \end{figure}
 
+\begin{table}[!htpd]
+\caption{Some Standardized Elementary Stream Types.}
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+Decimal & Hex & Description \\
+Value & Value & \\
+\hline
+6 & 0x06 & ITU-T Rec. H.222 and ISO/IEC 13818-1 (MPEG-2 packetized data)\\
+ & & privately defined (ie, DVB subtitles/VBI and AC-3)\\
+ \hline
+17 & 0x11 & ISO/IEC 14496-3 (MPEG-4 LOAS multi-format framed audio)\\
+ & & in a packetized stream \\
+ \hline
+27 & 0x1B & ITU-T Rec. H.264 and ISO/IEC 14496-10 (lower bit-rate video)\\
+ & & in a packetized stream \\
+\hline
+\end{tabular}
+\label{tab_ISOESTypes}
+\\Source: \cite[2.4.4.9]{ISO}
+\end{center}
+\end{table}
+
 %\lipsum[32]
+
+\chapter{Tables from ABNT NBR15603}
+\label{tables_abnt}
+
+\begin{figure}[!hb]
+\centering
+\caption{PSI tables PIDs according to SBTVD standard.}
+\includegraphics[width=0.7\linewidth]{figuras/tab_psi_tables_names_pids_abnt.png}
+\\Source and Copyright: \citeonline[Part 2 - 7.1.4]{NBR}
+\label{fig:tab_psi_tables_names_pids_abnt}
+\end{figure}
+
+\begin{figure}[!hb]
+\centering
+\caption{PSI tables IDs according to SBTVD standard.}
+\includegraphics[width=0.7\linewidth]{figuras/tab_psi_tables_ids_level_frequency_abnt.png}
+\\Source and Copyright: \citeonline[Part 2 - 7.1.4]{NBR}
+\label{fig:tab_psi_tables_ids_level_frequency}
+\end{figure}
+
+
 
 \end{anexosenv}
 
