@@ -59,6 +59,7 @@
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
+\usepackage{listings} 			% para melhorias de justificação
 % ---
 		
 % ---
@@ -157,6 +158,22 @@ da Universidade Federal do Rio Grande do Sul.}
 % ---
 \makeindex
 % ---
+
+\lstset{
+	basicstyle=\footnotesize\ttfamily,
+	%framextopmargin=50pt,
+	%frame=lrtb
+    language=C,
+    frame=single,
+    tabsize=2,
+    showspaces=false,
+    showstringspaces=false,
+    keywordstyle=\color{blue},
+    %morekeywords={QStringList,QDate,QString,QIODevice},
+    commentstyle=\color{CadetBlue},
+    %caption={Zistenie, či sme v daný deň, už záznam o rýchlosti uložili},
+    breaklines=true
+	}
 
 % ----
 % Início do documento
@@ -1011,6 +1028,7 @@ TODO
 \subsection{NIT Descriptors}
 \label{nit_descriptors}
 TODO
+TODO cálculo dos valores de area code, network ID
 
 \subsection{SDT Descriptors}
 \label{nit_descriptors}
@@ -1117,124 +1135,109 @@ Even though FFMPEG doesn't provide native support for multiple MPEG services, it
 \end{itemize}
 
 
-\chapter{Architecture of the chosen solution}
+\chapter{Development of the tool}
 
-The source code for the entire application can be downloaded for free from the project website \cite{ffmpeg}. Once downloaded, what the developer encounters is a set of directories and files. In the root directory, there are many text files describing in detail the licences, the configuration, the compilation and the installation of the tool. FFMPEG is organized in the following structure: there are four executable applications that result from the package compilation and installation: \textit{ffmpeg, ffprobe, ffplay} and \textit{ffserver}. These four applications run based on seven libraries that are shared among the applications, and can be also used outside FFMPEG via a public API. The libraries handle the functionalities of the tool, which are basically encoding, decoding, filtering, multiplexing and demultiplexing media streams. The \textit{libavformat} library is responsible for the multiplexing functionalities, it includes a ISO/IEC 13818-1 compatible multiplexer. What follows is a detailed description of the tool, at source-code level. All the code is in C programming language, unless otherwise noted. References for the C language notations used here are widely available on the Internet \cite{cpp_reference} or on books \cite{ritchie}.
+\section{Introduction}
 
-Once the user calls \textit{ffmpeg} with a set of input files, options and an output file, the first step it does is to parse the parameters and initialize the structures that carry streams and system information. The main libavformat structure used for both multiplexing and demultiplexing is \texttt{AVFormatContext}, which exports all information about the file being written (or read, when demultiplexing). When multiplexing, the most important variable this structure carries is an \texttt{AVOutputFormat} pointer to the output format handler. It also contains an array of \texttt{AVStreams}, all the streams identified during parsing step. Any libavformat multiplexer accepts a set of options, which can be passed as command-line arguments and are checked against a set of preset values during parsing step.
+The source code for the entire application can be downloaded for free from the project website \cite{ffmpeg}. Once downloaded, what the developer encounters is a set of directories and files. In the root directory, there are many text files describing in detail the licences, the configuration, the compilation and the installation of the tool. FFMPEG is organized in the following structure: there are four executable applications that result from the package compilation and installation: \textit{ffmpeg, ffprobe, ffplay} and \textit{ffserver}. These four applications run based on seven libraries that are shared among the applications, and can be also used outside FFMPEG via a public API. The libraries handle the functionalities of the tool, which are basically encoding, decoding, filtering, multiplexing and demultiplexing media streams. The \textit{libavformat} library is responsible for the multiplexing functionalities, it includes a ISO/IEC 13818-1 compatible multiplexer. Even if an application could be developed using the functions in the public API, the development of the original tool is made with object-oriented programming concepts, in a way that interactions between modules are easily understood even for a first-time reader of the code. What follows is a detailed description of the tool, at source-code level. All the code is in C programming language, unless otherwise noted. References for the C language notations used here are widely available on the Internet \cite{cpp_reference} or on books \cite{ritchie}.
 
-While parsing the output file name, if it identifies an \textit{.ts} extension, the MPEG2 multiplexer inside the \textit{libavformat} library  is assigned to handle the output. 
+\section{The FFmpeg framework}
 
-Even if an application could be developed using the functions in the public API, the development of the tool is made with object-oriented programming concepts, in a way that interactions between modules are easily understood even for a first-time reader of the code.
+Once the user calls \textit{ffmpeg} with a set of input files, options and an output file, the first step it does is to parse the parameters and initialize the structures that contain streams and system information. The main \textit{libavformat} structure used for both multiplexing and demultiplexing is \texttt{AVFormatContext}. When multiplexing, the most important variable this structure carries is an \texttt{AVOutputFormat} pointer to the output format handler. It also contains an array of \texttt{AVStreams}, which contains all the input streams identified during parsing step. Any \textit{libavformat} multiplexer accepts a set of options, which can be passed as command-line arguments and are checked against a set of preset values during parsing step. While parsing the output file name, if \textit{ffmpeg} identifies a \textit{.ts} extension, the MPEG2 multiplexer inside \textit{libavformat} library is assigned to handle the output.
 
-Exploring the libavformat folder, one finds the \textit{mpegtsenc.c} file. Here lies the source code for most of the multiplexer functions. 
+The structures used by the multiplexer that represent the definitions on the standard are \texttt{MpegTSSection} for the tables, \texttt{MpegTSService} for the services, \texttt{MpegTSWrite} for the Transport Stream itself and \texttt{MpegTSWriteStream} for the streams.
 
-The main MPEG2 muxer structure is \textit{MpegTSWrite}, which has a excerpt presented in \ref{tab_MpegTSWrite}. The structure contains many control variables, as well as the PSI tables PAT and SDT as \textit{MpegTSSection} structs, a dynamic array \textit{services} and a counter \textit{nb\_services} with respect to the services contained in the TS, the output muxing rate \( \textit{mux\_rate} \) and the PIDs for tables and elementary streams \( \textit{service\_id} and \textit{pmt\_start\_pid} \) .
+\texttt{MpegTSSection} is the structure that represents one PSI or SI table section and holds information of the table's PID, the current continuity counter status and a pointer to the \texttt{AVFormatContext} structure in its \texttt{opaque} variable. This is quite a generic section, the customization for each of the PSI tables is done by the functions that write the sections to the stream, which will be commented further in this text.
 
-\begin{table}[!htpd]
-\label{tab_MpegTSWrite}
-\caption{ Excerpt of MpegTSWrite structure.}
-\begin{center}
-\begin{tabular}{|l|}
-\hline
-\\
-typedef struct MpegTSWrite \{\\
-...\\
-MpegTSSection pat;\\
-MpegTSSection sdt;\\
-MpegTSService **services;\\
-...\\
-int nb\_services;\\
-...\\
-int mux\_rate;\\
-...\\
-int service\_id;\\
-int pmt\_start\_pid;\\
-...\\
- \}MpegTSWrite;\\
- \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+\texttt{MpegTSService} represents a service, and contains a \texttt{MpegTSSection} for its Program Map Table, a service ID, the PCR PID and a pair of control variables to manage the service's PCR transmission rate.
 
-The next relevant structure to the development of this project is MpegTSSection, which is presented in Table \ref{tab_MpegTSSection} . This is the responsible for holding a generic table representation of what is described by ISO/IEC standard, with a PID, a continuity counter \(\textit{cc}\), a pointer to the function that writes in a TS packet the corresponding table and another pointer, \textit{opaque}, that directs to the general AVFormatContext structure. This is quite a general section, the customization for each of the PSI tables is done by the functions that write the sections to the stream, which will be commented further in this text.
+\texttt{MpegTSWriteStream} represents one elementary stream that is sent through the TS. It has a pointer to the corresponding service, the stream PID, a continuity counter, the stream's current PTS and DTS values and the stream raw payload itself.
 
-\begin{table}[!htpd]
-\label{tab_MpegTSSection}
-\caption{ Excerpt of MpegTSSection structure.}
-\begin{center}
-\begin{tabular}{|l|}
-\hline
-\\
-typedef struct MpegTSSection \{\\
-	int pid;\\
-	int cc;\\
-	void\(*write\_packet\)\(struct MpegTSSection *s, const uint8\_t *packet\);\\
-	void *opaque;\\
-\} MpegTSSection;\\
- \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+The main multiplexer structure is \textit{MpegTSWrite}, shown in \autoref{lst_MpegTSWrite}, that represents the Transport Stream itself. The structure contains the PSI tables PAT, NIT and SDT as three \textit{MpegTSSection} structures, a dynamic array of \textit{MpegTSServices} and many control variables, such as the counter \texttt{nb\_services} for the number of services contained in the TS, the desired constant multiplexing rate \texttt{mux\_rate} and a pair of variables to control the repeated transmission of each PSI table.
 
-What follows is the structure that organizes the information concerning each MPEG service in the transport stream. The \textit{MpegTSService} struct, presented in Table \ref{tab_MpegTSService} holds the following information: a pointer to the corresponding PMT, the service ID, the provider and service names, as character strings, and the PCR PID related to this service.
+Along with the control variables, the physical network information is included as well: the fields \texttt{transport\_stream\_id} and \texttt{original\_network\_id} are assigned values received from the command-line.
 
-\begin{table}[!htpd]
-\label{tab_MpegTSService}
-\caption{ Excerpt of MpegTSService structure.}
-\begin{center}
-\begin{tabular}{|l|}
-\hline
-\\
-typedef struct MpegTSService \{
-MpegTSSection pmt; \\
-int sid; \\
-char *name;\\
-char *provider\_name;\\
-int pcr\_pid;\\
-...\\
-\}MpegTSService;\\
- \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+Each command-line parameter passed to FFmpeg is parsed and must be validated before use. Each valid option is listed as one entry in a structure, an example is presented in \autoref{lst_input_option}. The first field is the option name, the second is a help text, the third is the position within a structure where it should be stored, then comes the variable type, the default value if it is not passed as argument, the minimum value, the maximum, and finally a internal definition of the option.
 
-The last of the selected MpegTS structures is \textit{MpegTSWriteStream}, which is formed by the information describing each of the elementary streams that will eventually be included in the services. The service that contains one stream is specified here via a pointer to a service structure, as one can see from Table \ref{tab_MpegTSWriteStream}. Along with the service, there are also the data specifying the stream PID and the current continuity counter value.
+\begin{lstlisting}[caption={Example of input option}, label=lst_input_option]
+{ "mpegts_transport_stream_id", "Set transport_stream_id field.", offsetof(MpegTSWrite, transport_stream_id), AV_OPT_TYPE_INT, {.i64 = 0x0001 }, 0x0001, 0xffff, AV_OPT_FLAG_ENCODING_PARAM}
+\end{lstlisting}
 
-\begin{table}[!htpd]
-\label{tab_MpegTSWriteStream}
-\caption{ Excerpt of MpegTSWriteStream structure.}
-\begin{center}
-\begin{tabular}{|l|}
-\hline
-\\
-typedef struct MpegTSWriteStream \{\\
-struct MpegTSService *service;\\
-int pid;\\
-int cc;\\
-...\\
-\}MpegTSWriteStream;\\
- \\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+\begin{lstlisting}[caption={Excerpt of MpegTSWrite structure}, label=lst_MpegTSWrite]
+typedef struct MpegTSWrite {
+...
+MpegTSSection pat;
+MpegTSSection sdt;
+MpegTSService **services;
+...
+int nb_services;
+...
+int mux_rate;
+...
+int service_id;
+int pmt_start_pid;
+...
+}MpegTSWrite;
+\end{lstlisting}
+%\hline
+%\end{tabular}
+%\end{center}
+%\end{table}
 
-By knowing the few information about FFMPEG muxer structures presented so far, one can already understand basically how the system works. A simple block diagram in Figure \ref{fig:diagrama_estruturas_ffmpeg} shows the relations between the presented structures, along with an example situation. Consider a digital television transport stream constituted by two services, with service IDs 1 and 2. The first service is formed by one video stream, with ID 101, and two audio streams, with IDs 111 and 112. The second service has one video stream, ID 201, and one audio stream, with ID 211. Each service has its own mapping table: for service 1 the table has a Table ID \(TID\) of 4001, and for service 2 the TID is 4002. Each program map table \(PMT\) links the service number to the stream numbers as defined by the standard. Finally, the program association table \(PAT\) links the available services 1 and 2 with their respective PMTs. To possibilitate the decoder to find these information within a transport stream, the PAT must have TID equal to 0, as can be noticed.
+\begin{lstlisting}[caption={Excerpt of MpegTSSection structure}, label=lst_MpegTSSection]
+typedef struct MpegTSSection {
+	int pid;
+	int cc;
+	void(*write_packet)(struct MpegTSSection *s, const uint8_t *packet);
+	void *opaque;
+} MpegTSSection;
+\end{lstlisting}
 
-\begin{figure}
-\centering
-\caption{Block diagram showing the relations between FFMPEG MPEG2 Muxer.}
-\includegraphics[width=1\linewidth]{figuras/diagrama_estruturas_ffmpeg.png}
-\\Source: the author.
-\label{fig:diagrama_estruturas_ffmpeg}
-\end{figure}
+\begin{lstlisting}[caption={Excerpt of MpegTSService structure}, label=lst_MpegTSService]
+typedef struct MpegTSService {
+MpegTSSection pmt; 
+int sid; 
+char *name;
+char *provider\_name;
+int pcr\_pid;
+...
+}MpegTSService;
+\end{lstlisting}
 
-This paragraph is a free adaptation of FFMPEG documentation for general muxing processes. The main functions related to the muxing process are avformat\_write\_header() for writing the TS stream header, av\_write\_frame() for writing the packets and av\_write\_trailer() for writting the stream end. After setting up the muxer environment, a call to the write\_header() function starts the transport stream output. After that, sucessive calls to write\_frame() and write\_section() fill in the output stream with video and audio streams or table sections, respectively. Finally, the stream is ended by calling write\_trailler().
+\begin{lstlisting}[caption={Excerpt of MpegTSWriteStream structure}, label=lst_MpegTSWriteStream]
+typedef struct MpegTSWriteStream {
+struct MpegTSService *service;
+int pid;
+int cc;
+...
+}MpegTSWriteStream;
+\end{lstlisting}
 
+% By knowing the few information about FFMPEG muxer structures presented so far, one can already understand basically how the system works. A simple block diagram in Figure \ref{fig:diagrama_estruturas_ffmpeg} shows the relations between the presented structures, along with an example situation. Consider a digital television transport stream constituted by two services, with service IDs 1 and 2. The first service is formed by one video stream, with ID 101, and two audio streams, with IDs 111 and 112. The second service has one video stream, ID 201, and one audio stream, with ID 211. Each service has its own mapping table: for service 1 the table has a Table ID \(TID\) of 4001, and for service 2 the TID is 4002. Each program map table \(PMT\) links the service number to the stream numbers as defined by the standard. Finally, the program association table \(PAT\) links the available services 1 and 2 with their respective PMTs. To possibilitate the decoder to find these information within a transport stream, the PAT must have TID equal to 0, as can be noticed.
+
+% \begin{figure}
+% \centering
+% \caption{Block diagram showing the relations between FFMPEG MPEG2 Muxer.}
+% \includegraphics[width=1\linewidth]{figuras/diagrama_estruturas_ffmpeg.png}
+% \\Source: the author.
+% \label{fig:diagrama_estruturas_ffmpeg}
+% \end{figure}
+
+The main functions related to the multiplexing process are \texttt{av\_write\_header()} for writing the TS stream header, \texttt{av\_write\_packet()} for writing the packets and \texttt{av\_write\_trailer()} for writting the stream tail. The list below describes the sequence of the calls to the functions:
+
+\begin{enumerate}
+	\item{A call to \texttt{av\_write\_header()} initializes the control variables;}
+	\item{as long as there is available data in the input streams, successive calls to \texttt{av\_write\_packet()} occur, each one writes one 188-byte TS packet in the output \textit{.ts} file. In its turn, \texttt{av\_write\_packet()} calls \texttt{mpegts\_write\_pes()} to handle the writing process of the current TS packet:}
+	\begin{enumerate}
+		\item {\label{itm:ret_si_info} \texttt{mpegts\_write\_pes()} calls  \texttt{retransmit\_si\_info()}, that outputs one PSI table section in the packet, if it's time;}
+		\item {\label{itm:dts_condition} \texttt{mpegts\_write\_pes()} loops among the streams and searches a stream with the current frame DTS within the time interval of the current PCR.}
+	\end{enumerate}
+	\item{when input streams are over, \texttt{av\_write\_end()} frees allocated memory and closes the files.}
+\end{enumerate}
+
+To decide if it's time, in \autoref{itm:ret_si_info}, \texttt{retransmit\_si\_info()} uses the control variables \texttt{\*\_packet\_count} and \texttt{\*\_packet\_period} of each table to control the transmission rates by incrementing the corresponding \texttt{packet\_count} each time the function is called and outputting the table only when the counter reaches \texttt{packet\_period};
+
+In \autoref{itm:dts_condition}, if \texttt{mpegts\_write\_pes()} finds a suitable PES packet, it fills a TS packet with data from this stream. If not, \texttt{mpegts\_write\_pes()} \texttt{mpegts\_insert\_pcr\_only()} is called to output only the necessary for a single PCR, without PES payload nor PSI tables, or \texttt{mpegts\_insert\_null\_packet()} is called to output an empty TS packet, full of stuffing bytes.
 
 % ----------------------------------------------------------
 % PARTE
@@ -1243,66 +1246,96 @@ This paragraph is a free adaptation of FFMPEG documentation for general muxing p
 % ----------------------------------------------------------
 
 % ---
-% primeiro capitulo de Resultados
+% development
 % ---
-\chapter{Project implementations}
-% ---
-
-% ---
-\section{Multiple services implementation}
+\chapter{Project implementation}
 % ---
 
-The first proposed modification to the original FFMPEG code is add multiple service support to the main program. For that objective, the first task was to find a way to give the muxer new information about how many services should be coded from the command-line interface. Fortunately, the application counts with a \textit{options} structure, which delivers to the muxer a group of pairs \textit{<option,value>}. The option \textit{final\_nb\_services} was created to guide the muxer to create the desired number of services. Through the existent interface, the user may provide multiple input files, with multiple audio/video streams, to form a single service, multiple stream output. By modifying the service assignment process, this implementation allows the user to create multiple services, multiple stream outputs.
-
-When calling FFMPEG, the user maps the input streams which shall be placed in each service by using the \textit{\-map} option. Each input stream is assigned an internal stream number by FFMPEG, and the muxer uses this data, combined to the newly added option, to alternately assign one stream to each service created with a modulus operation of the two information. Considering the example shown in Figure \ref{fig:diagrama_estruturas_ffmpeg}, the mapping should be done by placing first the two video streams, then the first audio stream corresponding to the first service, then the audio stream corresponding to the second service and finally the second audio stream corresponding to the first service.
-
-As can be seen on the code excerpt in Table \ref{tab_service_assignment}, once the number of services parameter is set from the command line, first the muxer loops to create services by calling mpegts\_add\_service() function. Along with the service creation, some fields of the new services are initialized, such as the proper table packets writing function, the global table context, and its continuity counter. When the services are added to the \textit{ts} context, they are appended to the end of a dynamic array of services (\textit{ts->services}). In a second moment, the muxer loops in the streams and assigns alternately one service to each stream. The assignment is done using the \textit{service} pointer field in the MpegTSWriteStream structure, presented before, here initialized as \textit{ts\_st}. The index for the service array is the modulus operation result between the current stream and the total number of services.
-
-TODO !!!
-
-\begin{table}[!htpd]
-\label{tab_service_assignment}
-\caption{ Excerpt of service assignment algorithm.}
-\begin{center}
-\begin{tabular}{|l|}
-\hline
-\\
-...\\
-for(i = 0 ; i < ts -> final\_nb\_services; i++) \{\\
-service = mpegts\_add\_service(ts, ts->service\_id+i, provider\_name, service\_name);\\
-service->pmt.write\_packet = section\_write\_packet;\\
-service->pmt.opaque = s;\\
-service->pmt.cc = 15;\\
-\}\\
-...\\
-for(i = 0;i < s->nb\_streams; i++) \{\\
-...\\
-ts\_st->service = ts->services[i \% ts->final\_nb\_services] ;\\
-...
-\}\\
-\\
-\hline
-\end{tabular}
-\end{center}
-\end{table}
+\section{New input options}
 
 % ---
-%\section{Desempenho em velocidade de multiplexação}
+\section{Multiple services}
 % ---
 
-%Para quantificar o tempo que o software desenvolvido leva para tratar fluxos de vídeo e áudio de tamanhos específicos, utilizou-se o comando \texttt{time}.
+\subsection{Introduction}
 
-%\lipsum[21-22]
+The first proposed modification to the original FFMPEG code is to add multiple service support. The first task was to find a way to give to the multiplexer new information about how many services should be generated. This was done by creating a new command-line parameter: the option \texttt{mpegts\_transmission\_profile}. Two profiles were previewed:
+\begin{itemize}
+\item profile number '1' was designed with two services: one Full-segment service with a high-definition video stream and an audio stream and one 1-Segment service with a low-definition video stream and another audio stream;
+\item profile number '2' was designed with a variable number of services: up to four services, each with a standard-definition video stream and an audio stream; and one  1-Segment service with a low-definition video stream and another audio stream.
+\end{itemize}
+
+Further information on the Full-Segment and 1-Segment services are provided in \autoref{modulation}.
+
+\subsection{Profile 1: one Full-seg service and one 1-Seg service}
+
+First the service ID for the HDTV service is calculated, based on the definitions in \autoref{calculo_sid}: the network ID is the \texttt{ts->onid} variable; the service type is hard-coded as \texttt{'00'}, as well as the program number (\texttt{0x0}). Then, one \texttt{MpegTSService} is added to the services array in \texttt{MpegTSWrite} with the existent \texttt{mpegts\_add\_service()} function. The parameters to this function are the recent calculated HD service ID, the provider name and the hard-coded service name. The process is repeated for the 1-Segment service, except that the service type is coded as \texttt{'11'} and the program number as \texttt{0x1}. Finally, the variable \texttt{ts->final\_nb\_services} is set as \texttt{'2'}.
+
+\begin{lstlisting}[caption={}, label=[]
+    provider_name = provider ? provider->value : DEFAULT_PROVIDER_NAME;
+	calculated_HD_service_ID = 0x0000;
+	calculated_HD_service_ID = ( ts->onid & 0x7FF ) << 5 | 0x0 << 3 | 0x0;
+	service = mpegts_add_service(ts, calculated_HD_service_ID, provider_name, "SVC HD Full Seg");
+	service->pmt.write_packet = section_write_packet;
+	service->pmt.opaque = s;
+	service->pmt.cc = 15;
+
+	calculated_LD_service_ID = 0x0000;
+	calculated_LD_service_ID = ( ts->onid & 0x7FF ) << 5 | 0x3 << 3 | 0x1;
+	service = mpegts_add_service(ts, calculated_LD_service_ID, provider_name, "SVC LD 1-Seg");
+	service->pmt.write_packet = section_write_packet;
+	service->pmt.opaque = s;
+	service->pmt.cc = 15;
+	
+	ts->final_nb_services = 2;
+\end{lstlisting}
+
+\subsection{Profile 2: standard definition services and one 1-Seg service}
+
+Profile two is not yet implemented, but the guidelines are the same as for profile 1. Instead of setting the variable \texttt{ts->final\_nb\_services} as 2, the value is left free for the user to choose and instead of creating only two services, a loop iterates the service creation until a counter reaches the total number of services.
+
+\subsection{Stream Mapping}
+
+When calling FFmpeg, the user defines the order that input streams shall be placed in the \texttt{AVFormatContext} structure with the \texttt{-map} option. This same sequence is used in the streams loops throughout the code, and defines also the order of assignment of streams PIDs. The first input stream receives the value in \texttt{mpegts\_pmt\_start\_pid} and the value is incremented by one for each new stream. The default value for \texttt{mpegts\_pmt\_start\_pid} is \texttt{0x100}.
+
+As already explained, streams hold the information of which service contains them with a pointer to one \texttt{MpegTSService} instance within the \texttt{MpegTSWriteStream} structure. Before the modifications of this project, since there was only one service, all the streams belonged to it. Now, the multiplexer iterates through all the streams and does a modulus operation with the stream index and the value of \texttt{mpegts\_final\_nb\_services} to assign alternately one stream to each service, as shown in \autoref{lst_stream_assignment}. \texttt{ts\_st} is the stream structure, \texttt{i} is the iteration variable.
+
+\begin{lstlisting}[caption={Assigning streams to services.}, label=[lst_stream_assignment]
+ts_st->service = ts->services[i \% ts->final_nb_services];
+\end{lstlisting}
+
+Considering the example shown in Figure \ref{fig:diagrama_estruturas_ffmpeg}, the mapping should be done by placing first the two video streams, then the first audio stream corresponding to the first service, then the audio stream corresponding to the second service and finally the second audio stream corresponding to the first service.
+
+\section{PSI tables}
+
+\subsection{Introduction}
+mpegts\_write\_section1()
+packet periods and counts, macros
+listar NIT, SDT and TOT
+
+\subsection{Descriptors}
+protótipo para facilitar a replicação
+como calcula o length, com ponteiros
+falar das input parameters adicionados para possibilitar a variação dos descritores
+
+separar as tabelas em subseções se tiverem especificidades
+
 
 %% ---
-%% segundo capitulo de Resultados
+%%  capitulo de Resultados
 %% ---
-%\chapter{Nam sed tellus sit amet lectus urna ullamcorper tristique interdum
-%elementum}
+\chapter{Tests and Results}
 %% ---
 %
 %% ---
-%\section{Pellentesque sit amet pede ac sem eleifend consectetuer}
+\section{Test environment}
+dispositivos de visualização(tv, celular, pentv, gps)
+captura de streams do ar com o pen tv, via tzap e dvbsnoop
+	com o tzap da pra saber se houve erros nao corrigíveis na recepção
+transmissão de streams com a eitv e com a dektec
+	com a eitv o objetivo era testar o sincronismo, testes nas primeiras etapas do projeto, validação de conceitos e validação da ferramenta ffmpeg como codificador de vídeo e áudio com sincronismo(uma das premissas do projeto!) embora o encoder seja responsavel por gerar os PTS e DTS, era preciso garantir que o multiplexador estava encapsulando corretamente os time stamps
+	com a dektec o objetivo era testar o conjunto todo
+
 %% ---
 %
 %\lipsum[24]
@@ -1317,8 +1350,8 @@ ts\_st->service = ts->services[i \% ts->final\_nb\_services] ;\\
 % ---
 % Conclusão (outro exemplo de capítulo sem numeração e presente no sumário)
 % ---
-\chapter[Conclusions]{Conclusions}
-%\addcontentsline{toc}{chapter}{Conclusão}
+\chapter*[Conclusions and Future Perspectives]{Conclusions and Future Perspectives}
+\addcontentsline{toc}{chapter}{Conclusions and Future Perspectives}
 % ---
 
 %\lipsum[31-33]
@@ -1382,7 +1415,7 @@ TODO Referências!!!
 \begin{figure}
 \centering
 \caption{ISDB-T channel, segment and program allocation.}
-\includegraphics[width=0.6\linewidth]{figuras/ISDB-T_CH_Seg_Prog_allocation.png}
+\includegraphics[width=0.8\linewidth]{figuras/ISDB-T_CH_Seg_Prog_allocation.png}
 \\Source: .
 \label{fig:ISDB-T_CH_Seg_Prog_allocation}
 \end{figure}
@@ -1461,7 +1494,6 @@ Value & Value & \\
 \end{center}
 \end{table}
 
-%\lipsum[32]
 
 \chapter{Tables from ABNT NBR15603}
 \label{tables_abnt}
