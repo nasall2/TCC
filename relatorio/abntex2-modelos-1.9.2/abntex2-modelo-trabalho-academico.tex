@@ -584,45 +584,6 @@ In \autoref{codecs}, a brief description of the encoders chosen to integrate the
 
 %% FIM DA INTRODUÇÃO ESCRITA PARA O TCC
 
-%Este documento e seu código-fonte são exemplos de referência de uso da classe
-%\textsf{abntex2} e do pacote \textsf{abntex2cite}. O documento 
-%exemplifica a elaboração de trabalho acadêmico (tese, dissertação e outros do
-%gênero) produzido conforme a ABNT NBR 14724:2011 \emph{Informação e documentação
-%- Trabalhos acadêmicos - Apresentação}.
-%
-%A expressão ``Modelo Canônico'' é utilizada para indicar que \abnTeX\ não é
-%modelo específico de nenhuma universidade ou instituição, mas que implementa tão
-%somente os requisitos das normas da ABNT. Uma lista completa das normas
-%observadas pelo \abnTeX\ é apresentada em \citeonline{abntex2classe}.
-%
-%Sinta-se convidado a participar do projeto \abnTeX! Acesse o site do projeto em
-%\url{http://abntex2.googlecode.com/}. Também fique livre para conhecer,
-%estudar, alterar e redistribuir o trabalho do \abnTeX, desde que os arquivos
-%modificados tenham seus nomes alterados e que os créditos sejam dados aos
-%autores originais, nos termos da ``The \LaTeX\ Project Public
-%License''\footnote{\url{http://www.latex-project.org/lppl.txt}}.
-%
-%Encorajamos que sejam realizadas customizações específicas deste exemplo para
-%universidades e outras instituições --- como capas, folha de aprovação, etc.
-%Porém, recomendamos que ao invés de se alterar diretamente os arquivos do
-%\abnTeX, distribua-se arquivos com as respectivas customizações.
-%Isso permite que futuras versões do \abnTeX~não se tornem automaticamente
-%incompatíveis com as customizações promovidas. Consulte
-%\citeonline{abntex2-wiki-como-customizar} par mais informações.
-%
-%Este documento deve ser utilizado como complemento dos manuais do \abnTeX\ 
-%\cite{abntex2classe,abntex2cite,abntex2cite-alf} e da classe \textsf{memoir}
-%\cite{memoir}. 
-%
-%Esperamos, sinceramente, que o \abnTeX\ aprimore a qualidade do trabalho que
-%você produzirá, de modo que o principal esforço seja concentrado no principal:
-%na contribuição científica.
-%
-%Equipe \abnTeX 
-%
-%Lauro César Araujo
-
-
 % ----------------------------------------------------------
 % PARTE
 % ----------------------------------------------------------
@@ -717,6 +678,7 @@ ES, Serviço, PID
 
 % ---
 \section{Transport Stream Header}
+\label{ts_header}
 % ---
 The main structure of the MPEG2 Transport Stream is a packet of constant size. The stream is made of many packets concatenated. \autoref{fig:TS_iso13818} shows the basic elements that are present in one packet, the value under each field is its length in bits. From the picture, it can be seen that a packet is roughly formed with 188 bytes of data. The mandatory header has 4 bytes, starts at the \textit{sync byte} and goes up to the \textit{continuity counter}. The packet payload may also contain the \textit{Adaptation Field}, a sort of header extension, with additional data that helps to decode and present the streams in sync. Apart from the 4 mandatory bytes for the header, the other 184 bytes may be filled with combinations of the following content: the Adaptation Field, PES data or information tables. The Adaptation Field presence is optional, and it is commonly used to carry sync data and to fill empty space in the last TS packets from one PES packet with stuffing bits.
 
@@ -906,6 +868,7 @@ PTS(k) = ((system\_clock\_frequency * t_p(k)) DIV 300) \% 2^{33}\\
 % ---
 
 \section{Program Specific Information}
+\label{iso_psi}
 
 Program Specific Information(PSI) is a set of normative data useful to transmission, demultiplexing and presentation of audio, video and data streams. The PSI set is organized in tables, each with a specific function in the standard. The tables that carry information of the PIDs that carry the video and audio streams, called PAT (Program Association Table) and PMT (Table Mapping Program) are mandatory and their syntax is defined by the ISO/IEC13818-1 standard. The Network Information Table is also mandatory according to the same standard, but its syntax is not defined by ISO/IEC. There is another set of tables that are not mandatory according to ISO13818, but ABNT NBR15603 defines as mandatory, as will be seen in \autoref{}.
 
@@ -994,7 +957,12 @@ Although ISO/IEC13818-1 defines other tables, such as the Conditional Access Tab
 \chapter{ABNT NBR15603 Standard}
 \label{nbr15603}
 
-The ABNT NBR15603 standard is divided into three parts, each one describes a portion of the SBTVD Systems Layer. Most of the content is an adaptation of the original ISO/IEC13818-1 standard, and there is no reason to be reproduced, but some peculiarities are worth to be detailed. Also, some contents were defined based on the ARIB STD-B10. There is a set of tables not defined in MPEG2 Systems, among them the Network Information Table, that are mandatory in SBTVD. The PIDs that must be used to transmit the Tables are slightly different than what is defined on ISO/IEC13818-1. \autoref{fig:tab_psi_tables_names_pids_abnt} in \autoref{tables_abnt} shows the modified values. \autoref{fig:tab_psi_tables_ids_level_frequency} also in \autoref{tables_abnt} brings other two important information: first, the transmission level of each table, whether it is mandatory( \textit{obrigatório} means mandatory) or optional its transmission; and second the repetition rate of each table transmission, in units of repetitions per milliseconds. The following is a brief description of the mandatory tables that have not yet been discussed in \autoref{iso13818}.
+\section{Introduction}
+
+The ABNT NBR15603 standard is divided into three parts, each one describes a portion of the SBTVD Systems Layer. Most of the content is an adaptation of the original ISO/IEC13818-1 standard, and there is no reason to be reproduced, but some peculiarities are worth to be detailed. Also, some contents were defined based on the ARIB STD-B10. There is a set of tables not defined in MPEG2 Systems, among them the Network Information Table, that are mandatory in SBTVD. The PIDs that must be used to transmit the Tables are slightly different than what is defined on ISO/IEC13818-1. \autoref{fig:tab_psi_tables_names_pids_abnt} in \autoref{tables_abnt} shows the modified values. \autoref{fig:tab_psi_tables_ids_level_frequency} also in \autoref{tables_abnt} brings other two important information: first, the transmission level of each table, whether its transmission is mandatory( \textit{obrigatório} means mandatory) or optional; and the repetition rate of each table in the stream, in units of repetitions per milliseconds. The tables whose transmission is mandatory are PAT, PMT, NIT, SDT, TOT, EIT and CAT(if the transmission is scrambled\footnote{Scrambling methods are used to prevent receptors without permission to open certain streams from viewing them, usually used in paid television systems and not in broadcast systems.}) ;  The following is a brief description of the mandatory tables that have not yet been discussed in \autoref{iso13818}.
+
+\section{Program Specific Information}
+\label{abnt_psi}
 
 \subsection{Service Description Table}
 \label{SDT}
@@ -1012,7 +980,6 @@ The Network Information Table carries information about the physical organizatio
 \item{\textit{transport\_descriptors\_length} contains the byte number of all the transport descriptors.}
 \end{itemize}
 
-
 \subsection{Time Offset Table}
 \label{TOT}
 TODO
@@ -1023,11 +990,39 @@ TODO
 
 \section{Program and System Descriptors}
 \label{descriptors}
-TODO 
+Descriptors are structures of data with a standardized syntax that increase the flexibility of tables to carry specific information related to the broadcasting system, the streams contents and program guides, for example. Their syntax always starts with a \textit{tag} byte, followed by one \textit{length} byte or two, and end with the descriptor \textit{data} itself. The lengths of data fields are flexible, it depends on the information carried by the descriptor. If it is the descriptor of the name of the broadcaster, then it must be variable, but if it's rather the descriptor carrying the central frequency of the channel, it must have always the same size.
+
+The ABNT standard defines a set of descriptors whose presence is mandatory in each of the mandatory tables. They are all listed because one target of the project is to implement all in the application:
+
+\begin{itemize}
+
+\item in the PAT there are no defined descriptors;
+\item in the PMT the following are mandatory: \textit{AAC descriptor} and \textit{Parental rating descriptor}, other descriptors are only mandatory under circumstances \citeonline[8.1]{NBR};
+\item in the NIT the following are mandatory: \textit{Network name descriptor}, \textit{Service list descriptor}, \textit{TS information descriptor}, \textit{Terrestrial delivery system descriptor}, \textit{Partial reception descriptor} (for 1-Segment reception) and \textit{System management descriptor};
+\item in the SDT the following is mandatory: \textit{Service descriptor};
+\item in the TOT the following is mandatory: \textit{Local time offset descriptor};
+\item in the EIT the following is mandatory: \textit{Parental rating descriptor}.
+\end{itemize}
+
+Each descriptor is briefly described in the following sections.
+
+\subsection{PMT Descriptors}
+\label{pmt_descriptors}
+The \textit{AAC descriptor} is not defined in the ABNT standard. The ABNT Operational Guideline for SBTVD suggests the following syntax: the first byte is the descriptor tag, with value \texttt{0x7C}; the second byte is the descriptor length, to be filled appropriately; a third byte is to inform the profile and level of the audio streams of the service described by the PMT, whose values are defined in a table and are \texttt{0x29} for AAC Profile - level 2 or \texttt{0x2E} for HE-AAC Profile - level 4, just to cite two examples. The fourth byte has only a flag to set whether an optional field is used in the following bytes, but it is not used in practical applications.
+
+The \textit{Parental rating descriptor} tag is \texttt{}, after the length byte what follows is a loop of four bytes: the first three represent a country code with three characters encoded according to ISO 8859-15\footnote{ISO 8859 is a character encoding standard similar to the well known ASCII standard, but more complete in terms of characters foreign to the English language. Each character is encoded as a number.}, for Brazil the characters are \texttt{BRA} which are coded as \texttt{0x42 0x52 0x41}. The other byte in the loop is the rating for the service being broadcasted. The first four bits encode the minimum age to watch: from free to all audiences (\texttt{'0001'}) to above 18 years only (\texttt{'0110'}), with steps in 10 years, 12, 14 and 16. The codes outside this range are forbidden. The other four bits inform the presence of scenes with drugs (\texttt{'0001'}), violence (\texttt{'0010'}) and sex (\texttt{'0100'}). Combinations of these values are possible, so if a show has scenes of drugs and violence, the four bits would be \texttt{'0011'}, the most significant bit is reserved for future applications.
 
 \subsection{NIT Descriptors}
 \label{nit_descriptors}
-TODO
+The \textit{Network name descriptor} carries the name of the transmission system. Tag and length have one byte each, and the name is encoded according to the ISO 8859-15 standard in the rest of the descriptor. The network names for two local broadcasters in Porto Alegre are "Band HDTV" and "RBS TV POA".
+
+The \textit{Service list descriptor} provides a list of all the services in the Transport Stream. Tag and length have one byte each, and the data fields are formed with a loop of two fields: \texttt{service\_id} and \texttt{service\_type}. The service ID is the same as the program number defined in the PMT. The service type is defined by ABNT \citeonline[8.3.13]{NBR}: \texttt{0x00} for HDTV and SDTV services and \texttt{0xC0} for 1-Segment services.
+
+The \textit{TS information descriptor}
+\textit{Terrestrial delivery system descriptor}
+\textit{Partial reception descriptor} (for 1-Segment reception)
+\textit{System management descriptor}
+
 TODO cálculo dos valores de area code, network ID
 
 \subsection{SDT Descriptors}
@@ -1043,6 +1038,8 @@ An example of an hypothetical decoder start-up operation is shown in \autoref{fi
 \\Source and Copyright: \cite{nhk}.
 \label{fig:funcionamento_inicial_decoder}
 \end{figure}
+
+\section{Recommendations on the ABNT NBR 15608}
 
 
 \chapter{Current Structure available in the Lab}
@@ -1143,7 +1140,11 @@ The source code for the entire application can be downloaded for free from the p
 
 \section{The FFmpeg framework}
 
+\subsection{Introduction}
+
 Once the user calls \textit{ffmpeg} with a set of input files, options and an output file, the first step it does is to parse the parameters and initialize the structures that contain streams and system information. The main \textit{libavformat} structure used for both multiplexing and demultiplexing is \texttt{AVFormatContext}. When multiplexing, the most important variable this structure carries is an \texttt{AVOutputFormat} pointer to the output format handler. It also contains an array of \texttt{AVStreams}, which contains all the input streams identified during parsing step. Any \textit{libavformat} multiplexer accepts a set of options, which can be passed as command-line arguments and are checked against a set of preset values during parsing step. While parsing the output file name, if \textit{ffmpeg} identifies a \textit{.ts} extension, the MPEG2 multiplexer inside \textit{libavformat} library is assigned to handle the output.
+
+\subsection{Variables and Structures}
 
 The structures used by the multiplexer that represent the definitions on the standard are \texttt{MpegTSSection} for the tables, \texttt{MpegTSService} for the services, \texttt{MpegTSWrite} for the Transport Stream itself and \texttt{MpegTSWriteStream} for the streams.
 
@@ -1159,60 +1160,6 @@ Along with the control variables, the physical network information is included a
 
 Each command-line parameter passed to FFmpeg is parsed and must be validated before use. Each valid option is listed as one entry in a structure, an example is presented in \autoref{lst_input_option}. The first field is the option name, the second is a help text, the third is the position within a structure where it should be stored, then comes the variable type, the default value if it is not passed as argument, the minimum value, the maximum, and finally a internal definition of the option.
 
-\begin{lstlisting}[caption={Example of input option}, label=lst_input_option]
-{ "mpegts_transport_stream_id", "Set transport_stream_id field.", offsetof(MpegTSWrite, transport_stream_id), AV_OPT_TYPE_INT, {.i64 = 0x0001 }, 0x0001, 0xffff, AV_OPT_FLAG_ENCODING_PARAM}
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Excerpt of MpegTSWrite structure}, label=lst_MpegTSWrite]
-typedef struct MpegTSWrite {
-...
-MpegTSSection pat;
-MpegTSSection sdt;
-MpegTSService **services;
-...
-int nb_services;
-...
-int mux_rate;
-...
-int service_id;
-int pmt_start_pid;
-...
-}MpegTSWrite;
-\end{lstlisting}
-%\hline
-%\end{tabular}
-%\end{center}
-%\end{table}
-
-\begin{lstlisting}[caption={Excerpt of MpegTSSection structure}, label=lst_MpegTSSection]
-typedef struct MpegTSSection {
-	int pid;
-	int cc;
-	void(*write_packet)(struct MpegTSSection *s, const uint8_t *packet);
-	void *opaque;
-} MpegTSSection;
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Excerpt of MpegTSService structure}, label=lst_MpegTSService]
-typedef struct MpegTSService {
-MpegTSSection pmt; 
-int sid; 
-char *name;
-char *provider\_name;
-int pcr\_pid;
-...
-}MpegTSService;
-\end{lstlisting}
-
-\begin{lstlisting}[caption={Excerpt of MpegTSWriteStream structure}, label=lst_MpegTSWriteStream]
-typedef struct MpegTSWriteStream {
-struct MpegTSService *service;
-int pid;
-int cc;
-...
-}MpegTSWriteStream;
-\end{lstlisting}
-
 % By knowing the few information about FFMPEG muxer structures presented so far, one can already understand basically how the system works. A simple block diagram in Figure \ref{fig:diagrama_estruturas_ffmpeg} shows the relations between the presented structures, along with an example situation. Consider a digital television transport stream constituted by two services, with service IDs 1 and 2. The first service is formed by one video stream, with ID 101, and two audio streams, with IDs 111 and 112. The second service has one video stream, ID 201, and one audio stream, with ID 211. Each service has its own mapping table: for service 1 the table has a Table ID \(TID\) of 4001, and for service 2 the TID is 4002. Each program map table \(PMT\) links the service number to the stream numbers as defined by the standard. Finally, the program association table \(PAT\) links the available services 1 and 2 with their respective PMTs. To possibilitate the decoder to find these information within a transport stream, the PAT must have TID equal to 0, as can be noticed.
 
 % \begin{figure}
@@ -1222,6 +1169,8 @@ int cc;
 % \\Source: the author.
 % \label{fig:diagrama_estruturas_ffmpeg}
 % \end{figure}
+
+\subsection{Functions}
 
 The main functions related to the multiplexing process are \texttt{av\_write\_header()} for writing the TS stream header, \texttt{av\_write\_packet()} for writing the packets and \texttt{av\_write\_trailer()} for writting the stream tail. The list below describes the sequence of the calls to the functions:
 
@@ -1235,9 +1184,13 @@ The main functions related to the multiplexing process are \texttt{av\_write\_he
 	\item{when input streams are over, \texttt{av\_write\_end()} frees allocated memory and closes the files.}
 \end{enumerate}
 
-To decide if it's time, in \autoref{itm:ret_si_info}, \texttt{retransmit\_si\_info()} uses the control variables \texttt{\*\_packet\_count} and \texttt{\*\_packet\_period} of each table to control the transmission rates by incrementing the corresponding \texttt{packet\_count} each time the function is called and outputting the table only when the counter reaches \texttt{packet\_period};
+To decide if it's time, in \autoref{itm:ret_si_info}, \texttt{retransmit\_si\_info()} uses the control variables \texttt{*\_packet\_count} and \texttt{*\_packet\_period} of each table to control the transmission rates by incrementing the corresponding \texttt{packet\_count} each time the function is called and outputting the table only when the counter reaches \texttt{packet\_period};
 
 In \autoref{itm:dts_condition}, if \texttt{mpegts\_write\_pes()} finds a suitable PES packet, it fills a TS packet with data from this stream. If not, \texttt{mpegts\_write\_pes()} \texttt{mpegts\_insert\_pcr\_only()} is called to output only the necessary for a single PCR, without PES payload nor PSI tables, or \texttt{mpegts\_insert\_null\_packet()} is called to output an empty TS packet, full of stuffing bytes.
+
+FFmpeg has dedicated functions to write TS packets with PSI tables. \texttt{mpegts\_write\_section()} is responsible for writing the TS packet header fields described in \autoref{ts_header}. \texttt{mpegts\_write\_section1()} is responsible for writing the common fields for all PSI tables, described in \autoref{iso_psi}.
+
+%and \autoref{abnt_psi}
 
 % ----------------------------------------------------------
 % PARTE
@@ -1252,6 +1205,11 @@ In \autoref{itm:dts_condition}, if \texttt{mpegts\_write\_pes()} finds a suitabl
 % ---
 
 \section{New input options}
+In order to provide flexibility to the user to configure the Transport Stream parameters according to his needs, several options were added to the command-line interface.
+
+Most of them materialize the physical characteristics of the network and their names are very related to the definitions in the standards: \texttt{mpegts\_transport\_stream\_id}, \texttt{mpegts\_original\_network\_id}, \texttt{mpegts\_area\_code}, \texttt{mpegts\_guard\_interval}, \texttt{mpegts\_transmission\_mode}, \texttt{mpegts\_physical\_channel}, \texttt{mpegts\_virtual\_channel}.
+
+Others are used as control variables and are self-explanatory: \texttt{mpegts\_final\_nb\_services} and  \texttt{mpegts\_transmission\_profile} whose use is explained in the following sections.
 
 % ---
 \section{Multiple services}
@@ -1265,30 +1223,11 @@ The first proposed modification to the original FFMPEG code is to add multiple s
 \item profile number '2' was designed with a variable number of services: up to four services, each with a standard-definition video stream and an audio stream; and one  1-Segment service with a low-definition video stream and another audio stream.
 \end{itemize}
 
-Further information on the Full-Segment and 1-Segment services are provided in \autoref{modulation}.
+Further information about the Full-Segment and 1-Segment services are provided in \autoref{modulation}.
 
 \subsection{Profile 1: one Full-seg service and one 1-Seg service}
 
 First the service ID for the HDTV service is calculated, based on the definitions in \autoref{calculo_sid}: the network ID is the \texttt{ts->onid} variable; the service type is hard-coded as \texttt{'00'}, as well as the program number (\texttt{0x0}). Then, one \texttt{MpegTSService} is added to the services array in \texttt{MpegTSWrite} with the existent \texttt{mpegts\_add\_service()} function. The parameters to this function are the recent calculated HD service ID, the provider name and the hard-coded service name. The process is repeated for the 1-Segment service, except that the service type is coded as \texttt{'11'} and the program number as \texttt{0x1}. Finally, the variable \texttt{ts->final\_nb\_services} is set as \texttt{'2'}.
-
-\begin{lstlisting}[caption={}, label=[]
-    provider_name = provider ? provider->value : DEFAULT_PROVIDER_NAME;
-	calculated_HD_service_ID = 0x0000;
-	calculated_HD_service_ID = ( ts->onid & 0x7FF ) << 5 | 0x0 << 3 | 0x0;
-	service = mpegts_add_service(ts, calculated_HD_service_ID, provider_name, "SVC HD Full Seg");
-	service->pmt.write_packet = section_write_packet;
-	service->pmt.opaque = s;
-	service->pmt.cc = 15;
-
-	calculated_LD_service_ID = 0x0000;
-	calculated_LD_service_ID = ( ts->onid & 0x7FF ) << 5 | 0x3 << 3 | 0x1;
-	service = mpegts_add_service(ts, calculated_LD_service_ID, provider_name, "SVC LD 1-Seg");
-	service->pmt.write_packet = section_write_packet;
-	service->pmt.opaque = s;
-	service->pmt.cc = 15;
-	
-	ts->final_nb_services = 2;
-\end{lstlisting}
 
 \subsection{Profile 2: standard definition services and one 1-Seg service}
 
@@ -1300,8 +1239,8 @@ When calling FFmpeg, the user defines the order that input streams shall be plac
 
 As already explained, streams hold the information of which service contains them with a pointer to one \texttt{MpegTSService} instance within the \texttt{MpegTSWriteStream} structure. Before the modifications of this project, since there was only one service, all the streams belonged to it. Now, the multiplexer iterates through all the streams and does a modulus operation with the stream index and the value of \texttt{mpegts\_final\_nb\_services} to assign alternately one stream to each service, as shown in \autoref{lst_stream_assignment}. \texttt{ts\_st} is the stream structure, \texttt{i} is the iteration variable.
 
-\begin{lstlisting}[caption={Assigning streams to services.}, label=[lst_stream_assignment]
-ts_st->service = ts->services[i \% ts->final_nb_services];
+\begin{lstlisting}[caption={Assigning streams to services.}, label={lst_stream_assignment}]
+ts_st->service = ts->services[i % ts->final_nb_services];
 \end{lstlisting}
 
 Considering the example shown in Figure \ref{fig:diagrama_estruturas_ffmpeg}, the mapping should be done by placing first the two video streams, then the first audio stream corresponding to the first service, then the audio stream corresponding to the second service and finally the second audio stream corresponding to the first service.
@@ -1309,9 +1248,44 @@ Considering the example shown in Figure \ref{fig:diagrama_estruturas_ffmpeg}, th
 \section{PSI tables}
 
 \subsection{Introduction}
-mpegts\_write\_section1()
-packet periods and counts, macros
+Each time \texttt{retransmit\_si\_info()} is called, it updates the counters for each table and tests if they have reached the period value. If true, \texttt{retransmit\_si\_info()} calls the \texttt{mpegts\_write\_<table>()} function, where \texttt{<table>} is one of the following: \texttt{sdt, nit, tot, pat, pmt}. To add SDT, NIT and TOT support, three sets of conditional calls were added, similar to the one shown in \autoref{lst_write_table_call}.
+
+\begin{lstlisting}[caption={Conditional call to \texttt{mpegts\_write\_nit()}.}, label={lst_write_table_call}]
+if (++ts->nit_packet_count == ts->nit_packet_period) {
+    ts->nit_packet_count = 0;
+    mpegts_write_nit(s);
+}
+\end{lstlisting}
+
+A set of macros were added to hold the default values of network characteristics, shown in \autoref{lst_macros}:
+
+\texttt{mpegts\_write\_section1()}
 listar NIT, SDT and TOT
+
+In C language, when an array variable is declared, a memory area with the size of the array is allocated and the variable itself is a pointer to the first element of the array \citeonline[5.1]{ritchie}. ISO defines 1024 bytes as the maximum authorized length of a table \citeonline[2.4.4]{ISO}. Excluding 8 bytes of the table header and 4 bytes of the CRC, results in 1012 bytes.
+
+To create the bitstream of the table with pointer manipulation, first an array of type \texttt{uint8\_t}\footnote{\texttt{uint8\_t} is an unsigned integer type with size of 1 byte.} with 1012 bytes is declared with name \texttt{data}. Then a pointer \texttt{q} of the same type is declared and the first address of the array is assigned to it.
+
+Since all the bytes in the array are stored in a contiguous memory area, it is easy to create the table bitstream by assigning the byte value of the address pointed by \texttt{q} and incrementing the pointer after each assignment, so that the next assignment is done in the next byte of the array. Since section length is dependant on how many bytes are used and length fields are at the beginning of the headers, length fields are skipped in a first pass to be filled later, and an auxiliary pointer(\texttt{len\_ptr}) holds the position of the length fields for the second pass. 
+
+Section lengths are calculated in a simple way. Most of the time their value only counts the variable size part of the sections, from right after the length field and up to the end of the last byte of the section. By calculating the difference of the two pointers \texttt{q} and \texttt{len\_ptr}, one gets the number of bytes written including length bytes. If one subtracts the size of the length field from this difference, he easily obtains the length of the variable portion of the section.
+
+\autoref{lst_pointer_assignment} shows an excerpt of the code: the pointer assignment algorithm. \autoref{fig:pointer_assignment} shows an example of how the  algorithm works. Six of the bytes allocated to variable \texttt{data} are shown on top, empty.
+\begin{enumerate}
+\item The first \texttt{data} address is assigned to \texttt{q} , as shown by the continuous arrow.
+\item \label{itm:len_ptr1} The syntax shown assigns the value \texttt{0x10} to the address pointed by \texttt{q} and increments by one the pointed address. The continuous arrow shows the pointed address after \autoref{itm:len_ptr1} is completed.
+\item \label{itm:len_ptr2} \texttt{len\_ptr} stores the current position of \texttt{q}, as indicated by the dashed arrow; the address pointed to by \texttt{q} is incremented by 2 units, as indicated by the continuous arrow, to leave space to the length fields.
+\item the value \texttt{0x45} is stored in the address currently pointed by \texttt{q}, and \texttt{q} is incremented by 1 byte.
+\item after all fields are filled with data and the length of the section is known, the length is written using the auxiliary pointer \texttt{len\_ptr}, that still points to the same position defined in \autoref{itm:len_ptr2}.
+\end{enumerate}
+
+\begin{figure}[!h]
+\centering
+\caption{Pointer assignment example.}
+\includegraphics[width=1\linewidth]{figuras/pointer_assignment.png}
+\\Source: The author.
+\label{fig:pointer_assignment}
+\end{figure}
 
 \subsection{Descriptors}
 protótipo para facilitar a replicação
@@ -1421,7 +1395,107 @@ TODO Referências!!!
 \end{figure}
 
 % ----------------------------------------------------------
-%\chapter{Trecho do código implementado em linguagem C}
+\chapter{Excerpts of code in C language}
+
+The following lists present either code developed by the author or parts of the existent code used throughout the text to illustrate the functioning of the tool.
+
+\begin{lstlisting}[caption={Example of input option}, label=lst_input_option]
+{ "mpegts_transport_stream_id", "Set transport_stream_id field.", offsetof(MpegTSWrite, transport_stream_id), AV_OPT_TYPE_INT, {.i64 = 0x0001 }, 0x0001, 0xffff, AV_OPT_FLAG_ENCODING_PARAM}
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Excerpt of MpegTSWrite structure}, label=lst_MpegTSWrite]
+typedef struct MpegTSWrite {
+...
+MpegTSSection pat;
+MpegTSSection sdt;
+MpegTSService **services;
+...
+int nb_services;
+...
+int mux_rate;
+...
+int service_id;
+int pmt_start_pid;
+...
+}MpegTSWrite;
+\end{lstlisting}
+%\hline
+%\end{tabular}
+%\end{center}
+%\end{table}
+
+\begin{lstlisting}[caption={Excerpt of MpegTSSection structure}, label=lst_MpegTSSection]
+typedef struct MpegTSSection {
+	int pid;
+	int cc;
+	void(*write_packet)(struct MpegTSSection *s, const uint8_t *packet);
+	void *opaque;
+} MpegTSSection;
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Excerpt of MpegTSService structure}, label=lst_MpegTSService]
+typedef struct MpegTSService {
+MpegTSSection pmt; 
+int sid; 
+char *name;
+char *provider\_name;
+int pcr\_pid;
+...
+}MpegTSService;
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Excerpt of MpegTSWriteStream structure}, label=lst_MpegTSWriteStream]
+typedef struct MpegTSWriteStream {
+struct MpegTSService *service;
+int pid;
+int cc;
+...
+}MpegTSWriteStream;
+\end{lstlisting}
+
+\begin{lstlisting}[caption={}, label=[]
+    provider_name = provider ? provider->value : DEFAULT_PROVIDER_NAME;
+	calculated_HD_service_ID = 0x0000;
+	calculated_HD_service_ID = ( ts->onid & 0x7FF ) << 5 | 0x0 << 3 | 0x0;
+	service = mpegts_add_service(ts, calculated_HD_service_ID, provider_name, "SVC HD Full Seg");
+	service->pmt.write_packet = section_write_packet;
+	service->pmt.opaque = s;
+	service->pmt.cc = 15;
+
+	calculated_LD_service_ID = 0x0000;
+	calculated_LD_service_ID = ( ts->onid & 0x7FF ) << 5 | 0x3 << 3 | 0x1;
+	service = mpegts_add_service(ts, calculated_LD_service_ID, provider_name, "SVC LD 1-Seg");
+	service->pmt.write_packet = section_write_packet;
+	service->pmt.opaque = s;
+	service->pmt.cc = 15;
+	
+	ts->final_nb_services = 2;
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Created macros.}, label={lst_macros}]
+#define DEFAULT_NETWORK_NAME    "LaPSI TV - UFRGS"
+#define DEFAULT_COUNTRY_CODE    "BRA"
+#define DEFAULT_NID		0x0640
+#define SDT_RETRANS_TIME 500
+#define NIT_RETRANS_TIME 50
+#define TOT_RETRANS_TIME 100
+\end{lstlisting}
+
+\begin{lstlisting}[caption={.}, label={lst_pointer_assignment}]
+q = data;
+desc_len_ptr = q;
+q += 2;
+
+*q++ = 0x40;
+putstr8(&q, DEFAULT_NETWORK_NAME);
+
+*q++ = 0xFE;
+sys_mgmt_desc_length_ptr = q;
+*q++;
+*q++ = 0x03;
+*q++ = 0x01;
+\end{lstlisting}
+
 % ----------------------------------------------------------
 %\lipsum[55]
 
