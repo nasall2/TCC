@@ -1042,22 +1042,6 @@ An example of an hypothetical decoder start-up operation is shown in \autoref{fi
 \section{Recommendations on the ABNT NBR 15608}
 
 
-\chapter{Current Structure available in the Lab}
-
-A Small Digital TV Station is currently set up at the Laboratory. It is an EiTV Playout Laboratory, as described in detail by the manufacturer \cite{eitv}, and comprises the PSI/SI server, the multiplexer, the modulator and the transmitter. It is a commercial solution, that meets the technical requirements of the SBTVD but its source code is not open to contribution. As inputs, one may supply one or more single-service TS streams as binary files containing video and audio ESs and fill data to be added to the PSI and SI tables. As output, the multiplexer produces either a single service or a multi service stream, which is sent in real-time to the modulator and the transmitter. When a TS file reaches its end, the multiplexer wraps around the file and repeats it. It does not allow input TS files to contain multiple services, so to broadcast a multi-service stream one may only use the internal multiplexer. This solution is not adapted to the project, since it does not allow multiple services in the same TS.
-
-There is also a Dektec DTA-115 PCI modulator board Installed in a workstation. A complete description of the board is available in the manufacturer's website \cite{dektec}. This device is much more adapted to the project goals, since it accepts to receive a multi-service stream and performs only the modulation and transmission stages on the chain. The board is being used in the project with a TS binary file as its input. When it reaches the end of the file, it wraps around and repeat the stream.
-
-The scope of operation of each device described here in the broadcast system can be distinguished in the \autoref{fig:scope_eitv_dektec}, which is an overlay on top of the diagram shown in \autoref{fig:diagrama_blocos_tvd}. In fact, the EiTV Playout Lab solution contains a modulator board similar to the Dektec DTA-115, as can be seen on its rear panel.
-
-\begin{figure}[!hb]
-\centering
-\caption{Scope of orperation of the two devices available in the Laboratory.}
-\includegraphics[width=1\linewidth]{figuras/scope_eitv_dektec.png}
-\\Source: The author.
-\label{fig:scope_eitv_dektec}
-\end{figure}
-
 \chapter{Available Solutions and Limitations}
 
 A quick search on a search engine for the keywords \textit{MPEG2 TS multiplexer} returns a long list of commercial solutions for multiplexing media files of most different formats in MPEG2 standard. The commercial solutions are usually associated with dedicated hardware, such as the solution presented by \cite{harris}, which are targeted for broadcasters and are expensive, of the order of a few thousand dollars. The main customers of these solutions are television broadcasters, producing live content and need low latency for signal encoding. These devices operate in real time, receiving streams of video, audio and data across multiple ASI interfaces and delivering output in a multiplexed stream in MPEG2 standard. The free solutions are \ textit {} software compatible with Windows and Linux platforms, mostly. Some have graphics and pattern to aid its use by users unfamiliar with the standard interface configurations. The main difference is that the goal is not the user of the system in real time, so that the specification for the processing and memory of personal computers are usually sufficient to run the tools. The input and output interfaces are commonly files that store binary data streams in a sequential manner.
@@ -1140,9 +1124,11 @@ The source code for the entire application can be downloaded for free from the p
 
 \section{The FFmpeg framework}
 
-\subsection{Introduction}
+%\subsection{Introduction}
 
 Once the user calls \textit{ffmpeg} with a set of input files, options and an output file, the first step it does is to parse the parameters and initialize the structures that contain streams and system information. The main \textit{libavformat} structure used for both multiplexing and demultiplexing is \texttt{AVFormatContext}. When multiplexing, the most important variable this structure carries is an \texttt{AVOutputFormat} pointer to the output format handler. It also contains an array of \texttt{AVStreams}, which contains all the input streams identified during parsing step. Any \textit{libavformat} multiplexer accepts a set of options, which can be passed as command-line arguments and are checked against a set of preset values during parsing step. While parsing the output file name, if \textit{ffmpeg} identifies a \textit{.ts} extension, the MPEG2 multiplexer inside \textit{libavformat} library is assigned to handle the output.
+
+TODO the ffmpeg version
 
 \subsection{Variables and Structures}
 
@@ -1204,12 +1190,15 @@ FFmpeg has dedicated functions to write TS packets with PSI tables. \texttt{mpeg
 \chapter{Project implementation}
 % ---
 
+%Find: \_
+% Replace with: \hspace{0.1mm}\_\hspace{0.1mm}
+
 \section{New input options}
 In order to provide flexibility to the user to configure the Transport Stream parameters according to his needs, several options were added to the command-line interface.
 
-Most of them materialize the physical characteristics of the network and their names are very related to the definitions in the standards: \texttt{mpegts\_transport\_stream\_id}, \texttt{mpegts\_original\_network\_id}, \texttt{mpegts\_area\_code}, \texttt{mpegts\_guard\_interval}, \texttt{mpegts\_transmission\_mode}, \texttt{mpegts\_physical\_channel}, \texttt{mpegts\_virtual\_channel}.
+Most of them materialize the physical characteristics of the network and their names are very related to the definitions in the standards: \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}transport\hspace{0.1mm}\_\hspace{0.1mm}stream\hspace{0.1mm}\_\hspace{0.1mm}id}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}original\hspace{0.1mm}\_\hspace{0.1mm}network\hspace{0.1mm}\_\hspace{0.1mm}id}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}area\hspace{0.1mm}\_\hspace{0.1mm}code}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}guard\hspace{0.1mm}\_\hspace{0.1mm}interval}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}transmission\hspace{0.1mm}\_\hspace{0.1mm}mode}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}physical\hspace{0.1mm}\_\hspace{0.1mm}channel}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}virtual\hspace{0.1mm}\_\hspace{0.1mm}channel}.
 
-Others are used as control variables and are self-explanatory: \texttt{mpegts\_final\_nb\_services} and  \texttt{mpegts\_transmission\_profile} whose use is explained in the following sections.
+Others are used as control variables and are self-explanatory: \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}final\hspace{0.1mm}\_\hspace{0.1mm}nb\hspace{0.1mm}\_\hspace{0.1mm}services} and \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}transmission\hspace{0.1mm}\_\hspace{0.1mm}profile}. Their use is explained in the following sections.
 
 % ---
 \section{Multiple services}
@@ -1303,9 +1292,48 @@ separar as tabelas em subseções se tiverem especificidades
 %
 %% ---
 \section{Test environment}
-dispositivos de visualização(tv, celular, pentv, gps)
-captura de streams do ar com o pen tv, via tzap e dvbsnoop
-	com o tzap da pra saber se houve erros nao corrigíveis na recepção
+
+The laboratory disposes of a low power TV Station. It is an EiTV Playout Laboratory \cite{eitv}, and comprises the PSI/SI server, the multiplexer, the modulator and the transmitter. It is a commercial solution, that meets the technical requirements of the SBTVD but the source code for the multiplexer is not open to contribution. As inputs, one may supply one or more single-service TS streams as binary files containing video and audio ESs and fill data into forms to be added to the PSI and SI tables. As output, the multiplexer produces either a single service or a multi service stream, which is sent in real-time to the modulator and the transmitter. When a TS file reaches its end, the multiplexer wraps around the file and repeats it.
+
+It does not allow input TS files to contain multiple services, so to broadcast a multi-service stream one may only use the internal multiplexer. This solution is not totally adapted to the project, since it does not allow multiple services in the same input TS. It is useful, on the other hand, to test the synchronism of audio and video streams.
+
+There is also a Dektec DTA-115 PCI modulator board installed in a workstation. A complete description of the board is available in the manufacturer's website \cite{dektec}. This device is much more adapted to the project goals, since it accepts to receive a multi-service stream and performs only the modulation and transmission stages on the chain. The board is being used in the project with a TS binary file as its input. When it reaches the end of the file, it wraps around and repeat the stream.
+
+The scope of operation of each device described here in the broadcast system can be distinguished in the \autoref{fig:scope_eitv_dektec}, which is an adaptation of the diagram shown in \autoref{fig:diagrama_blocos_tvd}. In fact, the EiTV Playout solution contains a modulator board similar to the Dektec DTA-115, as can be seen on its rear panel.
+
+\begin{figure}[!hb]
+\centering
+\caption{Input points for the available solutions.}
+\includegraphics[width=1\linewidth]{figuras/scope_eitv_dektec.png}
+\\Source: The author.
+\label{fig:scope_eitv_dektec}
+\end{figure}
+
+Two visualization devices were available for each service type: a Philips LCD TV and an EiTV Set Top Box for Full-Segment reception and a Lenoxx GPS an Samsung Cell Phone for 1-Segment reception. Additionally, a USB receiver with Full-segment and 1-Segment reception capabilites is used attached to a Linux Workstation. With the USB receiver, Transport Streams are captured and then analysed using two freeware softwares: \textit{MPEG-2 TS Packet Analyser} \cite{} and \textit{SBTVD Transport Stream Parser v0.32} \cite{}.
+
+\section{Timing tests}
+
+These tests were done before any modifications on the source code. The objective of these first tests is to verify that FFmpeg, without any modifications, can provide a stream with video and audio in sync. Two different sources of video and audio were tested. The first source is a \textit{mp4} file that contains a video encoded in H.264 with resolution of 720x404 pixels, 23.98 frames per second, and audio encoded in HE-AAC with stereo channels at a sample rate of 48KHz. The second source is another \textit{mp4} file with H.264 video, frame size of 480x360 pixels at 29.97 fps, and stereo HE-AAC audio at 48KHz. The two videos were re-encoded with FFmpeg to output a 1920x1080 frame size at 29,97 frames per second, and the MPEG2 multiplexer was used to create a Transport Stream with one single service.
+
+The syntax to call ffmpeg and produce these outputs is shown in \autoref{lst_ffmpeg_single_service}
+
+\begin{lstlisting}[caption={}, label={lst_ffmpeg_single_service}]
+./ffmpeg -i src.mp4 -vcodec libx264 -r 29.97 -s hd1080 -profile:v high -acodec aac -strict -2 -latm 1 -muxrate 4000000 -t 60 -mpegts_flags latm -loglevel verbose -y dst.ts
+\end{lstlisting}
+
+One point to cite here is the importance of the value in the \texttt{muxrate} option. Based on the original video and audio bit-rates, one may estimate roughly the necessary TS bitrate to carry them along with the PSI tables. In the two cases, a multiplex rate of 4 Mbps generated an overhead of about 18\%, which is an acceptable amount. Overhead here is the amount of packets without data of the streams.
+
+If an underestimated bit-rate is chosen, the PCRs and PTSs will be calculated incorrectly. When the transmitter eventually sends the bit-stream to the air in a slower bitrate than necessary, playback will present freeze moments because there will be instants of time without video or audio to be displayed, i.e., it is as if the stream was reproduced in slow motion. On the other hand, an overestimated TS bit-rate causes the multiplexer to add too much stuffing packets into the stream and use unnecessary space.
+
+One thing to notice in these streams is that they are not compliant with the SBTVD standard. They do not contain the tables added in the development of the project and can not be used directly in DekTec board. They were remultiplexed in EiTV Playout, where the PSI tables were added, and then broadcasted. The streams were received in the visualization devices and the sync between video and audio was verified by watching and hearing the outputs in scenes where people were shown while talking. Three different people stated that video and audio were in sync.
+
+The results were satisfactory, and although there was no emplyment of functionalities developed by the author, it was necessary to ensure that the multiplexer would packetize correctly the chunks of data, as well as label the frames with timestamps in sync.
+
+\section{Multiple Services Tests}
+
+These tests were carried out after the applying the implementations described in the paper. Another two inputs were used, one is an acquired TS from a local broadcast channel and the other is a TS created with the developed multiplexer. Instead of 
+
+
 transmissão de streams com a eitv e com a dektec
 	com a eitv o objetivo era testar o sincronismo, testes nas primeiras etapas do projeto, validação de conceitos e validação da ferramenta ffmpeg como codificador de vídeo e áudio com sincronismo(uma das premissas do projeto!) embora o encoder seja responsavel por gerar os PTS e DTS, era preciso garantir que o multiplexador estava encapsulando corretamente os time stamps
 	com a dektec o objetivo era testar o conjunto todo
@@ -1495,6 +1523,11 @@ sys_mgmt_desc_length_ptr = q;
 *q++ = 0x03;
 *q++ = 0x01;
 \end{lstlisting}
+
+\chapter{Tutorial for capturing streams}
+
+captura de streams do ar com o pen tv, via tzap e dvbsnoop
+	com o tzap da pra saber se houve erros nao corrigíveis na recepção
 
 % ----------------------------------------------------------
 %\lipsum[55]
