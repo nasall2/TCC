@@ -1188,6 +1188,7 @@ FFmpeg has dedicated functions to write TS packets with PSI tables. \texttt{mpeg
 % development
 % ---
 \chapter{Project implementation}
+\label{implementation}
 % ---
 
 %Find: \_
@@ -1223,6 +1224,7 @@ First the service ID for the HDTV service is calculated, based on the definition
 Profile two is not yet implemented, but the guidelines are the same as for profile 1. Instead of setting the variable \texttt{ts->final\_nb\_services} as 2, the value is left free for the user to choose and instead of creating only two services, a loop iterates the service creation until a counter reaches the total number of services.
 
 \subsection{Stream Mapping}
+\label{stream_mapping}
 
 When calling FFmpeg, the user defines the order that input streams shall be placed in the \texttt{AVFormatContext} structure with the \texttt{-map} option. This same sequence is used in the streams loops throughout the code, and defines also the order of assignment of streams PIDs. The first input stream receives the value in \texttt{mpegts\_pmt\_start\_pid} and the value is incremented by one for each new stream. The default value for \texttt{mpegts\_pmt\_start\_pid} is \texttt{0x100}.
 
@@ -1293,49 +1295,296 @@ separar as tabelas em subseções se tiverem especificidades
 %% ---
 \section{Test environment}
 
-The laboratory disposes of a low power TV Station. It is an EiTV Playout Laboratory \cite{eitv}, and comprises the PSI/SI server, the multiplexer, the modulator and the transmitter. It is a commercial solution, that meets the technical requirements of the SBTVD but the source code for the multiplexer is not open to contribution. As inputs, one may supply one or more single-service TS streams as binary files containing video and audio ESs and fill data into forms to be added to the PSI and SI tables. As output, the multiplexer produces either a single service or a multi service stream, which is sent in real-time to the modulator and the transmitter. When a TS file reaches its end, the multiplexer wraps around the file and repeats it.
+The laboratory disposes of two systems for TV broadcasting: the first is an EiTV Playout Laboratory \cite{eitv}, that comprises a PSI/SI generator, a multiplexer, a modulator and a low power transmitter. It is a commercial solution, that meets the technical requirements of the SBTVD but the source code is not open to contribution. As inputs, one may supply one or more single-service TS streams as binary files containing video and audio ESs and fill data into forms to be added to the PSI and SI tables. It does not allow input TS files to contain multiple services, so to broadcast a multi-service stream one may only use the internal multiplexer.
 
-It does not allow input TS files to contain multiple services, so to broadcast a multi-service stream one may only use the internal multiplexer. This solution is not totally adapted to the project, since it does not allow multiple services in the same input TS. It is useful, on the other hand, to test the synchronism of audio and video streams.
+As output, the multiplexer produces either a single service or a multi service stream, depending on how the input streams were configured, and the TS is sent in real-time to the modulator and the transmitter.This solution is not totally adapted to the project, since it does not allow multiple services in the same input TS. It is useful, on the other hand, to test the timing of audio and video streams.
 
-There is also a Dektec DTA-115 PCI modulator board installed in a workstation. A complete description of the board is available in the manufacturer's website \cite{dektec}. This device is much more adapted to the project goals, since it accepts to receive a multi-service stream and performs only the modulation and transmission stages on the chain. The board is being used in the project with a TS binary file as its input. When it reaches the end of the file, it wraps around and repeat the stream.
+The other available solution in the Dektec DTA-115 PCI modulator board, which is installed in a PC workstation. This device is much more adapted to the project goals, because it receives a multi-service Transport Stream as binary file and performs the modulation and transmission steps. It's output is a RF connector which is currently connected to a  UHF antenna. A complete description of the board is available in the manufacturer's website \cite{dektec}. The control of the board is done using StreamXpress software, provided by the board's manufacturer.
 
-The scope of operation of each device described here in the broadcast system can be distinguished in the \autoref{fig:scope_eitv_dektec}, which is an adaptation of the diagram shown in \autoref{fig:diagrama_blocos_tvd}. In fact, the EiTV Playout solution contains a modulator board similar to the Dektec DTA-115, as can be seen on its rear panel.
+% \begin{figure}[!hb]
+% \centering
+% \caption{Input points for the available solutions.}
+% \includegraphics[width=0.9\linewidth]{figuras/scope_eitv_dektec.png}
+% \\Source: The author.
+% \label{fig:scope_eitv_dektec}
+% \end{figure}
 
-\begin{figure}[!hb]
-\centering
-\caption{Input points for the available solutions.}
-\includegraphics[width=1\linewidth]{figuras/scope_eitv_dektec.png}
-\\Source: The author.
-\label{fig:scope_eitv_dektec}
-\end{figure}
-
-Two visualization devices were available for each service type: a Philips LCD TV and an EiTV Set Top Box for Full-Segment reception and a Lenoxx GPS an Samsung Cell Phone for 1-Segment reception. Additionally, a USB receiver with Full-segment and 1-Segment reception capabilites is used attached to a Linux Workstation. With the USB receiver, Transport Streams are captured and then analysed using two freeware softwares: \textit{MPEG-2 TS Packet Analyser} \cite{} and \textit{SBTVD Transport Stream Parser v0.32} \cite{}.
+Two visualization devices are available for each service type: a Philips LCD TV and an EiTV Set Top Box for Full-Segment reception and for 1-Segment reception a Lenoxx GPS and a Samsung Cell Phone. Additionally, a USB receiver with Full-segment and 1-Segment reception capabilities is used attached to a Linux Workstation. With the USB receiver, Transport Streams are captured and then analysed using two free softwares: \textit{MPEG-2 TS Packet Analyser} \cite{} and \textit{SBTVD Transport Stream Parser v0.32} \cite{}. FFprobe is also used as a tool to analyse TSs and display information about the streams contained in them.
 
 \section{Timing tests}
 
-These tests were done before any modifications on the source code. The objective of these first tests is to verify that FFmpeg, without any modifications, can provide a stream with video and audio in sync. Two different sources of video and audio were tested. The first source is a \textit{mp4} file that contains a video encoded in H.264 with resolution of 720x404 pixels, 23.98 frames per second, and audio encoded in HE-AAC with stereo channels at a sample rate of 48KHz. The second source is another \textit{mp4} file with H.264 video, frame size of 480x360 pixels at 29.97 fps, and stereo HE-AAC audio at 48KHz. The two videos were re-encoded with FFmpeg to output a 1920x1080 frame size at 29,97 frames per second, and the MPEG2 multiplexer was used to create a Transport Stream with one single service.
+These tests were done before any modifications on the source code. The objective of these first tests is to verify that FFmpeg, without any modifications, can provide a stream with video and audio in sync. 
 
-The syntax to call ffmpeg and produce these outputs is shown in \autoref{lst_ffmpeg_single_service}
+Two different sources of video and audio were tested. The first source is a \textit{mp4} file that contains a video encoded in H.264 with resolution of 720x404 pixels, 23.98 frames per second, and audio encoded in HE-AAC with stereo channels at a sample rate of 48KHz. The second source is another \textit{mp4} file with H.264 video, frame size of 480x360 pixels at 29.97 fps, and stereo HE-AAC audio at 48KHz. The two videos were re-encoded with FFmpeg to output a 1920x1080 frame size at 29,97 frames per second, and the MPEG2 multiplexer was used to create a Transport Stream with one single service. The block diagram in \autoref{fig:test_scn_timing} shows the signal flow.
+
+\begin{figure}[!hb]
+\centering
+\caption{Signal flow for timing tests.}
+\includegraphics[width=0.9\linewidth]{figuras/test_scn_timing.png}
+\\Source: The author.
+\label{fig:test_scn_timing}
+\end{figure}
+
+The syntax to call ffmpeg and produce these outputs is shown in \autoref{lst_ffmpeg_single_service}. \texttt{-vcodec libx264 -r 29.97 -s hd1080 -profile:v high} set up the video codec. \texttt{-acodec aac -strict -2 -latm 1} set up the audio codec. \texttt{-t 60} tells the multiplexer to generate a TS with only 60 seconds.
 
 \begin{lstlisting}[caption={}, label={lst_ffmpeg_single_service}]
-./ffmpeg -i src.mp4 -vcodec libx264 -r 29.97 -s hd1080 -profile:v high -acodec aac -strict -2 -latm 1 -muxrate 4000000 -t 60 -mpegts_flags latm -loglevel verbose -y dst.ts
+./ffmpeg -i src.mp4 -vcodec libx264 -r 29.97 -s hd1080 -profile:v high -acodec aac -strict -2 -latm 1 -muxrate 3600000 -t 60 -mpegts_flags latm -loglevel verbose -y dst.ts
 \end{lstlisting}
 
-One point to cite here is the importance of the value in the \texttt{muxrate} option. Based on the original video and audio bit-rates, one may estimate roughly the necessary TS bitrate to carry them along with the PSI tables. In the two cases, a multiplex rate of 4 Mbps generated an overhead of about 18\%, which is an acceptable amount. Overhead here is the amount of packets without data of the streams.
+Attention should be given to the importance of the \texttt{muxrate} option. In the first repetitions of this test, FFmpeg was being called without this option and the output TS ended up with a variable bitrate (VBR), which is not compliant to the MPEG2 standard and leads to a catastrophic loss of sync. When setting up the transmission parameters in EiTV control panel, the TS bitrate must be entered, so the average bitrate of the stream was applied. Since a VBR TS was being broadcast as if it had constant bitrate (CBR), whenever the output bitrate was greater than input bitrate, frames were presented faster than supposed to or skipped. On the opposite case, there were gaps without any frame and the audio would mute or the video would freeze.
 
-If an underestimated bit-rate is chosen, the PCRs and PTSs will be calculated incorrectly. When the transmitter eventually sends the bit-stream to the air in a slower bitrate than necessary, playback will present freeze moments because there will be instants of time without video or audio to be displayed, i.e., it is as if the stream was reproduced in slow motion. On the other hand, an overestimated TS bit-rate causes the multiplexer to add too much stuffing packets into the stream and use unnecessary space.
+After realizing the need of setting muxrate, it was necessary to know what value should be set. If an underestimated bit-rate is chosen, the PCRs and PTSs will be calculated incorrectly and frames will not be delivered at the expected frame rate. When the transmitter eventually sends the bit-stream to the air in a slower bitrate than necessary, playback will present freeze moments because there will be instants of time without video or audio to be displayed, i.e., it is as if the stream was reproduced in slow motion. On the other hand, an overestimated TS bit-rate causes the multiplexer to add too much stuffing packets into the stream and use unnecessary band.
 
-One thing to notice in these streams is that they are not compliant with the SBTVD standard. They do not contain the tables added in the development of the project and can not be used directly in DekTec board. They were remultiplexed in EiTV Playout, where the PSI tables were added, and then broadcasted. The streams were received in the visualization devices and the sync between video and audio was verified by watching and hearing the outputs in scenes where people were shown while talking. Three different people stated that video and audio were in sync.
+Analyses of the local broadcast channel shown that TSs carried about 11 \% of stuffing bytes, as can be shown in the graphics in \autoref{fig:graph_rbs_dump} and \autoref{fig:graph_band_dump}. The percentages indicated in the figures refer to the amount of data in each PIDs. The PID numbers and packet counts can be seen in \autoref{tab_dumps}. In the graphs, the designation of stuffing packets is \textit{null packet}. From this information, the muxrate option was set at 3.6 Mpbs, which results in an overhead of about 11 \%, as can be seen in \autoref{fig:graph_generated_dump}.
 
-The results were satisfactory, and although there was no emplyment of functionalities developed by the author, it was necessary to ensure that the multiplexer would packetize correctly the chunks of data, as well as label the frames with timestamps in sync.
+\begin{figure}[!h]
+\centering
+\caption{Packets distribution among PIDs in local broadcaster RBS TV.}
+\includegraphics[width=0.9\linewidth]{figuras/graph_rbs_dump.png}
+\\Source: The author.
+\label{fig:graph_rbs_dump}
+\end{figure}
+
+\begin{figure}[!h]
+\centering
+\caption{Packets distribution among PIDs in local broadcaster TV Bandeirantes.}
+\includegraphics[width=0.9\linewidth]{figuras/graph_band_dump.png}
+\\Source: The author.
+\label{fig:graph_band_dump}
+\end{figure}
+
+\begin{table}[!hb]
+\centering
+    \caption {Data from stream aquisitions.}
+    \begin{tabular}{|l|l|l|l|l|l|l|}
+    \hline
+     RBS  & RBS          & RBS    & ~ & BAND & BAND         & BAND   \\ \hline
+    PID   & Type         & Count  & ~ & PID  & Type         & Count  \\ \hline
+    0     & PAT          & 260    & ~ & 0    & PAT          & 100    \\ \hline
+    16    & NIT          & 26     & ~ & 16   & NIT          & 10     \\ \hline
+    17    & SDT/BAT      & 13     & ~ & 17   & SDT/BAT      & 5      \\ \hline
+    18    & EIT          & 734    & ~ & 18   & EIT          & 10     \\ \hline
+    20    & TDT/TOT      & 5      & ~ & 20   & TDT/TOT      & 2      \\ \hline
+    39    & Private Data & 115    & ~ & 36   & ~            & 10     \\ \hline
+    256   & PCR HD       & 452    & ~ & 39   & ~            & 10     \\ \hline
+    257   & PMT HD       & 261    & ~ & 233  & CC HD        & 27     \\ \hline
+    273   & Video HD     & 237551 & ~ & 256  & PCR HD       & 264    \\ \hline
+    274   & Audio HD 1   & 1729   & ~ & 257  & PMT HD       & 100    \\ \hline
+    275   & Audio HD 2   & 4288   & ~ & 273  & Video HD     & 76284  \\ \hline
+    276   & Audio HD 3   & 1745   & ~ & 274  & Audio HD 1   & 654    \\ \hline
+    277   & Audio HD 4   & 4280   & ~ & 275  & Audio HD 2   & 660    \\ \hline
+    278   & CC HD        & 53     & ~ & 512  & PCR 1Seg     & 47     \\ \hline
+    500   & Private Data & 51     & ~ & 529  & Video 1Seg   & 2006   \\ \hline
+    512   & PCR 1Seg     & 114    & ~ & 530  & Audio 1Seg   & 394    \\ \hline
+    529   & Video 1Seg   & 5551   & ~ & 549  & CC 1Seg      & 4      \\ \hline
+    530   & Audio 1Seg   & 585    & ~ & 1000 & Private Data & 4169   \\ \hline
+    534   & CC 1Seg      & 53     & ~ & 1001 & Private Data & 4168   \\ \hline
+    900   & Private Data & 10415  & ~ & 4101 & Private Data & 521    \\ \hline
+    8136  & PMT 1Seg     & 132    & ~ & 8136 & PMT 1Seg     & 26     \\ \hline
+    8191  & null packet  & 31587  & ~ & 8191 & null packet  & 10529  \\ \hline
+    Total & ~            & 300000 & ~ & ~    & ~            & 100000 \\ \hline
+    \end{tabular}
+	\label{tab_dumps}
+\end{table}
+
+\begin{figure}[!h]
+\centering
+\caption{Packets distribution among PIDs in generated TS.}
+\includegraphics[width=0.9\linewidth]{figuras/graph_generated_dump.png}
+\\Source: The author.
+\label{fig:graph_generated_dump}
+\end{figure}
+
+\begin{lstlisting}[caption={Output of FFmpeg when input is as \autoref{lst_ffmpeg_single_service}., label={lst_ffprobe_clean}]
+Input #0, mpegts, from 'dst.ts':
+  Duration: 00:00:59.98, start: 1.445400, bitrate: 3662 kb/s
+  Program 1 
+    Metadata:
+      service_name    : Service01
+      service_provider: FFmpeg
+    Stream #0:0[0x100]: Video: h264 (High) ([27][0][0][0] / 0x001B), yuv420p, 1920x1080, 29.97 fps, 29.97 tbr, 90k tbn, 59.94 tbc
+    Stream #0:1[0x101](und): Audio: aac_latm ([17][0][0][0] / 0x0011), 48000 Hz, stereo, fltp
+\end{lstlisting}
+
+FFprobe displays what is in \autoref{lst_ffprobe_clean} when analysing the output of \autoref{lst_ffmpeg_single_service}. The TS lasts 59.98 seconds and has a bitrate of 3662 kbps. It contains only one program, with program_number 1, that has two streams: one video stream (PID \texttt{0x100}) and one audio stream (PID \texttt{0x101}) that comply to the requirements of the SBTVD standard.
+
+The streams were received in the visualization devices and the sync between video and audio was verified by watching and hearing the outputs in scenes where people were filmed while talking. Three different people stated that video and audio were in sync.
+
+The results were satisfactory, and although there was no employment of functionalities developed by the author, this test was necessary to ensure that the multiplexer could packetize correctly the chunks of data, as well as label the frames with timestamps in sync.
+
+%This TS is not compliant with the SBTVD standard. It does not contain the tables added in the development of the project and can not be used directly in DekTec board. They were remultiplexed in EiTV Playout, where the PSI tables were added, and then broadcasted. 
+% a value of 18Mbps, which is much higher than the original re-encoded stream (2728 kbps) was passed as argument and the issue of muting audio and freezing video was solved, but it still caused video and audio to be completely out of sync. In dialog scenes, the characters' mouths would open several seconds after their voice was heard. Several analyses of the generated TSs with \textit{MPEG-2 TS Packet Analyser}, varying the muxrate values from 18Mbps down to 4Mbps. When 4Mbps was broadcast, audio and video became synced. Also, chunks of stuffing packets are placed by FFmpeg between chunks of different PIDs, so that audio and video streams are separated by long periods of stuffing packets.
+% This was attributed to the fact that stuffing packets were 
+% amount of stuffing packets added in the stream reduced after each reduction of muxrate, which is obvious. 
+% To present streams in sync, the decoder must delay the presentation of one stream while waiting the arrival of the other stream. When too much stuffing packets are transmitted, the decoder can not wait so much time due to the size of their buffers, 
+
+%\section{Analysing TS packets with Stream Analyser}
+
 
 \section{Multiple Services Tests}
 
-These tests were carried out after the applying the implementations described in the paper. Another two inputs were used, one is an acquired TS from a local broadcast channel and the other is a TS created with the developed multiplexer. Instead of 
+These tests were carried out after applying the implementations described in \autoref{implementation}. Their purpose is to validate the developed system. Two different sets of tests were made, one with a TS captured from a local broadcast channel with PenTV and the other with a TS created with the developed multiplexer.
 
+\subsection{Retransmitting a captured TS}
+\label{retransmitting}
+
+This first set of tests were carried out to understand how the Dektec PCI board works and to validate its functioning. It was done by transmitting a TS that certainly is compliant to the standard, because it was captured from a local broadcaster. The simple block diagram in \autoref{fig:test_scn_retrans} shows the signal flow in this test.
+
+\begin{figure}[!h]
+\centering
+\caption{Signal flow for retransmission tests.}
+\includegraphics[width=0.9\linewidth]{figuras/test_scn_retrans.png}
+\\Source: The author.
+\label{fig:test_scn_retrans}
+\end{figure}
+
+The modulator board was configured with the following configuration, which is known to work as informed by previous researchers of the laboratory:
+
+\begin{itemize}
+\item television broadcast type, mode 3, guard interval 1/16;
+\item partial reception enabled for 1-Segment transmission on layer A;
+\item layer A configured with QPSK modulation, code rate 2/3, time interleave 2 and occupying one segment\footnote{\label{footnote_modulation}Refer to \autoref{modulation}.};
+\item layer B configured with 64QAM modulation, code rate 3/4, time interleave of 2 and occupying twelve segments\footnotemark[\ref{footnote_modulation}];
+\end{itemize}
+
+With the captured TS file loaded in StreamXpress and these configurations set, in the program interface it is possible to select which PIDs should really be transmitted and in which layer in real-time, as shown in \autoref{}. Several different combinations of transmitted PIDs and the status of reception in the TV and cell phone are organized in the following tables. They are separated by the reception device and within each device separated by its tuning configuration.
+
+\begin{table}
+    \caption {TV receiver in manual tuning method.}
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    Sent PIDs                   & Signal Level & Screen / Speakers Status & Service Name \\ \hline
+    NIT                         & 0            & Blue Screen              & NONE         \\ \hline
+    NIT, PAT                    & Good         & Blue Screen              & NONE         \\ \hline
+    NIT, PAT, PMT               & Good         & Blue Screen              & NONE         \\ \hline
+    NIT, PAT, PMT, A/V ESs      & Good         & Video and Audio in Sync  & NONE         \\ \hline
+    NIT, PAT, PMT, A/V ESs, SDT & Good         & Video and Audio in Sync  & Band HDTV    \\ \hline
+    \end{tabular}
+	\label{tab_manual_tuning}
+
+\end{table}
+
+\begin{table}
+    \caption {TV receiver in normal operation mode.}
+    \begin{tabular}{|l|l|l|l|}
+    \hline
+    Sent PIDs               & Opens A/V Streams & "No Signal" Flag & "No available programme" flag \\ \hline
+    NIT                     & NO                & YES              & NO                            \\ \hline
+    NIT, PAT                & NO                & NO               & YES                           \\ \hline
+    NIT, PAT, PMT           & NO                & NO               & YES                           \\ \hline
+    NIT, PAT, PMT, Video ES & YES, video only   & NO               & NO                            \\ \hline
+    NIT, PAT, A/V ESs  & NO         & NO               & YES                            \\ \hline
+	NIT, PAT, PMT, A/V ESs  & YES, both         & NO               & NO                            \\ \hline
+    \end{tabular}
+	\label{tab_normal_operation}
+\end{table}
+
+\begin{table}
+    \caption {TV receiver in blind search mode.}
+    \begin{tabular}{|l|l|}
+    \hline
+    Sent PIDs & Finds channel \\ \hline
+    NIT       & YES           \\ \hline
+    PAT, PMT  & NO            \\ \hline
+    PAT       & NO            \\ \hline
+    NIT, PAT  & YES           \\ \hline
+    \end{tabular}
+	\label{tab_blind_search}
+\end{table}
+
+Several important information can be observed from this tables:
+\begin{itemize}
+\item all times PAT and NIT were transmitted in layer A, so it can be noticed from \autoref{tab_manual_tuning} that the TV is capable of decoding PIDs sent in the 1-Segment layer;
+\item during blind scan, the TV can not find the broadcast channel without the NIT as proved by \autoref{tab_blind_search};
+\item in \autoref{tab_normal_operation}, without the PMT, even if the A/V ESs are sent, the TV can not open the streams;
+\item the SDT doesn't make difference to the tuning or finding PIDs, but without it the service has no name.
+\end{itemize}
+
+%\autoref{tab_blind_search} 	\autoref{tab_normal_operation} 	\autoref{tab_manual_tuning}
+
+With the cell phone, the results are slightly different. There is no manual tuning method, so only blind searches and normal operation tests were done. The results are:
+
+\begin{itemize}
+\item from \autoref{tab_cell} it can be seen that PAT presence makes no difference for the phone to open the streams. This is due to the recommendation on NBR 15608, for 1-Segment PMTs to have a default PID range;
+\item without NIT, the phone can not find the broadcast channel in blind search. If NIT is removed after blind search, the phone keeps receiving as long as PMT is still being sent.
+\end{itemize}
+
+\begin{table}
+    \caption {Cell phone in blind search and normal operation.}
+    \begin{tabular}{|l|l|l|}
+    \hline
+    Sent PIDs              & Finds channel in blind search & Status in normal operation \\ \hline
+    NIT                    & YES                           & "Signal too weak, retry?"  \\ \hline
+    PAT, PMT, SDT, A/V ESs & NO                            & Opens A/V                  \\ \hline
+    NIT, PMT, SDT, A/V ESs & YES                           & Opens A/V                  \\ \hline
+    NIT, PMT, A/V ESs      & YES                           & Opens A/V                  \\ \hline
+    \end{tabular}
+	\label{tab_cell}
+\end{table}
+
+This whole set of tests provides now information about what to expect when the stream generated by the developed multiplexer is broadcasted.
+
+\subsection{Transmitting a remultiplexed TS with two services}
+
+The main objective of this last set of tests is to confirm that the developed multiplexer creates a TS compliant to the standard and that is is received and decoded correctly. The two inputs are edited Transport Streams which were captured and remultiplexed, one contains the Full Segment service and the other, the 1-Segment service.
+
+The TS was generated using the following configurations, which are compliant to the standard: the physical network characteristics are original network ID 0730, area code 2970, guard interval 1/16, transmission mode 3, physical channel 20 and virtual channel 1. The transmission profile is set as 1. \autoref{lst_ffmpeg_multi_service} shows the command-line call and \autoref{lst_ffprobe_multi_service} shows the FFprobe analysis results.
+
+\begin{lstlisting}[caption={}, label={lst_ffmpeg_multi_service}]
+./ffmpeg -i /var/src/tve_HD_0406.ts -i /var/src/tve_LD_0406.ts -map 0:0 -map 1:0 -map 0:1 -map 1:1 -vcodec copy -acodec copy -mpegts_original_network_id 0730 -mpegts_area_code 2970 -mpegts_guard_interval 2 -mpegts_transmission_mode 3 -mpegts_physical_channel 20 -mpegts_virtual_channel 1 -mpegts_transmission_profile 1 -muxrate 12000000 -mpegts_flags latm -loglevel verbose -t 30 -y /home/nethome/endres/TVE_HD_LD.ts
+\end{lstlisting}
+
+\begin{figure}[!h]
+\centering
+\caption{TS Parser output for four different Transport Streams.}
+\includegraphics[width=0.9\linewidth]{figuras/ts_parser_tve_orig_remux.png}
+\\Source: The author.
+\label{fig:ts_parser_tve_orig_remux}
+\end{figure}
+
+\autoref{ts_parser_tve_orig_remux} shows the output of MPEG2 Parser for the original captured TS in (a), the two streams derived from it in (b) and the remultiplexed TS by this project in (c). In (a), one may notice the presence of all PSI/SI tables. In (b), only one PMT remains on each edited TS and since they were generated with the original FFmpeg, SI tables are not present(NIT, TOT), except the SDT\footnote{An SDT without all the required information is generated by FFmpeg automatically.}. In (c), the PSI/SI tables are recreated with the developed solution and the service numbers are no longer the same, since network characteristics are different from the original captured TS.
+
+In \autoref{ts_parser_tve_remux_pmt} the TS Parser is analysing the PMTs of the remultiplexed TS. In the left side is the PMT for Full-Segment service, where service ID \texttt{0x5B40} can be identified, the parental rating descriptor is indicating that the show if free for all ages in Brazil and the Elementary Streams described are one video of type H.264 at PID \texttt{0x100} (the primary video ES) and one AAC/LATM audio of PID \texttt{0x102}. The parser lacks the syntax of some descriptors and can not show the AAC descriptor, for example, but it can be seen that its tag is \texttt{0x7C} and content is \texttt{0x2E} as indicated by \autoref{pmt_descriptors}.
+
+In the right side of \autoref{ts_parser_tve_remux_pmt}, the same as above is valid, but the video stream is identified as 1-segment primary video and the service number is \texttt{0x5B59}.
+
+It is interesting to show here that the stream mapping explained in \autoref{stream_mapping} actually worked. The first input stream was the HD video and it received the PID \texttt{0x100}. The second was the 1-Segment video, assigned PID \texttt{0x101}. The third was HD audio, that got PID \texttt{0x102}, and 1-Segment audio got PID \texttt{0x103}.
+
+\begin{figure}[!h]
+\centering
+\caption{TS Parser analysing PMTs of remultiplexed TS.}
+\includegraphics[width=0.9\linewidth]{figuras/ts_parser_tve_remux_pmt.png}
+\\Source: The author.
+\label{fig:ts_parser_tve_remux_pmt}
+\end{figure}
+
+In \autoref{ts_parser_tve_remux_nit} the TS Parser is analysing the NIT of the remultiplexed TS. Since the table is too long, it was split in two parts as shown by the arrow. From the network descriptors tree, it is seen that the default network name was used in the Network Name Descriptor. The parser lacks the syntax of the System Management Descriptor. Further in the tree, one sees the value ZYA730 as the Original Network ID, the value that was passed as a parameter to FFmpeg.
+
+Within the TS descriptors, the TS name holds the same name of the network, as defined by the SBTVD standard. In the Transmission loop, the two services have their modulation schemes detailed, as well as the service types, numbers and IDs. In the rightmost part of \autoref{ts_parser_tve_remux_nit}, the Partial Reception Descriptor points that service \texttt{0x5B59} is for 1-Segment reception. Finally, the Terrestrial System Delivery Descriptor carries many of the options passed to FFmpeg, all according to the expected.
+
+\begin{figure}[!h]
+\centering
+\caption{TS Parser analysing NIT of remultiplexed TS.}
+\includegraphics[width=0.9\linewidth]{figuras/ts_parser_tve_remux_nit.png}
+\\Source: The author.
+\label{fig:ts_parser_tve_remux_nit}
+\end{figure}
+
+In \autoref{ts_parser_tve_remux_sdt} the TS Parser is analysing the SDT of the remultiplexed TS. Once again the service IDs and service types are shown, as well as the EIT scheduling flags indicating that there is neither EPG information nor EIT tables. The Service Descriptors show the service names, providers and service types.
+
+\begin{figure}[!h]
+\centering
+\caption{TS Parser analysing SDT of remultiplexed TS.}
+\includegraphics[width=0.9\linewidth]{figuras/ts_parser_tve_remux_sdt.png}
+\\Source: The author.
+\label{fig:ts_parser_tve_remux_sdt}
+\end{figure}
+
+After this complete analysis among the PSI/SI tables generated by the code developed in the project, it can be seen that all the created tables and descriptors are compliant to the standard and contain valid information. Also, the information in the tables is readable by the receptors as will be seen next. The same sequence of tests of \autoref{retransmitting} was carried out for this Transport Stream.
+
+Dektec configurations: When it reaches the end of the file, it wraps around and repeat the stream.
 
 transmissão de streams com a eitv e com a dektec
-	com a eitv o objetivo era testar o sincronismo, testes nas primeiras etapas do projeto, validação de conceitos e validação da ferramenta ffmpeg como codificador de vídeo e áudio com sincronismo(uma das premissas do projeto!) embora o encoder seja responsavel por gerar os PTS e DTS, era preciso garantir que o multiplexador estava encapsulando corretamente os time stamps
 	com a dektec o objetivo era testar o conjunto todo
 
 %% ---
