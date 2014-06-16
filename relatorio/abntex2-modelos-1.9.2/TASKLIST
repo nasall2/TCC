@@ -2,6 +2,12 @@
 
 2 Sincronismo
 
-3 Adicionar a NIT
+3 Adicionar a NIT : SBTVD Compliant
 
 4 Descritores de Conteúdo(lingua audio, closed captions,)
+
+=======
+
+constant bitrate
+
+encode multiple streams

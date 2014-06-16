@@ -112,7 +112,8 @@
   Escola de Engenharia
   \par
   Departamento de Engenharia Elétrica}
-\tipotrabalho{Graduation Thesis}
+%\tipotrabalho{Graduation Thesis}
+\tipotrabalho{Trabalho de Conclusão de Curso}
 % O preambulo deve conter o tipo do trabalho, o objetivo, 
 % o nome da instituição e a área de concentração 
 \preambulo{ Trabalho de conclusão de curso apresentado para obtenção do diploma de Engenheiro Eletricista
@@ -217,39 +218,39 @@ da Universidade Federal do Rio Grande do Sul.}
 % \begin{fichacatalografica}
 %     \includepdf{fig_ficha_catalografica.pdf}
 % \end{fichacatalografica}
-\begin{fichacatalografica}
-	\vspace*{\fill}					% Posição vertical
-	\hrule							% Linha horizontal
-	\begin{center}					% Minipage Centralizado
-	\begin{minipage}[c]{12.5cm}		% Largura
+% \begin{fichacatalografica}
+	% \vspace*{\fill}					% Posição vertical
+	% \hrule							% Linha horizontal
+	% \begin{center}					% Minipage Centralizado
+	% \begin{minipage}[c]{12.5cm}		% Largura
 	
-	\imprimirautor
+	% \imprimirautor
 	
-	\hspace{0.5cm} \imprimirtitulo  / \imprimirautor. --
-	\imprimirlocal, \imprimirdata-
+	% \hspace{0.5cm} \imprimirtitulo  / \imprimirautor. --
+	% \imprimirlocal, \imprimirdata-
 	
-	\hspace{0.5cm} \pageref{LastPage} p. : il. (some color.) ; 30 cm.\\
+	% \hspace{0.5cm} \pageref{LastPage} p. : il. (some color.) ; 30 cm.\\
 	
-	\hspace{0.5cm} \imprimirorientadorRotulo~\imprimirorientador\\
+	% \hspace{0.5cm} \imprimirorientadorRotulo~\imprimirorientador\\
 	
-	\hspace{0.5cm}
-	\parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
-	\imprimirdata.}\\
+	% \hspace{0.5cm}
+	% \parbox[t]{\textwidth}{\imprimirtipotrabalho~--~\imprimirinstituicao,
+	% \imprimirdata.}\\
 	
-	\hspace{0.5cm}
-		1. Multiplexation.
-		2. MPEG2
-		I. Altamiro Amadeu Susin.
-		II. Universidade Federal do Rio Grande do Sul.
-		III. Escola de Engenharia.
-		IV. Development of a MPEG2 Multiplexer compliant with SBTVD Digital TV Standard\\
+	% \hspace{0.5cm}
+		% 1. SBTVD.
+		% 2. Multiplexing.
+		% I. Altamiro Amadeu Susin.
+		% II. Universidade Federal do Rio Grande do Sul.
+		% III. Escola de Engenharia.
+		% IV. Development of a MPEG2 Multiplexer compliant with SBTVD Digital TV Standard\\
 	
-	\hspace{8.75cm} CDU 02:141:005.7\\
+	% \hspace{8.75cm} CDU 02:141:005.7\\
 	
-	\end{minipage}
-	\end{center}
-	\hrule
-\end{fichacatalografica}
+	% \end{minipage}
+	% \end{center}
+	% \hrule
+% \end{fichacatalografica}
 % ---
 
 % ---
@@ -314,9 +315,9 @@ da Universidade Federal do Rio Grande do Sul.}
 
    % \assinatura{\textbf{\imprimirorientador} \\ Orientador} 
    % \assinatura{\textbf{Sylvie Kerouedan} \\ Convidado Telecom Bretagne}
-   \assinatura{\textbf{Fulano de Tal} \\ Convidado 2}
-   \assinatura{\textbf{Professor} \\ Convidado 3}
-   \assinatura{\textbf{Professor} \\ Convidado 4}
+   % \assinatura{\textbf{Fulano de Tal} \\ Convidado 2}
+   % \assinatura{\textbf{Professor} \\ Convidado 3}
+   % \assinatura{\textbf{Professor} \\ Convidado 4}
       
    % \begin{center}
     % \vspace*{0.5cm}
@@ -388,11 +389,7 @@ da Universidade Federal do Rio Grande do Sul.}
 \begin{resumo}[Resumo]
  \begin{otherlanguage*}{brazil}
 	
-Estudos para a implantação da TV digital no Brasil identificaram que o sistema de transmissão deve ser derivado do padrão japonês, o ISDB-T, mas com peculiaridades. Um dos objetivos das organizações públicas, escolhendo o padrão japonês era o de permitir um desenvolvimento mais significativo da tecnologia nacional. Os padrões americano (ATSC) e europeu (DVB) já estão bem definidos, atualmente com pouco ou nenhum espaço para mais desenvolvimento. As principais modificações do sistema brasileiro no padrão japonês é a codificação MPEG4 (H.264) para vídeo e HE-AACv2 para áudio.
-
-Assim, a escolha da tecnologia japonesa modificada permitiu que centros de pesquisa brasileiros participassem no desenvolvimento da televisão digital. O principal objetivo deste trabalho é desenvolver uma ferramenta que cria um Transport Stream compatível com o padrão brasileiro definido na ABNT NBR15603-1 . Esta norma é baseada na norma ISO/IEC13818.
-
-Para atingir o objetivo, uma extensa pesquisa foi feita para entender os conceitos fundamentais introduzidos pela ISO/IEC13818, e mais pesquisas para entender as diferenças entre a ISO/IEC13818 e a ABNT NBR15603-1. Algumas ferramentas existentes geram fluxos compatíveis com a norma internacional, mas não atendem às modificações brasileiras. Sugere-se portanto uma modificação de uma solução existente, FFmpeg, que agora inclui as estruturas obrigatórias do SBTVD nos Transport Streams gerados.
+Estudos para a implantação da TV digital no Brasil definiram que o sistema de transmissão deve ser derivado do padrão japonês ISDB-T. Um dos objetivos das organizações públicas ao escolher o padrão japonês era o de permitir um desenvolvimento mais significativo da tecnologia nacional, de modo que a tecnologia japonesa modificada permitiu que centros de pesquisa brasileiros participassem no desenvolvimento da televisão digital. O principal objetivo deste trabalho é desenvolver uma ferramenta que cria um Transport Stream compatível com o padrão brasileiro definido na ABNT NBR15603-1, baseada na norma ISO/IEC13818. Para atingir o objetivo, uma considerável pesquisa foi feita para entender os conceitos fundamentais introduzidos pela ISO/IEC13818, e as diferenças entre a ISO/IEC13818 e a ABNT NBR15603-1. Algumas ferramentas existentes criam fluxos compatíveis com a norma internacional, mas não atendem às modificações brasileiras. Sugere-se portanto uma modificação de uma solução existente, FFmpeg, que agora passa a incluir as estruturas obrigatórias do SBTVD nos fluxos de transporte gerados.
 
  \textbf{Palavras-chaves}: Multiplexação. MPEG2. Transport Stream. SBTVD.
  \end{otherlanguage*}
@@ -401,11 +398,7 @@ Para atingir o objetivo, uma extensa pesquisa foi feita para entender os conceit
 % resumo em inglês
 \begin{resumo}[Abstract]
 
-Studies for the implementation of digital TV in Brazil have identified that the transmission system should be derived from the Japanese standard, ISDB-T, but with peculiarities. One of the goals of public organizations by choosing the Japanese standard was to allow a more significant development of national technology. The American (ATSC) and European (DVB) standards are already well defined, with little or no space for further development. The main modifications of the Brazilian system on the Japanese standard is MPEG4 coding (H.264) for video and HE-AACv2 for audio.
-
-Thus, the choice for the modified Japanese technology has allowed Brazilian research centres to participate on the development of digital television. The main objective of this work is develop a tool that creates a Transport Stream which is compliant to the Brazilian standard ABNT NBR15603-1. This standard is based in the ISO/IEC13818 paper.
-
-To achieve the objective, extensive research was done to understand the fundamental concepts introduced by ISO/IEC13818, and further research to understand the differences between ISO/IEC13818 and ABNT NBR15603-1. Some existing tools generate streams compliant to the international standard but not to the Brazilian modifications. A modification in therefore proposed to an existing solution, FFmpeg, which now includes the mandatory structures of SBTVD in generated Transport Streams.
+Studies for the implementation of digital TV in Brazil have identified that the transmission system should be derived from the Japanese standard, ISDB-T. One of the goals of public organizations by choosing the Japanese standard was to allow a more significant development of national technology. Thus, the choice for the modified Japanese technology has allowed Brazilian research centres to participate on the development of digital television. The main objective of this project is develop a tool that creates a Transport Stream which is compliant to the Brazilian standard ABNT NBR15603 which is based in the ISO/IEC 13818-1 standard. To achieve the objective, considerable research was carried out to understand the fundamental concepts introduced by ISO/IEC13818and the differences between ISO/IEC13818-1 and ABNT NBR15603. Some existing tools generate streams compliant to the international standard but not to the Brazilian modifications. A modification is therefore proposed to an existing solution, FFmpeg, which now includes the mandatory structures of SBTVD in generated Transport Streams.
 
    \vspace{\onelineskip}
  
@@ -471,6 +464,7 @@ To achieve the objective, extensive research was done to understand the fundamen
   \item[\texttt{0xN}] Is the hexadecimal number 'N'
   \item[DIV] Integer division with truncation of the result towards $-\infty$
   \item[\%] Modulus operator. Defined only for positive numbers.
+  \item[\texttt{N d}] Is the decimal number 'N'.
 %  \item[$ \in $] Pertence
 \end{simbolos}
 % ---
@@ -492,7 +486,7 @@ To achieve the objective, extensive research was done to understand the fundamen
 
 \chapter*[Disclaimer]{Disclaimer}
 
-This work was developed based on the \cite{ffmpeg} framework and is subject to the LGPL v2.1 Licence, \cite{gplv2}. The modified part of FFMpeg code is within the 'avformat' library, which is Copyright (C) 2003 of Fabrice Bellard. 
+This work was developed based on the FFmpeg\cite{ffmpeg} framework and is subject to the LGPL v2.1 Licence \cite{gplv2}. The modified part of FFMpeg code is within the 'avformat' library, which is Copyright (C) 2003 of Fabrice Bellard. 
 
 The H.264 encoder used to create the sample video streams in this work is licenced under the GPL v2 Licence and is Copyright (C) 2005 of Mans Rullgard ( mans@mansr.com).
 
@@ -514,7 +508,7 @@ along with FFmpeg; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 \end{lstlisting}
 
-The source code for this modification is publicly available in the Internet under Git version control system, and may accessed via the following link:
+The source code for this modification is publicly available in the Internet under Git version control system, and may be accessed via the following link:
 \begin{verbatim}
 https://github.com/nasall2/TCC_ffmpeg
 \end{verbatim}
@@ -523,7 +517,7 @@ https://github.com/nasall2/TCC_ffmpeg
 % Introdução (exemplo de capítulo sem numeração, mas presente no Sumário)
 % ----------------------------------------------------------
 \chapter[Introduction]{Introduction}
-%\addcontentsline{toc}{chapter}{Introdução}
+%\addcontentsline{toc}{chapter}{Introduction}
 % ----------------------------------------------------------
 
 %Historicamente, a televisão está presente nas casas da maioria dos cidadãos brasileiros e é a principal fonte de
@@ -554,26 +548,28 @@ https://github.com/nasall2/TCC_ffmpeg
 %à \textit{Internet}, como demonstrou a Caixa Econômica Federal em 2010\cite{caixa}. Contudo, a similaridade do sistema de transmissão brasileiro com o padrão internacional MPEG2 e a não obrigatoriedade da utilização de interfaces interativas até 2015 levou ao desinteresse das geradoras no desenvolvimento da tecnologia,
 %de modo que atualmente muito pouco se investe para a criação de equipamentos interativos para a televisão digital em terrítório brasileiro.
 
-Historically, television is present in the homes of most Brazilian citizens and is the main source of entertainment and information to the population. Over the past 10 years, new digital media such as computer and cell phones are being adopted by the population of different social classes. A recent data \cite{pnad2011} says that in 2011, 69 \% of the population had a mobile phone line. Although significant, the participation of this medium is still far below the television, whose coverage area reaches 100 \% of the territory via satellite \cite{StarOne}, and around 70 \% of the population by land \cite{forum_sbtvd}. Television is therefore the main channel of communication available to the general public in Brazil.
+Historically, television is present in the homes of most Brazilian citizens and it is the main source of entertainment and information to the population. Over the past 10 years, new digital media such as computer and cell phones are being adopted by the population of different social classes. A recent report \cite{pnad2011} says that in 2011, 69 \% of the population had a mobile phone line. Although significant, the participation of this medium is still far below the television, whose coverage area reaches 100 \% of the territory via satellite \cite{StarOne}, and around 98\% of the population by land \cite{globo}. Television is therefore the main channel of communication available to the general public in Brazil.
 
-Although it has unparalleled coverage to other technologies, television is, roughly speaking , a mean of unidirectional communication. It is not possible, using the analog transmission system , to hand to the viewer interactivity with the content submitted by the broadcaster. Compared to \textit{Internet}, for example , television is at disadvantage in this respect. It is possible, however, to provide interactive programming if there is a way to return data to the broadcaster. With interactivity, it can be presented to the user program options, and from the user's choice, the TV displays the chosen content . Thus , one could combine the interactivity of \textit{Internet} to television coverage and thereby promote the social inclusion of remote areas without access to infrastructure of high-speed data links, available in the larger cities . This technology is not feasible with the current analog television infrastructure : it is impossible to ship via a single analog channel more than one video and audio stream simultaneously.
+Although it has unparalleled coverage to other technologies, television is a mean of unidirectional communication. It is not possible, using the analog TV transmission system, to hand to the viewer interactivity with the content submitted by the broadcaster. Compared to \textit{Internet}, for example, television is at disadvantage in this aspect. It is possible, however, to provide interactive programming if there is a way to return data to the broadcaster. With interactivity, it can be presented to the user program options, and from the user's choice, the TV displays the chosen content. Thus, one could combine the interactivity of \textit{Internet} to television coverage and thereby promote the social inclusion of remote areas without access to infrastructure of high-speed data links, available in the larger cities . This technology is not feasible with the current analog television infrastructure: it is impossible to transmit via a single analog channel more than one video and two audio streams simultaneously.
 
-As a solution to this difficulty, ISO/IEC developed the digital transmission system described by ISO/IEC13818 standard, commercially known by the acronym which names the committee formed to draft it, MPEG2. The specification describes standards of encoding and transmitting video, audio and side data. One key feature for television applications is that it is possible to broadcast multiple audiovisual programs simultaneously, thus allowing the user to select which information he wants to receive among several services sent by one single broadcaster, in the same physical channel.
+As a solution to this difficulty, ISO/IEC developed the digital transmission system described by ISO/IEC13818 standard, commercially known by the acronym which names the committee formed to draft it, MPEG2. The specification describes standards of encoding and transmitting video, audio and system data. One key feature for television applications is that it is possible to broadcast multiple audiovisual programs simultaneously, thus allowing the user to select which information he wants to receive among several services sent by one single broadcaster, in the same physical channel.
 
-Since 1994 , private companies and government funded research and technical tests to compare the performance of three digital television systems that were known to be efficient in their countries of origin at that time: ATSC \cite{ATSC}, developed in the United States; DVB-T \cite{DVB}, developed by a consortium of companies for use in European countries; and ISDB , developed in Japan by ARIB\cite{ARIB}. The three systems have similarities and differences regarding the encoding of video and audio: for example, both the DVB and ISDB use the transport infrastructure of MPEG2 standard, but differ in the modulation schemes. After the evaluations , it was determined that the system with the best performance for Brazilian territory would be based on the Japanese ISDB with some modifications, such as pointed in \cite{SBTVD_diff_ISDB}.
+In Brazil, since 1994, private companies and government funded research and technical tests to compare the performance of three digital television systems that were known to be efficient in their countries of origin at that time: ATSC \cite{ATSC}, developed in the United States; DVB-T \cite{DVB}, developed by a consortium of companies for use in European countries; and ISDB , developed in Japan by ARIB\cite{ARIB}. The three systems have similarities and differences regarding the encoding of video and audio: for example, both the DVB and ISDB use the transport infrastructure of MPEG2 standard, but differ in the modulation schemes. After the evaluations, it was determined that the system with the best performance for Brazilian territory would be based on the Japanese ISDB with some modifications, such as pointed in \cite{decreto8061}.
 
-The differences between the original ISDB and the modified standard used in Brazil mainly relate to video encoding and interactivity platform. In order to promote the development of national industry , the government decided to adopt an open source interactive platform, developed mainly with Ginga, a technology developed mainly by PUC-RJ\cite{PUCRJ}. Through this tool the broadcaster can, for example, deliver useful information to the low-income population without access to the \textit{Internet}, as an application sugested by one Brazilian Bank in 2010 \cite{caixa}. Another application is a project recently developed by the brazilian public comunication company (EBC), called "Brasil 4D" \cite{consultas}. The users can make appointments with doctors or schedule meetings to solve social security issues, or yet check job offers in real time, all this through the TV remote control. However , the similarity of the Brazilian system with the international standard and the fact that interactive interfaces will not be mandatory until 2015 led to the lack of interest of many broadcasters in the development of applications, so that currently very little is invested in the creation of interactive digital television in Brazilian territory.
+The differences between the original ISDB and the modified standard used in Brazil mainly relate to video encoding and interactivity platform. In order to promote the development of national industry, the government decided to adopt an open source interactive platform, developed with Ginga, a technology developed mainly by Brazilian researchers\cite{PUCRJ}. Through this tool the broadcaster can, for example, deliver useful information to the low-income population without access to the \textit{Internet}, as an application sugested by one Brazilian Bank in 2010 \cite{caixa}. Another application is a project recently developed by the brazilian public comunication company (EBC), called "Brasil 4D" \cite{consultas}. The users can make appointments with doctors or schedule meetings to solve social security issues, or yet check job offers in real time, all this through the TV remote control. However, the similarity of the Brazilian system with the international standard and the fact that interactive interfaces will not be mandatory until 2015 led to the lack of interest of many broadcasters in the development of applications, so that currently very little is invested in the creation of interactive digital television in Brazilian territory.
 
-A digital television system is composed basically by the group of equipments presented in Picture \ref{fig:diagrama_blocos_tvd}. At the beginning of the signal flow, there are the video and audio capturing elements, such as cameras and microphones, and the raw signal may be analog or digital depending on the capture technology used. Once captured, the video and audio are compressed and coded through corresponding encoders. The output of the encoders are standardized bitstreams called Elementary Streams. Once the elementary streams leave the encoders, they enter the multiplexer, where all the streams are packetized and embedded into one single stream, which is the main objective of the MPEG2 systems layer. What follows is one key process for the system robustness: the stream receives a wrapping of error correction code to resist to the noisy, multipath channel between the broadcaster and the receiver. Finally, a digital modulation is applied and the modulated stream is sent to the antenna.
+A digital television system is composed basically by the group of equipments presented in \autoref{fig:diagrama_blocos_tvd}. At the beginning of the signal flow, there are the video and audio capturing elements, such as cameras and microphones, and the raw signal may be analog or digital depending on the capture technology used. Once captured, the video and audio are compressed and coded through corresponding encoders. The output of the encoders are standardized bitstreams called Elementary Streams. Once the elementary streams leave the encoders, they enter the multiplexer, where all the streams are packetized and embedded into one single stream, which is the main objective of the MPEG2 systems layer. What follows is one key process for the system robustness: the stream is protected with the use of error correction codes to resist to the noisy, multipath channel between the broadcaster and the receiver. Finally, a digital modulation is applied and the modulated stream is sent to the antenna.
  
- \begin{figure}
+ \begin{figure}[!h]
 \centering
 \caption{Block diagram showing digital television basic signal flow.}
 \includegraphics[width=1\linewidth]{figuras/diagrama_blocos_tvd.png}
 \label{fig:diagrama_blocos_tvd}
 \end{figure}
  
-The main difference between analog and digital TV broadcasting systems, at the modulation level, is that in analog TV the multiplexing is frequential, i.e., the video signal is sent in a frequency band within the channel bandwidth and the audio in another frequency band. In digital technology, this multiplexing happens in time domain: the multiplexer output has constant bitrate, and for fractions of second only one packet from one of the media sources is sent to the transmitter. In the other side of the channel, the receiver is conceived in such a way that after passing the error correction layer, a \textit{demultiplexer} takes the compound stream and splits it back into elemental bitstreams. They are then sent to the decoders and to audiovisual output devices. It would be certainly disturbing to the viewer to watch delayed video or audio outputs, so one challenge of this multiplexing scheme is to synchronize the reproduction of all the streams. To ensure this, presentation time stamps are added periodically into the streams so they can be reproduced in sync.
+The main difference between analog and digital TV broadcasting systems, at the modulation level, is that in analog TV the multiplexing is in frequency domain, the video signal is sent in a frequency band within the channel bandwidth and the audio in another frequency band. In digital technology, this multiplexing happens in time domain: the multiplexer output has constant bitrate, and for fractions of second only one packet from one of the media sources is sent to the transmitter. In the other side of the channel, the receiver is conceived in such a way that after passing the error correction layer, a \textit{demultiplexer} takes the compound stream and splits it back into elementary bitstreams. They are then sent to the decoders and to audiovisual output devices.
+
+It would be certainly disturbing to the viewer to watch delayed video or audio outputs, thus one challenge of this multiplexing scheme is to synchronize the reproduction of all the streams. To ensure this, presentation time stamps are added periodically into the streams so they can be reproduced in sync.
 
 %O sistema de transmissão de televisão digital funciona, basicamente, coordenando a entrada de fluxos elementares de vídeo, áudio e dados no fluxo de transmissão. Na televisão analógica, a multiplexação é frequencial, ou seja, o sinal de vídeo é enviado em um intervalo de frequências dentro do canal e o sinal de áudio em outro intervalo. Na tecnologia digital, essa multiplexação é feita no tempo: por frações de segundo, apenas um dos sinais é enviado no canal e o receptor armazena os sinais independentemente para depois fazer a decodificação. No momento da reprodução dos sinais, é preciso que haja sincronismo nos fluxos de vídeo e áudio.
 
@@ -581,13 +577,15 @@ The Presitential Act number 8061\cite{decreto8061}, from july 29, 2013, establis
 
 %O Decreto presidencial número 8061, de 29 de julho de 2013, estabelece o cronograma de desligamento dos sistemas de transmissão de televisão analógica. Até 31 de dezembro de 2018, todos os transmissores analógicos devem ser desativados e os canais de radiofrequência devolvidos à união... COLOCAR REFERENCIA! 
 
-The objective of this project is to develop a simple, yet flexible, tool to handle the Systems layer on SBTVD standard. Basically, by using this tool one is able to produce a SBTVD-compatible Transport Stream binary file that can be used to broadcast recorded video and audio streams into appropriate receivers. Many commercial solutions for this objective are available on the market, so the target here was not to develop a consumer product, but rather something more academic, educational, where most of the configurations can be modified as desired. One main UFRGS internal client is the SBTVD set top box project. In order to run tests of the whole system, streams with different multiplexing set-ups must be broadcast. When received, the way that the decoder handles them must be analysed.
+The objective of this project is to develop a simple, yet flexible, tool to handle the Systems layer on SBTVD standard. Basically, by using this tool one is able to produce a SBTVD-compatible binary file containing a Transport Stream that can be used to broadcast recorded video and audio streams into appropriate receivers. Many commercial solutions for this objective are available on the market, so the target here was not to develop a consumer product, but rather something more academic, educational, where most of the configurations can be modified as desired. The main UFRGS internal client is the SBTVD set top box project, which is developing a set-top-box in as a System on Chip architecture in FPGA. In order to run tests of the entire system, streams with different multiplexing setups must be broadcast. When received, the way that the decoder handles them must be analysed.
 
-The project workflow was the following. The first step was to study the ABNT NBR15603 standard and the references in it to the ISO/IEC 13818 standard and to the ARIB STD-B10 standard. Here the target was to understand how the Systems Layer should work and identify which parts were mandatory and optional. While discussing the project at the very first weeks, it was decided to evaluate the possibility of develop the tool from scratch. This was before the first step was accomplished, because other people in the lab had already done some research and had concluded that the available freeware tools couldn't handle the SBTVD characteristics. During the author's own research on the Internet, some interesting tools were identified, and instead of developing from scratch, it seemed by then more reasonable to profit of an existent framework. Once it was decided that an existing tool would be modified, the third step was to add the missing features in order to make it compatible with the SBTVD, and finally the features were tested on several receivers.
+The project workflow was the following. The first step was to study the ABNT NBR15603 standard and the references in it to the ISO/IEC 13818 standard and to the ARIB STD-B10 standard. Here the target was to understand how the Systems Layer should work and identify which parts were mandatory and optional. While discussing the project at the very first weeks, it was decided to evaluate the possibility of develop the tool from scratch. This was before the first step was accomplished, because other people in the lab had already done some research and had concluded that the available freeware tools couldn't handle the SBTVD characteristics. During the author's own research on the Internet, some interesting tools were identified, and instead of developing from scratch, it seemed by then more reasonable to profit of an existent framework.
 
-%The main challenges to accomplish in the project are provide a tool that has four key features: output a stream with an acceptable audiovisual timing performance, encode multiple input stream formats into the standard recommendations, create a stream with multiple embedded services and ensure a constant bitrate in the output. In the first few weeks, no freeware solution had been found to meet these requirements, so it was proposed that the tool should be developed from scratch. After extra research efforts, some existing open source applications were found and fortunately they already met some of the requirements, but all were developed respecting the pure MPEG2 standard and naturally didn't include some of the brazilian system requirements. It was then proposed that the project target was to deliver no longer a solution from scratch, bu rather something based on one of the existing tools, adapting it to comprise the brazilian standard requirements. A discussion on the analysed tools is presented in the following chapters.
+Once it was decided that an existing tool would be modified, the third step was to add the missing features in order to make it compatible with the SBTVD, and finally the features were tested on several receivers. The practical objective of the project is to provide a tool that creates Transport Streams with three key features: synchronous audiovisual presentation, compliance to the SBTVD standard and multiple services. Eventually, if any mandatory structures are only informational and do not block the system from working, they might be left for further development.
 
-%TODO The project objective is to develop an academic solution  not develop a customer solution, but rather an academic solution, in which one may broadcast streams without the restrictions of a commercial solution, although one may integrate the software to a modulator PCI board and a amplifier to constitute a small, cheap TV Station.
+%In the first few weeks, no freeware solution had been found to meet these requirements, so it was proposed that the tool should be developed from scratch. After extra research efforts, some existing open source applications were found and fortunately they already met some of the requirements, but all were developed respecting the pure MPEG2 standard and naturally didn't include some of the brazilian system requirements. It was then proposed that the project target was to deliver no longer a solution from scratch, bu rather something based on one of the existing tools, adapting it to comprise the brazilian standard requirements. A discussion on the analysed tools is presented in the following chapters.
+
+% The project objective is to develop an academic solution  not develop a customer solution, but rather an academic solution, in which one may broadcast streams without the restrictions of a commercial solution, although one may integrate the software to a modulator PCI board and a amplifier to constitute a small, cheap TV Station.
 
 %In \autoref{codecs}, a brief description of the encoders chosen to integrate the standard is presented. In \autoref{}, 
 
@@ -618,15 +616,14 @@ The project workflow was the following. The first step was to study the ABNT NBR
 \chapter{Audiovisual codecs used in SBTVD}
 \label{codecs}
 
-The codecs chosen to used in SBTVD are H.264 for video and AAC/LATM for the audio. This overview is useful to understand the synchronization methods adopted in the systems layer.
+The codecs chosen to be used in SBTVD are H.264 for video and AAC/LATM for the audio. This overview is useful to understand the synchronization methods adopted in the systems layer, explained further in the text.
 
 \section{H.264}
 
-The H.264 video coding standard is also known as the MPEG-4 Part 10 standard, and was published as the evolution of the existing video coding standards (ITU-T H.261 / MPEG1, ITU-T H.262 / MPEG2). The main applications for this standard, as described by the publisher itself, are video-conferencing, digital storage media, television broadcasting, Internet streaming and Internet communication. It was developed to provide a solution that has higher compression rates than the former standards, and yet improved subjective quality. To the television broadcast market, it suits perfectly the transmission of high definition video. Technically, the encoder takes the raw video frames and performs sequentially prediction, transform and entropy encoding processes to produce a compressed bitstream. The codec features are organized in profiles and levels, the \textit{high} profile suits the HDTV video transmission characteristics on the Full Segment transmission, while the \textit{baseline} profile fits the needs for mobile, 1-Segment broadcasts.
+The H.264 video coding standard is also known as the MPEG-4 Part 10 standard, and it was published as the evolution of the existing video coding standards (ITU-T H.261 / MPEG1, ITU-T H.262 / MPEG2). The main applications for this standard, as described by the publisher itself, are video-conferencing, digital  media storage, television broadcasting, Internet streaming and Internet communication. It was developed to provide a solution that has higher compression rates than the former standards, and yet improves subjective quality. To the television broadcast market, it suits perfectly the transmission of high definition video. Technically, the encoder takes the raw video frames and sequentially performs prediction, transform and entropy encoding processes to produce a compressed bitstream. The codec features are organized in profiles and levels, the \textit{high} profile suits the HDTV video transmission characteristics on the Full Segment transmission, while the \textit{baseline} profile fits the needs for mobile, 1-Segment broadcasts. See \autoref{modulation}.
 
-%TODO Add more specific profile information
 
-In the first step, prediction, two types of redundancy in pixel values are exploited: the spatial and the temporal. To do so, the encoder splits one frame into square or rectangular blocks of pixels, called macroblocks, and predicts the values of pixels in the current macroblock based on information from previously analysed macroblocks either in the current frame or in previously coded frames. Then, instead of transmitting the pixel values, is transmits the difference between the original and the predicted frame (which should have less information if the encoder is efficient) along with pointers to the macroblocks that must be used to recreate that region. These pointers are called motion vectors. There are three different types of prediction schemes, that lead to different kinds of frames:
+In the first step, prediction, the encoder splits one frame into square or rectangular blocks of pixels, called macroblocks, and predicts the values of pixels in the current macroblock based on information from previously analysed macroblocks either in the current frame or in previously coded frames. Then, instead of transmitting the pixel values, is transmits the difference between the original and the predicted frame (which should have less information if the encoder is efficient) along with pointers to the macroblocks that must be used to recreate that region. These pointers are called motion vectors. There are three different types of prediction schemes, that lead to different kinds of frames:
 
 \begin{itemize}
 \item{an I-frame is constructed by predicting pixel values only from macroblocks within the same frame, this is the intra-frame prediction;}
@@ -634,7 +631,7 @@ In the first step, prediction, two types of redundancy in pixel values are explo
 \item{a B-frame is made by predicting the output frame from the current input, the earlier inputs or yet the later input frames, and is known as the bidirectional inter-frame prediction.}
 \end{itemize}
 
-The decrease in amount of information can be noticed in Figure \ref{fig:motion_compensation}, adapted from \cite{richardson}. The first frame is marked as (a) and coded with intra prediction. The following frame is (b), which is coded as a P-frame. When generic motion compensation coding is applied, the residual frame is the one in (c). Knowing that these frames have differential pixel values \footnote{Differential pixel values means that a black pixel is the negative threshold, a white pixel is the positive threshold and gray is zero.}, it can be noticed that most of the pixels have a value close to zero in (c), which means a residual with very little information. The number of bytes needed to code one I frame is therefore much higher than the necessary to code a P frame, since there is no motion compensation in the first one.
+The decrease in amount of information can be noticed in \autoref{fig:motion_compensation}, adapted from \cite{richardson}. The first frame is marked as (a) and coded with intra prediction. The following frame in presentation sequence is (b), which is coded as a P-frame. There is a slight difference between frames that can be seen by the bicycle position. When generic motion compensation coding is applied, the residual frame is the one in (c). Knowing that these frames have differential pixel values \footnote{Differential pixel values means that a black pixel is the negative threshold, a white pixel is the positive threshold and gray is zero.}, it can be noticed that most of the pixels have a value close to zero in (c), which means a residual with very little information. The number of bytes needed to code one I frame is therefore much higher than the necessary to code a P frame, since there is no motion compensation in the first one.
 
 \begin{figure}
 \centering
@@ -644,12 +641,12 @@ The decrease in amount of information can be noticed in Figure \ref{fig:motion_c
 \label{fig:motion_compensation}
 \end{figure}
 
-Although there is a substantial decrease in amount of information with inter-frame prediction, the video quality may degenerate catastrophically if too many P and B frames are used between two I frames. This leads to a compromise of quality and bitrate and the usual frame arrangement is the one shown in Figure \ref{fig:IBBPBBP}, that places at most two B frames between one I and one P, or between two P frames, and at most two P frames between consecutive I frames. This arrangement is called a Group of Pictures, or GOP as referenced in MPEG4 standard.
+Although there is a substantial decrease in amount of information with inter-frame prediction, the video quality may degenerate if too many P and B frames are used between two I frames, due to quantization. This leads to a compromise of quality and bitrate and the usual frame arrangement is the one shown in \autoref{fig:IBBPBBP}, that places at most two B frames between one I and one P, or between two P frames, and at most two P frames between consecutive I frames. This arrangement is called a Group of Pictures, or GOP as referenced in MPEG4 standard.
 
 \begin{figure}
 \centering
-\caption{.}
-\includegraphics[width=1\linewidth]{figuras/IBBPBBP.png}
+\caption{Usual group of pictures arrangement.}
+\includegraphics[width=0.6\linewidth]{figuras/IBBPBBP.png}
 \\Source: The Author.
 \label{fig:IBBPBBP}
 \end{figure}
@@ -658,7 +655,7 @@ The next encoder step is to transform the residual frame from prediction with an
 
 \section{AAC}
 
-The audio codec chosen to incorporate the SBTVD, developed by Fraunhofer IIS along with AT\&T, Dolby and Sony, is called Advanced Audio Coding, or AAC. Since the beggining of the dewvelopment in 1994, the successive evolutions in the codec gave place to profiles that assemble the main features. Three different profiles are the mostly used in digital television broadcast: AAC-LC, HE-AAC, HE-AACv2. According to the main developer(\cite{fraunhofer}), even the simplest profile, AAC-LC (LC for low complexity) provides \textit{"an audio whose quality even for expert listeners, so-called golden ears, is indistinguishable from the original"}.
+The audio codec chosen to incorporate the SBTVD, developed by Fraunhofer IIS along with AT\&T, Dolby and Sony, is called Advanced Audio Coding, or AAC. Since the beginning of the development in 1994, the successive evolutions in the codec gave place to profiles that assemble the main features. Three different profiles are the mostly used in digital television broadcast: AAC-LC, HE-AAC, HE-AACv2. According to the main developer\cite{fraunhofer}, even the simplest profile, AAC-LC (LC for low complexity) provides \textit{"an audio whose quality even for expert listeners, so-called golden ears, is indistinguishable from the original"}.
 
 The codec supports encoding of ancillary data along with the audio samples, and all with typically 192Kbps for broadcast quality stereo streams in AAC-LC profile. If the HE-AAC profile is chosen, the Spectral Band Replication(SBR) feature is applied and for the same audio quality in the output, a 30\% bitrate reduction is observed. In HE-AAC the lower part of the audio spectrum is sampled at half the frequency of the remaining signal using AAC-LC, and the high frequency band is coded with SBR. SBR exploits the relationship of upper and lower sides of the spectrum to produce a parametric recreation of the upper band, thus reducing the total bitrate. HE-AAC achieves typical 48 to 64 kbps for stereo streams.
 
@@ -672,14 +669,14 @@ The chosen profile to integrate the SBTVD is HE-AACv2. Additionally to the alrea
 \label{fig:he_aac_v2}
 \end{figure}
 
-LATM is one method of encapsulating audio frames for transmission in Transport Streams. Further information can be obtained in ISO/IEC 14496-3 International Standard - Audio.
+LATM is the selected method for encapsulating audio frames for transmission in SBTVD Transport Streams. Further information can be obtained in ISO/IEC 14496-3 International Standard - Audio.
 
 \chapter{ISO/IEC 13818-1 Standard}
 \label{iso13818}
 % ---
 The main objective of the ISO/IEC13818-1 standard is to describe the conversion of multiple bitstreams into one single stream carrying wrapped video and audio data, as well as additional information responsible to unwrap the streams. Similarly to other ISO/IEC standards, the text only specifies the decoding/demultiplexing side of the transmission chain, leaving the architectures of encoding/multiplexing stages to the manufacturers decision.
 
-Some concepts should be briefly described to the reader by now. The first is the \textit{program} (or \textit{service}), which is a collection of program elements, that on their turn are elementary streams. They may share a time base and will then be reproduced simultaneously. This is equivalent to the analog TV channel concept, in which a broadcaster sends a video stream and several audio streams to the viewer. The second is the \textit{PID}, which is a label assigned at the system layer to each different payload carried by the TS. Each information table has its own PID, each Elementary Stream also. The concept here is similar to a pointer, in programming: during reception of a TS packet, the demultiplexer will read the packet PID and push its payload to the appropriate buffer so that information gets concatenated with previously received packets of the same PID.
+Some concepts should be briefly described to the reader by now. The first is the \textit{program} (or \textit{service}), which is formed by a collection of program elements, that on their turn are called \textit{elementary streams}. They may share a time base and then will be reproduced simultaneously. This is equivalent to the analog TV channel concept, in which a broadcaster sends a video stream and several audio streams to the viewer. The second is the \textit{PID}, which is a label assigned at the system layer to each different payload carried by the TS. Each information table has its own PID, each Elementary Stream also. The concept here is similar to a pointer, in programming: during reception of a TS packet, the demultiplexer will read the packet PID and push its payload to the appropriate buffer so that information gets concatenated with previously received packets of the same PID.
 
 The standard defines two architectures that should be applied in different situations, both of them based on the transmission of packets of data. The first is the Program Stream, defined to be used in error free situations, such as storage in digital discs: the streams of this type are composed of long packets of variable length, the Packetized Elementary Streams (PES) packets. The other architecture, suitable for faulty, error prone transmission channels, is the Transport Stream. The stream packet has fixed length and is much smaller than the PES packets, which makes it easier to error correction codes to ensure the transmission through the faulty channels. Since the second architecture is much more suitable to broadcasting situations, the following sections will be focused only on it. Only selected topics will be discussed in the following chapter, these are the concepts that must be understood to develop the simple, but functional, MPEG-2 multiplexer of the project.
 
@@ -687,22 +684,22 @@ The standard defines two architectures that should be applied in different situa
 \section{Transport Stream Header}
 \label{ts_header}
 % ---
-The main structure of the MPEG2 Transport Stream is a packet of constant size. The stream is made of many packets concatenated. \autoref{fig:TS_iso13818} shows the basic elements that are present in one packet, the value under each field is its length in bits. From the picture, it can be seen that a packet is roughly formed with 188 bytes of data. The mandatory header has 4 bytes, starts at the \textit{sync byte} and goes up to the \textit{continuity counter}. The packet payload may also contain the \textit{Adaptation Field}, a sort of header extension, with additional data that helps to decode and present the streams in sync. Apart from the 4 mandatory bytes for the header, the other 184 bytes may be filled with combinations of the following content: the Adaptation Field, PES data or information tables. The Adaptation Field presence is optional, and it is commonly used to carry sync data and to fill empty space in the last TS packets from one PES packet with stuffing bits.
+The main structure of the MPEG2 Transport Stream is a packet of constant size. The stream is made of many packets concatenated. \autoref{fig:TS_iso13818} shows the basic elements that are present in one packet, the value under each field is its length in bits. From the picture, it can be seen that a packet is roughly formed with 188 bytes of data. The mandatory header has 4 bytes, starts at the \textit{sync byte} and goes up to the \textit{continuity counter}. The packet payload may also contain the \textit{Adaptation Field}, a sort of header extension, with additional data that helps to decode and present the streams in sync. Apart from the 4 mandatory bytes of the header, the other 184 bytes may be filled with combinations of the following content: the Adaptation Field, PES data or information tables. The Adaptation Field presence is optional, and it is commonly used to carry sync data and to fill empty space in the last TS packets from one PES packet with stuffing bits.
 
 The header fields relevant to this project are briefly described next:
 \begin{itemize}
-\item{The \textit{sync\_byte} is a fixed, 8-bit field whose value is always \texttt{0x47} and is used to identify the beginning of a TS packet;}
-\item{ The \textit{payload\_unit\_start\_indicator} is a 1-bit field and a value of '1' indicates that either a PES packet or a PSI section starts in the current TS packet;}
+\item{The \textit{sync\hspace{0.1mm}\_\hspace{0.1mm}byte} is a fixed, 8-bit field whose value is always \texttt{0x47} and is used to identify the beginning of a TS packet;}
+\item{ The \textit{payload\hspace{0.1mm}\_\hspace{0.1mm}unit\hspace{0.1mm}\_\hspace{0.1mm}start\hspace{0.1mm}\_\hspace{0.1mm}indicator} is a 1-bit field and a value of '1' indicates that either a PES packet or a PSI section starts in the current TS packet;}
 \item{The field \textit{PID} is a 13-bit field, that indicates which type of data is stored in the packet payload. As will be discussed later, some PID values are reserved for specific data types;}
-\item{The \textit{adaptation\_field\_control} flag is a 2-bit field and indicates if the current packet mandatory header is followed by an Adaptation Field and/or payload data. \autoref{tab_adapataion_field} gives detailed information about the values;}
-\item{The \textit{data\_bytes} Data bytes are the packet payload, and shall be contiguous bytes of data from the PES packets, PSI sections, packet stuffing bytes after PSI sections, or private data as indicated by the PID.}
+\item{The \textit{adaptation\hspace{0.1mm}\_\hspace{0.1mm}field\hspace{0.1mm}\_\hspace{0.1mm}control} flag is a 2-bit field and indicates if the current packet mandatory header is followed by an Adaptation Field and/or payload data. \autoref{tab_adapataion_field} gives detailed information about the values;}
+\item{The \textit{data\hspace{0.1mm}\_\hspace{0.1mm}bytes} are the packet payload, and shall be contiguous bytes of data from the PES packets, PSI sections, packet stuffing bytes after PSI sections, or private data as indicated by the PID.}
  \end{itemize}
 
-The \textit{continuity\_counter} is a 4-bit counter that increments on every TS packet of each individual PIDs. It works as a sequential checking and reordering information for the demultiplexer to know whether the packet order was respected in transmission, or to know if a packet was repeated. Under two conditions the continuity counter is not incremented: if a duplicate packet with payload is sent, and the \textit{adaptation\_field\_control} must be either '01' or '11' to indicate the payload presence; if there is no payload in the packet, and the \textit{adaptation\_field\_control} must be either '00' or '10'.
+The \textit{continuity\hspace{0.1mm}\_\hspace{0.1mm}counter} is a 4-bit counter that increments on every TS packet of each individual PIDs. It works as a sequential checking and reordering information for the demultiplexer to know whether the packet order was respected in transmission, or to know if a packet was repeated. Under two conditions the continuity counter is not incremented: if a duplicate packet with payload is sent, and the \textit{adaptation\hspace{0.1mm}\_\hspace{0.1mm}field\hspace{0.1mm}\_\hspace{0.1mm}control} must be either '01' or '11' to indicate the payload presence; if there is no payload in the packet, and the \textit{adaptation\hspace{0.1mm}\_\hspace{0.1mm}field\hspace{0.1mm}\_\hspace{0.1mm}control} must be either '00' or '10'.
  
-The priority indicator flag and the scrambling control flag are not used in practical implementations and were left out purposely. However, they are part of the standard and are defined in \citeonline[2.4.3.3]{ISO}.
+The priority indicator flag and the scrambling control flag are not used in practical implementations and were left out intentionally. However, they are part of the standard and are defined in \citeonline[2.4.3.3]{ISO}.
  
-\begin{figure}
+\begin{figure}[!h]
 \centering
 \caption{Formation scheme of a TS packet.}
 \includegraphics[width=1\linewidth]{figuras/TS_iso13818.png}
@@ -710,7 +707,7 @@ The priority indicator flag and the scrambling control flag are not used in prac
 \label{fig:TS_iso13818}
 \end{figure}
 
-\begin{table}[!hb]
+\begin{table}[!h]
 \caption{Adaptation Field control values.}
 \begin{center}
 \begin{tabular}{|c|c|}
@@ -719,11 +716,11 @@ Value & Description \\
 \hline
 00 & Reserved for future use\\
 \hline
-01 & No adaptation\_field, payload only\\
+01 & No adaptation\hspace{0.1mm}\_\hspace{0.1mm}field, payload only\\
 \hline
-10 & Adaptation\_field only, no payload\\
+10 & Adaptation\hspace{0.1mm}\_\hspace{0.1mm}field only, no payload\\
 \hline
-11 & Adaptation\_field followed by payload\\
+11 & Adaptation\hspace{0.1mm}\_\hspace{0.1mm}field followed by payload\\
 \hline
 \end{tabular}
 \label{tab_adapataion_field}
@@ -735,11 +732,11 @@ Value & Description \\
 
 The Adaptation Field (AF) is an optional extension of the TS packet header. Although optional, it contains many useful information and is widely used in practical implementations to carry timing information and to fill with stuffing bytes remaining space in TS packets. \autoref{fig:AdapField_iso13818} shows the concatenation of fields in the Adaptation Field graphically. One characteristic of this extension is that many fields are optional, hence there are several flags that toggle the existence of the fields.
 
-The \textit{adaptation\_field\_length} field has 8 bits and specifies the number of bytes in the adaptation field immediately after itself. When there is payload data sharing the TS packet with the adaptation field, this value shall be in the range 0 to 182. If there is no payload, just the AF, the length must be set to 183. For TS packets carrying PES data, stuffing is usually needed in the last TS packet used because PES packets are not necessarily multiples of 188 bytes. Stuffing is accomplished by setting the adaptation field length to more than the sum of the lengths of the data elements in it, so that the remaining payload bytes in PES data exactly fits in the left space. The extra space in the adaptation field is filled with stuffing bytes with the value '0xFF'.
+The \textit{adaptation\hspace{0.1mm}\_\hspace{0.1mm}field\hspace{0.1mm}\_\hspace{0.1mm}length} field has 8 bits and specifies the number of bytes in the adaptation field immediately after itself. When there is payload data sharing the TS packet with the adaptation field, this value shall be in the range 0 to 182. If there is no payload, just the AF, the length must be set to 183. For TS packets carrying PES data, stuffing is usually needed in the last TS packet used because PES packets are not necessarily multiples of 188 bytes. Stuffing is accomplished by setting the adaptation field length to more than the sum of the lengths of the data elements in it, so that the remaining payload bytes in PES data exactly fits in the left space. The extra space in the adaptation field is filled with stuffing bytes with the value \texttt{0xFF}.
 
 %This is the only method of stuffing allowed for packets carrying PES data, but for PSI sections another method will be described later.
 
-The \textit{PCR\_flag} informs the presence of the optional PCR timing information in the \textit{program\_clock\_reference\_base} and \textit{program\_clock\_reference\_extension} fields, that are described in \autoref{Timing}. These fields are wrapped together in \autoref{fig:AdapField_iso13818} as 'PCR', with 42 bits.The other fields will not be described because they are not crucial for the functioning of the multiplexer. However, they are part of the standard and are defined in \citeonline[2.4.3.5]{ISO}.
+The \textit{PCR\hspace{0.1mm}\_\hspace{0.1mm}flag} informs the presence of the optional PCR timing information in the \textit{program\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}reference\hspace{0.1mm}\_\hspace{0.1mm}base} and \textit{program\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}reference\hspace{0.1mm}\_\hspace{0.1mm}extension} fields, that are described in \autoref{Timing}. These fields are wrapped together in \autoref{fig:AdapField_iso13818} as 'PCR', with 42 bits.The other fields will not be described because they are not crucial for the functioning of the multiplexer. However, they are part of the standard and are defined in \citeonline[2.4.3.5]{ISO}.
 
 \begin{figure}
 \centering
@@ -757,23 +754,23 @@ The \textit{PCR\_flag} informs the presence of the optional PCR timing informati
 %\item{ou ainda com sessões de tabelas de dados complementares aos fluxos, fundamentais para a parametrização do decodificador.}
 %\end{itemize}
 
-The ISO13818 standard recommends the TS bit-rate to be constant, according to \citeonline[2.4.2.2]{ISO}. However, to increase the performance of the codecs, their output  is necessarily variable, and therefore stuffing bits must be added to the transport streams whenever there is no useful information to be transmitted. To better understand this, take the video encoder as an example: consider that the frame rate is constant and equal to 29.97 frames per second. Since the frames are coded according to the H.264 standard with motion compensation and prediction techniques, the I-frames have necessarily more information than P-frames or even more than B-frames. Therefore, during the transmission of an I-frame, the amount of useful information in the output stream is higher than if a B-frame is being processed. It is up to the multiplexer to handle this variable to constant transformation by filling streams with stuffing bytes.
+The ISO13818 standard recommends the TS bit-rate to be constant, according to \citeonline[2.4.2.2]{ISO}. However, to increase the performance of the codecs, their output is necessarily variable, and therefore stuffing bits must be added to the transport streams whenever there is no useful information to be transmitted. To better understand this, take the video encoder as an example: consider that the frame rate is constant and equal to 29.97 frames per second. Since the frames are coded according to the H.264 standard with motion compensation and prediction techniques, the I-frames have necessarily more information than P-frames or even more than B-frames. Therefore, during the transmission of an I-frame, the amount of useful information in the output stream is higher than if a B-frame is being processed. It is up to the multiplexer to handle this variable to constant transformation by filling streams with stuffing bytes.
 % ---
 
 \section{Packetized Elementary Stream Header}
 
 The Elementary Streams, when packetized, also receive a header with Systems Layer information. \autoref{fig:PES_iso13818} shows graphically the fields that form the PES Header, and the most significant ones are described in the following list:
 \begin{itemize}
-\item{The \textit{packet\_start\_code\_prefix} field has 24 bits and constitutes an identification of the start of a packet. Its value is fixed in \texttt{0x000001};}
-\item{The \textit{stream\_ID} is a 8-bit field that may be set to a valid value among those in \autoref{tab_ISOESTypes};}
-\item{The \textit{PES\_packet\_length} has 16 bits and informs the length of the PES packet from the first bit after the field itself until the end of the packet;}
-\item{Among the \textit{7 flags} field in the second row of \autoref{fig:PES_iso13818} is the \textit{PTS\_DTS\_flags}, a 2-bit field which informs whether time stamps are present for this packet, and whose values are coded according to \autoref{tab_PTS_DTS_flags}. Time stamps are discussed in \autoref{PTS_DTS}. These time stamps are carried in the \textit{PTS} and/or \textit{DTS} 33-bit fields, shown in the third row of \autoref{fig:PES_iso13818}.}
+\item{The \textit{packet\hspace{0.1mm}\_\hspace{0.1mm}start\hspace{0.1mm}\_\hspace{0.1mm}code\hspace{0.1mm}\_\hspace{0.1mm}prefix} field has 24 bits and constitutes an identification of the start of a packet. Its value is fixed in \texttt{0x000001};}
+\item{The \textit{stream\hspace{0.1mm}\_\hspace{0.1mm}ID} is a 8-bit field that may be set to a valid value among those in \autoref{tab_ISOESTypes};}
+\item{The \textit{PES\hspace{0.1mm}\_\hspace{0.1mm}packet\hspace{0.1mm}\_\hspace{0.1mm}length} has 16 bits and informs the length of the PES packet from the first bit after the field itself until the end of the packet;}
+\item{Among the \textit{7 flags} field in the second row of \autoref{fig:PES_iso13818} is the \textit{PTS\hspace{0.1mm}\_\hspace{0.1mm}DTS\hspace{0.1mm}\_\hspace{0.1mm}flags}, a 2-bit field which informs whether time stamps are present for this packet, and whose values are coded according to \autoref{tab_PTS_DTS_flags}. Time stamps are discussed in \autoref{PTS_DTS}. These time stamps are carried in the \textit{PTS} and/or \textit{DTS} 33-bit fields, shown in the third row of \autoref{fig:PES_iso13818}.}
 \end{itemize}
 
 Most of the other fields are intended to carry information to help stream decoding, and are out of the scope of this project.
 
 \begin{table}[!hb]
-\caption{PTS\_DTS\_flags values.}
+\caption{PTS\hspace{0.1mm}\_\hspace{0.1mm}DTS\hspace{0.1mm}\_\hspace{0.1mm}flags values.}
 \begin{center}
 \begin{tabular}{|c|c|}
 \hline
@@ -805,45 +802,69 @@ Value & Timestamp \\
 \section{Timing}
 \label{Timing}
 
-Video and audio information are carried in separate streams that need to be reproduced simultaneously in the receiver, so timing control is crucial to the operation of a television broadcasting system. 
+Video and audio information are carried in separate streams that need to be reproduced simultaneously in the receiver, so timing control is crucial to the operation of a television broadcasting system.
+
+The timing model introduced by the standard supposes a constant end-to-end delay from the encoder input, through the transmitter, the receiver and up to the decoder output for all elementary streams of the same program. This way it is possible to theoretically ensure the synchronous playback of both video and audio streams.
+
+The key concept introduced in the ISO standard is the System Time Clock (STC), a reference time base for all the streams in a service being transmitted. The transmitter controls this clock reference for encoding processes and labels each presentation unit with time stamps. The reference clock is sent through the transmission channel and is used by the receiver to lock its own clock to the reference. The media presentation units are transmitted with the time stamps, which are used by the receiver to decode and present the frames at the appropriate time.
+
+If the frequency of the receiver is the same of the transmitter, the encoding, decoding and presentation rates will be the same and the system will work indefinitely as long as there is data to be transmitted. On the other hand, if frequencies are not locked to each other, an inevitable situation of underflow or overflow of the decoder buffers will eventually happen. If an overflow happens, frames will be discarded and not presented. In case of video, if discarded frames would be used to decode other frames, the whole group of pictures is lost. If an underflow happens, there will be freezes in video or mute moments in audio.
+
+It is therefore important to ensure the reconstruction of the STC in the receiver, because the constant delay model is constructed supposing that both sides are perfectly in sync and sets decoding and presentation time stamps to follow the STC. To keep the receiver locked to the reference clock, a digital phase locked loop block is necessary. The following paragraphs describe in greater detail the creation of PCR, PTS and DTS.
 
 %O sincronismo é fundamental para o funcionamento de um sistema de transmissão de televisão, pois é preciso garantir a reprodução do vídeo e do áudio simultaneamente e com a mesma referência temporal. Para possibilitar tal sincronismo, um complexo sistema de sincronismo existe no padrão. O conceito fundamental é a transmissão de um sinal de clock codificado nos pacotes do TS, o PCR, explicado a seguir. Esse sinal é decodificado e alimenta um sistema PLL no decodificador, para então ser utilizado nos fluxos de áudio e vídeo. Os fluxos elementares, por sua vez, transportam referências temporais ao PCR nos campos PTS e DTS, explicados a seguir, e assim são reproduzidos com base em uma mesma referência temporal.
 
 \subsection{PCR}
 
-The key concept introduced in the ISO standard is the System Time Clock (STC), a reference time base for all the streams in a service being transmitted. If multiple services are present in the same TS, they may share the time base or there may be multiple time bases multiplexed in the stream. The STC is implemented as a counter with 42 bits incremented at a 27MHz rate. The reference to this oscillator should be considered to be a GPS satellite signal or an atomic clock oscillator, because the frequency deviation may not be above 810 Hz, with a drift smaller than $ 75 * 10^{-3} $ Hz/s. The STC value is sampled at most every 100ms \citeonline[D.0.3]{ISO} and is encoded in two Program Clock Reference fields (PCR), one in terms of units of 90 KHz and the other in parts of 27MHz. The PCR fields are carried by the Transport Stream inside the TS adaptation field, and might be placed along with Elementary Streams or in individual PIDs. These requirements are defined by \citeonline[2.4]{ISO}.
+The STC is implemented as a counter with 42 bits incremented at a 27MHz rate. The reference to this oscillator should be considered to be a GPS satellite signal or an atomic clock oscillator, because the frequency deviation may not be above 810 Hz, with a drift smaller than $ 75 * 10^{-3} $ Hz/s. The STC value is sampled at most every 100ms \citeonline[D.0.3]{ISO} and is encoded in two Program Clock Reference fields (PCR), one in terms of units of 90 KHz and the other in parts of 27MHz. The PCR fields are carried by the Transport Stream inside the TS adaptation field, and might be placed along with Elementary Streams or in individual PIDs. These requirements are defined by \citeonline[2.4]{ISO}.
 
 In the decoder, a digital PLL (Phase Locked Loop) synchronizes the local time reference to the one in the encoder side. The digital PLL is composed by a voltage controlled oscillator(VCO), a counter, a subtractor and a gain adjustment block, as can be seen in \autoref{fig:pll_decoder}. At decoder start-up, the VCO is locally set to oscillate at 27MHz and its signal is used as clock to the counter. Once the first PCR arrives from the received TS, the subtractor outputs the difference between the local PCR and the one sent by the encoder. The result is used as feedback to the VCO, after proper gain adjustment, to sync the local frequency with the encoder. By using this method, the decoder does not need to have an accurate, expensive oscillator, as does the encoder.
 
-The PCR value is not an absolute time reference, but rather the STC starts its counter when the encoding system is turned on. The relationship between the time elapsed since system start-up, $t(i)$, and the PCR value, $PCR(i)$ is calculated as follows, in \autoref{eq:pcr1}. According to \citeonline[2.4.3.5]{ISO} the PCR is carried in two fields within the TS header. The fields names are program\_clock\_reference\_base and program\_clock\_reference\_extension The first part, program\_clock\_reference\_base, is a 33-bit field whose value is given by PCR\_base(i), as given in \autoref{eq:pcr2}. The second part, program\_clock\_reference\_extension, is a 9-bit field whose value is given by PCR\_ext(i), as given in \autoref{eq:pcr3}. Yet, as states the standard, \quotation{\textit{the encoded PCR indicates the intended time of arrival of the byte containing the last bit of the program\_clock\_reference\_base at the input of the system target decoder.}}
+The PCR value is not an absolute time reference, but rather the STC starts its counter when the encoding system is turned on. The relationship between the time elapsed since system start-up, $t(i)$, and the PCR value, $PCR(i)$ is calculated as follows, in \autoref{eq:pcr1}. According to \citeonline[2.4.3.5]{ISO} the PCR is carried in two fields within the TS header. The fields names are program\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}reference\hspace{0.1mm}\_\hspace{0.1mm}base and program\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}reference\hspace{0.1mm}\_\hspace{0.1mm}extension The first part, program\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}reference\hspace{0.1mm}\_\hspace{0.1mm}base, is a 33-bit field whose value is given by PCR\hspace{0.1mm}\_\hspace{0.1mm}base(i), as given in \autoref{eq:pcr2}. The second part, program\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}reference\hspace{0.1mm}\_\hspace{0.1mm}extension, is a 9-bit field whose value is given by PCR\hspace{0.1mm}\_\hspace{0.1mm}ext(i), as given in \autoref{eq:pcr3}. Yet, as states the standard, \quotation{\textit{the encoded PCR indicates the intended time of arrival of the byte containing the last bit of the program\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}reference\hspace{0.1mm}\_\hspace{0.1mm}base at the input of the system target decoder.}}
 
 \begin{equation}
-PCR(i) = PCR\_base(i) * 300 + PCR\_ext(i)\\
+PCR(i) = PCR\hspace{0.1mm}\_\hspace{0.1mm}base(i) * 300 + PCR\hspace{0.1mm}\_\hspace{0.1mm}ext(i)\\
 \label{eq:pcr1}
 \end{equation}
 \begin{equation}
-PCR\_base(i) = ((system\_clock\_frequency * t(i)) DIV 300) \% 2^{33}\\
+PCR\hspace{0.1mm}\_\hspace{0.1mm}base(i) = ((system\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}frequency * t(i)) DIV 300) \% 2^{33}\\
 \label{eq:pcr2}
 \end{equation}
 \begin{equation}
-PCR\_ext(i) = ((system\_clock\_frequency * t(i)) DIV 1) \% 300
+PCR\hspace{0.1mm}\_\hspace{0.1mm}ext(i) = ((system\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}frequency * t(i)) DIV 1) \% 300
 \label{eq:pcr3}
 \end{equation}
 
-\begin{figure}[!hb]
-\centering
-\caption{PCR Sampling block diagram.}
-\includegraphics[width=1\linewidth]{figuras/pcr_sampling.png}
-\\Source: The Author.
-\label{fig:pcr_sampling}
-\end{figure}
+% \begin{figure}[!hb]
+% \centering
+% \caption{PCR Sampling block diagram.}
+% \includegraphics[width=1\linewidth]{figuras/pcr_sampling.png}
+% \\Source: The Author.
+% \label{fig:pcr_sampling}
+% \end{figure}
 
 \begin{figure}[!hb]
 \centering
 \caption{Decoder PLL block diagram.}
 \includegraphics[width=1\linewidth]{figuras/pll_decoder.png}
-\\Source and Copyright: \citeonline[TODO TODO TODO]{ISO}
+\\Source and Copyright: \cite{ISO}
 \label{fig:pll_decoder}
+\end{figure}
+
+Since transmission channels are not perfect, PCR arrival period may vary from one packet to the next, thus subjecting the PCR to jitter. Jitter occurs because packets may arrive out of order or be lost due to transmission errors. In this situation, a discrepancy between the time of arrival of a given PCR and the time that it represents causes the receiver to lose sync with the transmitter.
+
+\autoref{fig:jitter} shows the consequence in the decoder frequency due to jitter in PCR values. PCR TX represents the times that the PCR values are transmitted. PCR RX represent the instants that PCR values are received. STC RX shows the regenerated clock in the receiver. The values \texttt{0} and \texttt{1} are sent and received in schedule and a constant delay of half a period can be identified. PCR value \texttt{2} is sent at $t_a$ but instead of arriving at $t_b$, when it was expected, it arrives at $t_b + \Delta_b$. The receiver STC was in sync with the transmitter and generated value 2 at $t_b$, but since no PCR was received until $t_b + \Delta_b$, a positive error of $\Delta_b$ was calculated and interpreted as if the recevier frequency was too high, i.e., the receiver reached PCR value 2 before the transmitter did. Therefore, the frequency is reduced.
+
+Meanwhile, the transmitter sends PCR value 3 at $t_c$, the packet suffers no jitter and arrives at $t_d$ to the receiver. However, due to the recalculated PLL frequency, the receiver STC will only reach PCR value 3 at $t_d + \Delta_d$, thus creating a negative error value at the subtractor. A negative error value indicates that the internal receiver frequency is lower than necessary and the frequency is increased again. By the time that PCR value 4 reaches the receiver, it is already back in sync and no error is generated.
+
+These oscillations of frequency can be hazardous to program playout, because the receiver buffers are not infinite and a big variation of frequency may lead to buffer overflow or underflow. The consequences of these two situations have already been pointed, they are the loss of groups of pictures or freezes in reproduction.
+
+\begin{figure}[!hb]
+\centering
+\caption{Jitter consequence in decoder PLL.}
+\includegraphics[width=0.8\linewidth]{figuras/jitter.png}
+\\Source and Copyright: The author.
+\label{fig:jitter}
 \end{figure}
 
 \subsection{PTS / DTS}
@@ -862,7 +883,7 @@ Take \autoref{fig:dts_pts} as an example: the upper row shows frames as they are
 \end{figure}
 
 \begin{equation}
-PTS(k) = ((system\_clock\_frequency * t_p(k)) DIV 300) \% 2^{33}\\
+PTS(k) = ((system\hspace{0.1mm}\_\hspace{0.1mm}clock\hspace{0.1mm}\_\hspace{0.1mm}frequency * t_p(k)) DIV 300) \% 2^{33}\\
 \label{eq:pts}
 \end{equation}
 
@@ -870,130 +891,105 @@ PTS(k) = ((system\_clock\_frequency * t_p(k)) DIV 300) \% 2^{33}\\
 
 %Os campos Decoding Time Stamp \(DTS\) e Presentation Time Stamp \(PTS\) são outros dois referenciais de tempo, derivados do PCR, e que servem a informar ao decodificador o instante de tempo em que devem ser decodificadas e exibidas, respectivamente, as Access Units de vídeo e áudio. Uma Presentation Unit \(PU\) é definida pela norma como sendo um quadro de áudio ou de vídeo, e uma Access Unit \(AU\) é a representação codificada da Presentation Unit.
 
-%A norma define claramente qual instante de tempo deve ser considerado para gerar o PTS ou o DTS: \quotation{No caso do áudio, se um PTS está presente num cabeçalho de PES, este deve fazer referência à primeira AU que comece no pacote. Uma AU de áudio começa em um pacote se o primeiro byte da AU de áudio estiver presente no pacote. No caso do vídeo, se um PTS está presente no cabeçalho do pacote PES, este deve se referir à AU que cujo primeiro \textit{start\_code} está neste pacote.}
+%A norma define claramente qual instante de tempo deve ser considerado para gerar o PTS ou o DTS: \quotation{No caso do áudio, se um PTS está presente num cabeçalho de PES, este deve fazer referência à primeira AU que comece no pacote. Uma AU de áudio começa em um pacote se o primeiro byte da AU de áudio estiver presente no pacote. No caso do vídeo, se um PTS está presente no cabeçalho do pacote PES, este deve se referir à AU que cujo primeiro \textit{start\hspace{0.1mm}\_\hspace{0.1mm}code} está neste pacote.}
 
 % ---
 
 \section{Program Specific Information}
 \label{iso_psi}
 
-Program Specific Information(PSI) is a set of normative data useful to transmission, demultiplexing and presentation of audio, video and data streams. The PSI set is organized in tables, each with a specific function in the standard. The tables that carry information of the PIDs that carry the video and audio streams, called PAT (Program Association Table) and PMT (Table Mapping Program) are mandatory and their syntax is defined by the ISO/IEC13818-1 standard. The Network Information Table is also mandatory according to the same standard, but its syntax is not defined by ISO/IEC. There is another set of tables that are not mandatory according to ISO13818, but ABNT NBR15603 defines as mandatory, as will be seen in \autoref{}.
+Program Specific Information(PSI) is a set of normative data useful to transmission, demultiplexing and presentation of audio, video and data streams. The PSI set is organized in tables, each with a specific function in the standard. The tables that carry information about which PIDs carry video and audio streams, called PAT (Program Association Table) and PMT (Program Map Table) are mandatory and their syntax is defined by the ISO/IEC13818-1 standard. The Network Information Table is also mandatory according to the standard, but its syntax is not defined by ISO/IEC. There is another set of tables that are not mandatory according to ISO13818, but ABNT NBR15603 defines as mandatory, as will be seen in \autoref{nbr15603}.
 
-Since programs may change of structure during transmission, for example a movie with multiple audio streams starts playout right after the local news with a single audio stream , PSI tables must be changed too. To inform the decoder whether a table been transmitted is valid at the moment or not, there are two fields in each section of the tables, the \textit{version\_number} and the \textit{current\_next\_indicator}.
+Since programs may change of structure during transmission, for example a movie with multiple audio streams starts playout right after the local news with a single audio stream, PSI tables must follow this change too. To inform the decoder whether a table been transmitted is valid at the moment or not, there are two fields in each section of the tables, the \textit{version\hspace{0.1mm}\_\hspace{0.1mm}number} and the \textit{current\hspace{0.1mm}\_\hspace{0.1mm}next\hspace{0.1mm}\_\hspace{0.1mm}indicator}.
 
 The Conditional Access Table must be present only if scrambling is employed. The Network Information Table is optional and its contents are not specified by ISO/IEC13818-1. The NIT used in SBTVD is defined by ABNT NBR15603.
 
 The ISO standard defines that the PSI tables must be sent in sections and that the sections can be segmented to fit the TS packets. Sections can not be longer than 1024 bytes, although in practice the number of bytes for the mandatory tables is very below that. There are several common fields to all PSI tables, they may vary of value but their syntax is the same:
 \begin{itemize}
-\item{The field \textit{table\_ID} has 8 bits and defines what is the table's type, according to \autoref{fig:tab_psi_tables_ids};}
-\item{The field \textit{section\_syntax\_indicator} is a 1-bit field which shall always be set to '1';}
-\item{The field \textit{section\_length} has 12 bits, the first most significant two shall be '00' and the other 10 bits are the length of the section, starting at the first bit after the length field and including the CRC;}
-\item{The field \textit{version\_number} has 5 bits, and should be incremented by one every time any information in the respective table changes;}
-\item{The field \textit{current\_next\_indicator} has 1 bit, and identifies whether the respective table is valid at the moment of transmission or will be valid later;}
-\item{The field \textit{section\_number} has 8 bits, and is used to order long, multiple section, tables. In practice, tables usually fit in a single section and this value is set to \texttt{0x00}}
-\item{The field \textit{last\_section\_number} has 8 bits, and is used to inform which was the \textit{section\_number} of the previous transmitted section. In practice, since tables only fill one section, this field is set to \texttt{0x00}, too.}
+\item{The field \textit{table\hspace{0.1mm}\_\hspace{0.1mm}ID} has 8 bits and defines what is the table's type, according to \autoref{fig:tab_psi_tables_ids};}
+\item{The field \textit{section\hspace{0.1mm}\_\hspace{0.1mm}syntax\hspace{0.1mm}\_\hspace{0.1mm}indicator} is a 1-bit field which shall always be set to '1';}
+\item{The field \textit{section\hspace{0.1mm}\_\hspace{0.1mm}length} has 12 bits, the first most significant two shall be '00' and the other 10 bits are the length of the section, starting at the first bit after the length field and including the CRC;}
+\item{The field \textit{version\hspace{0.1mm}\_\hspace{0.1mm}number} has 5 bits, and should be incremented by one every time any information in the respective table changes;}
+\item{The field \textit{current\hspace{0.1mm}\_\hspace{0.1mm}next\hspace{0.1mm}\_\hspace{0.1mm}indicator} has 1 bit, and identifies whether the respective table is valid at the moment of transmission or will be valid later;}
+\item{The field \textit{section\hspace{0.1mm}\_\hspace{0.1mm}number} has 8 bits, and is used to order long, multiple section, tables. In practice, tables usually fit in a single section and this value is set to \texttt{0x00}}
+\item{The field \textit{last\hspace{0.1mm}\_\hspace{0.1mm}section\hspace{0.1mm}\_\hspace{0.1mm}number} has 8 bits, and is used to inform which was the \textit{section\hspace{0.1mm}\_\hspace{0.1mm}number} of the previous transmitted section. In practice, since tables only fill one section, this field is set to \texttt{0x00}, too.}
 \end{itemize}
 
-%TODO SDT has smth different in this common fields?
 
 Descriptors are structures used to extend the definitions of services and their elements. All descriptors have the same format: they begin with an 8-bit tag value, then there is an 8-bit length field and variable length data bytes. The standard defines a considerable amount of descriptors, but not all of them are used in practical applications. A selection of the descriptors used in the project are presented in \autoref{descriptors}.
 
 %O PSI é o conjunto de informações especificas ao programa, ou \textit{Program Specific information}, em inglês, e serve para organizar as informações de transmissão, sincronismo, decodificação e apresentação dos fluxos de áudio, vídeo e dados. O PSI é organizado em forma de tabelas, cada uma com uma função específica no padrão. As tabelas que servem a indicar ao decodificador onde estão no TS os fluxos de vídeo e áudio, chamadas de PAT( Tabela de associação de programas) e PMT (Tabela de Mapeamento de Programas), são obrigatórias, Há ainda um conjunto grande de tabelas que servem a outros fins, e que não são obrigatórias segundo a ISO13818, mas que a ABNT NBR15603 define como obrigatórias.
-%A norma ISO define que as tabelas do PSI devem ser enviadas em seções e as seções podem ser segmentadas para caberem nos pacotes de TS. As seções não podem ter mais de 1024 bytes, embora na prática o número de bytes para uma tabela obrigatória fique bem abaixo. A sintaxe das tabelas é padronizada. Um campo no início da tabela (table\_ID) define qual o seu tipo (PAT,PMT, etc.) e o campo section number serve como um contador caso a tabela seja dividida em diversas seções. O campo version umos campos que seguem são personalizados version, section number, program number.
+%A norma ISO define que as tabelas do PSI devem ser enviadas em seções e as seções podem ser segmentadas para caberem nos pacotes de TS. As seções não podem ter mais de 1024 bytes, embora na prática o número de bytes para uma tabela obrigatória fique bem abaixo. A sintaxe das tabelas é padronizada. Um campo no início da tabela (table\hspace{0.1mm}\_\hspace{0.1mm}ID) define qual o seu tipo (PAT,PMT, etc.) e o campo section number serve como um contador caso a tabela seja dividida em diversas seções. O campo version umos campos que seguem são personalizados version, section number, program number.
 
 \subsection{Program Association Table}
 
-The Program Association Table (PAT) indicates the PID of the corresponding Program Map Table (PMT) for each service in the multiplexer. It lists, for every program on the stream, its unique \textbf{program number} and the PID of that program's PMT, the \textbf{program map PID}. The PAT is assigned to a fixed PID of \texttt{0x0000}, so the decoder may look for this PID first and then find the PMT of each service in the PIDs pointed by the PAT. The field \textit{table\_ID}is always \texttt{0x00} for PAT. The field \textit{transport\_stream\_ID} has 16 bits and represents a unique ID to differentiate this Transport Stream from all streams in a network. In SBTVD, this value is calculated based on geographic position of the transmitter and the broadcaster's call signs \footnote{A call sign, is a unique designation for a transmitting station. In Brazil, the range assigned by ITU for broadcast stations is ZV-ZZ\cite{anatel}.}. Additionally to the common fields, this table also carry the following fields, in a loop, right after \textit{last\_section\_number}:
+The Program Association Table (PAT) indicates the PID of the corresponding Program Map Table (PMT) for each service in the multiplexer. It lists, for every program on the stream, its unique \textit{program number} and the PID of that program's PMT, the \textit{program map PID}. The PAT is assigned to the fixed PID \texttt{0x0000}, so the decoder can always know where to look for first and then find the PMT of each service in the PIDs pointed by the PAT. The field \textit{table\hspace{0.1mm}\_\hspace{0.1mm}ID} is always \texttt{0x00} for PAT. The field \textit{transport\hspace{0.1mm}\_\hspace{0.1mm}stream\hspace{0.1mm}\_\hspace{0.1mm}ID} has 16 bits and represents a unique ID to differentiate this Transport Stream from all streams in a network. In SBTVD, this value is calculated based on geographic position of the transmitter and the broadcaster's call signs \footnote{A call sign is a unique designation for a transmitting station. In Brazil, the range assigned by ITU for broadcast stations is from ZVA-000 to ZZZ999.}. Additionally to the common fields, this table also carry the following fields, in a loop, right after \textit{last\hspace{0.1mm}\_\hspace{0.1mm}section\hspace{0.1mm}\_\hspace{0.1mm}number}:
 
 \begin{itemize}
-\item{first a \textit{program\_number} field, with 16 bits, names the first program in the TS;}
-\item{ then a 13-bit field, \textit{program\_map\_PID} points the PID value of the corresponding PMT;}
-\item{if the \textit{program\_number} is \texttt{0x00}, instead of the above definition, ISO specifies that the PID pointed to is the one of the NIT, and the field is called \textit{network\_PID}.}
+\item{first a \textit{program\hspace{0.1mm}\_\hspace{0.1mm}number} field, with 16 bits, names the first program in the TS;}
+\item{ then a 13-bit field, \textit{program\hspace{0.1mm}\_\hspace{0.1mm}map\hspace{0.1mm}\_\hspace{0.1mm}PID} points the PID value of the corresponding PMT;}
+\item{if the \textit{program\hspace{0.1mm}\_\hspace{0.1mm}number} is \texttt{0x00}, instead of the above definition, ISO specifies that the PID pointed to is the one of the NIT, and the field is called \textit{network\hspace{0.1mm}\_\hspace{0.1mm}PID}.}
 \end{itemize}
 
-As an example, consider \autoref{fig:TSAnalyser_close_PAT}, that shows the display of a TS Analyser when a PAT table section is analysed. The field \textit{table id} indicates \texttt{0x00}, which is the PAT code according to \autoref{fig:tab_psi_tables_ids}. The pair \textit{program\_number} \texttt{0} and \textit{program\_map\_PID} \texttt{16} is unique and its presence indicates that the NIT table is present and is carried in the PID \texttt{16}. It's unique because, according to the ISO standard, a program number \texttt{0} always indicates the NIT PID, and the NIT table shall always use the PID \texttt{16}, \citeonline[2.4.4.3]{ISO}. The other pairs indicate that there are two programs in the transport stream, with program numbers \texttt{23104} and \texttt{23129}. Each of these programs have their PMTs allocated in the PIDs \texttt{257} and \texttt{8136}, respectively. In the \autoref{PMT}, it will be seen how these values are taken into account.
-
-\begin{figure}[!hb]
-\centering
-\caption{TS Analyser output showing a PAT Table.}
-\includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PAT.png}
-\\Source: Reproduction of the MPEG TS Analyser software, \cite{TS_analyser}.
-\label{fig:TSAnalyser_close_PAT}
-\end{figure}
+A PAT table section is analysed in \autoref{pat_pmt_analysis}.
 
 \subsection{Program Map Table}
 \label{PMT}
 
-One Transport Stream must have as many Program Map Tables as services. Each Program Map Table (PMT) in the TS indicates which PIDs contain the elementary streams corresponding to one service. It links a \textbf{program number} to several \textbf{elementary PIDs}. Each elementary stream must have a \textbf{type} identification, which designate the nature of the stream, according to ISO13818-1, and defines roughly whether it is a video, audio or data stream. \autoref{tab_ISOESTypes} is an excerpt of the standardized types. Apart from the common fields already presented, the PMT also has the following fields:
+One Transport Stream must have as many Program Map Tables as services. Each Program Map Table (PMT) in the TS indicates which PIDs contain the elementary streams corresponding to one service. It links a \textbf{program number} to several \textbf{elementary PIDs}. Each elementary stream must have a \textbf{type} identification, which designate the nature of the stream, according to ISO13818-1, and defines roughly whether it is a video, audio or data stream. \autoref{tab_ISOESTypes} is an excerpt of the standardized types. Apart from the common fields already presented in the introductory chapter, the PMT also has the following fields:
 
 \begin{itemize}
-\item{a \textit{program\_number} field, with 16 bits, designates the program specified by this section;}
-\item{then a 13-bit field, the \textit{PCR\_PID} points the PID whose adaptation field contains the PCR that should be used to sync this service ;}
-\item{if the \textit{program\_number} is \texttt{0x00}, instead of the above definition, ISO specifies that the PID pointed to is the one of the NIT, and the field is called \textit{network\_PID}.}
-\item{The field \textit{program\_info\_length} has 12 bits, the first most significant two shall be '00' and the other 10 bits represent the length of the section descriptors, in bytes;}
-\item{the \textit{stream\_type} field has 8 bits, and as already discussed, should be filled with the standardized designation of a stream according to \autoref{tab_ISOESTypes};}
-\item{the \textit{elementary\_PID} field has 13 bits and make reference to the PID with the stream whose type is in \textit{stream\_type};}
-\item{the \textit{ES\_info\_length} has 12 bits, the first most significant two shall be '00' and the other 10 bits represent the length of the ES descriptors;}
+\item{a \textit{program\hspace{0.1mm}\_\hspace{0.1mm}number} field, with 16 bits, designates the program specified by this section;}
+\item{then a 13-bit field, the \textit{PCR\hspace{0.1mm}\_\hspace{0.1mm}PID} points the PID whose adaptation field contains the PCR that should be used to sync this service ;}
+\item{if the \textit{program\hspace{0.1mm}\_\hspace{0.1mm}number} is \texttt{0x00}, instead of the above definition, ISO specifies that the PID pointed to is the one of the NIT, and the field is called \textit{network\hspace{0.1mm}\_\hspace{0.1mm}PID}.}
+\item{The field \textit{program\hspace{0.1mm}\_\hspace{0.1mm}info\hspace{0.1mm}\_\hspace{0.1mm}length} has 12 bits, the first most significant two shall be '00' and the other 10 bits represent the length of the section descriptors, in bytes;}
+\item{the \textit{stream\hspace{0.1mm}\_\hspace{0.1mm}type} field has 8 bits, and as already discussed, should be filled with the standardized designation of a stream according to \autoref{tab_ISOESTypes};}
+\item{the \textit{elementary\hspace{0.1mm}\_\hspace{0.1mm}PID} field has 13 bits and make reference to the PID with the stream whose type is in \textit{stream\hspace{0.1mm}\_\hspace{0.1mm}type};}
+\item{the \textit{ES\hspace{0.1mm}\_\hspace{0.1mm}info\hspace{0.1mm}\_\hspace{0.1mm}length} has 12 bits, the first most significant two shall be '00' and the other 10 bits represent the length of the ES descriptors;}
 \item{what follows are a variable number of descriptors, whose syntax will be discussed in \autoref{descriptors}.}
 \end{itemize}
 
-Figure \ref{fig:TSAnalyser_close_PMT}, that follows, shows a snapshot of the analyser output for a PMT table. In the example, the \textit{program number} is \texttt{23104}, the table ID corresponding to the PMT is \texttt{0x02} (as defined by ISO13818-1) and the PCR information is carried in the PID (PCR\_PID) \texttt{256d} \footnote{The \textit{d} indicates a decimal number.}. Yet, from Picture \ref{fig:TSAnalyser_close_PMT_TS_Header}, it can be seen at the TS Header that the PID carrying the PMT table is number \texttt{257}, as indicated by the PAT table analysed before.
-
-By analysing both \autoref{tab_ISOESTypes} and \autoref{fig:TSAnalyser_close_PMT}, one may notice that the stream types and PIDs that come after the PCR information match: the ES with PID \texttt{273} is H.264 video and the ESs with PIDs \texttt{274} and \texttt{275} are AAC/LATM audio streams, which means that there are two audio streams. The stream with type \texttt{6d} and PID \texttt{288} is the subtitle / closed captions stream. Later on this chapter the descriptors shown here will be discussed.
-
-\begin{figure}[!hb]
-\centering
-\caption{TS Analyser output showing a PMT Table.}
-\includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PMT.png}
-\\Source: Reproduction of the MPEG TS Analyser software.
-\label{fig:TSAnalyser_close_PMT}
-\end{figure}
-
-\begin{figure}[!hb]
-\centering
-\caption{TS Analyser output showing the TS Header info for the PMT Table.}
-\includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PMT_TS_Header.png}
-\\Source: Reproduction of the MPEG TS Analyser software.
-\label{fig:TSAnalyser_close_PMT_TS_Header}
-\end{figure}
+A PMT table section is analysed in \autoref{pat_pmt_analysis}.
 
 \subsection{Further Considerations}
 
-Although ISO/IEC13818-1 defines other tables, such as the Conditional Access Table, these are not commonly used in free to air television broadcasting systems\cite{} and were left off the scope of the project.
+Although ISO/IEC13818-1 defines other tables, such as the Conditional Access Table, these are not commonly used in free to air television broadcasting systems and were left off the scope of the project.
 
 \chapter{ABNT NBR15603 Standard}
 \label{nbr15603}
 
 \section{Introduction}
 
-The ABNT NBR15603 standard is divided into three parts, each one describes a portion of the SBTVD Systems Layer. Most of the content is an adaptation of the original ISO/IEC13818-1 standard, and there is no reason to be reproduced, but some peculiarities are worth to be detailed. Also, some contents were defined based on the ARIB STD-B10. There is a set of tables not defined in MPEG2 Systems, among them the Network Information Table, that are mandatory in SBTVD. The PIDs that must be used to transmit the Tables are slightly different than what is defined on ISO/IEC13818-1. \autoref{fig:tab_psi_tables_names_pids_abnt} in \autoref{tables_abnt} shows the modified values. \autoref{fig:tab_psi_tables_ids_level_frequency} also in \autoref{tables_abnt} brings other two important information: first, the transmission level of each table, whether its transmission is mandatory( \textit{obrigatório} means mandatory) or optional; and the repetition rate of each table in the stream, in units of repetitions per milliseconds. The tables whose transmission is mandatory are PAT, PMT, NIT, SDT, TOT, EIT and CAT(if the transmission is scrambled\footnote{Scrambling methods are used to prevent receptors without permission to open certain streams from viewing them, usually used in paid television systems and not in broadcast systems.}) ;  The following is a brief description of the mandatory tables that have not yet been discussed in \autoref{iso13818}.
+The ABNT NBR15603 standard is divided into three parts, each one describes a portion of the SBTVD Systems Layer. Most of the content is an adaptation of the original ISO/IEC13818-1 standard, and there is no reason to be reproduced, but some peculiarities are worth to be detailed. Also, some contents were defined based on the ARIB STD-B10. There is a set of tables not defined in MPEG2 Systems, among them the Network Information Table, that are mandatory in SBTVD. The PIDs that must be used to transmit the Tables are slightly different than what is defined on ISO/IEC13818-1. \autoref{fig:tab_psi_tables_names_pids_abnt} in \autoref{tables_abnt} shows the modified values. \autoref{fig:tab_psi_tables_ids_level_frequency} also in \autoref{tables_abnt} brings other two important information: first, the transmission level of each table, whether its transmission is mandatory( \textit{obrigatório} means mandatory) or optional; and the repetition rate of each table in the stream, in units of repetitions per milliseconds. The tables whose transmission is mandatory are PAT, PMT, NIT, SDT, TOT, EIT and CAT(if the transmission is scrambled\footnote{Scrambling methods are used to prevent receptors without permission to open certain streams from viewing them, usually used in paid television systems and not in broadcast systems.}); The following is a brief description of the mandatory tables that have not yet been discussed in \autoref{iso13818}.
 
-\section{Program Specific Information} %TODO TODO aqui nao é SI ???
+\section{System Information} 
 \label{abnt_psi}
 
 \subsection{Service Description Table}
 \label{SDT}
-The Service Description Table brings useful information to describe the services contained in the TS. Multiple SDTs can be transmitted, corresponding to different Transport Streams, but in practical broadcast implementations this feature is not used. Services information is coded into SDT in a loop. For every service, it carries flags signalling the presence of another mandatory table, the EIT, which is described in \autoref{EIT}, a \textit{running\_status} flag with 3 bits informs to the decoder if the service is currently running; and other flags as described in \citeonline[7.2.6.1]{NBR}.
+The Service Description Table brings useful information to describe the services contained in the TS. Multiple SDTs can be transmitted, corresponding to different Transport Streams, but in practical broadcast implementations this feature is not used. Services information is coded into SDT in a loop. For every service, it carries flags signalling the presence of another mandatory table, the EIT, which is described in \autoref{EIT}, a \textit{running\hspace{0.1mm}\_\hspace{0.1mm}status} flag with 3 bits informs to the decoder if the service is currently running; and other flags as described in \citeonline[7.2.6.1]{NBR}.
 
 \subsection{Network Information Table}
 \label{NIT}
 The Network Information Table carries information about the physical organization of the network, such as the network ID, and all the characteristics about the transmission channel, such as modulation method, frequency and channels. Most of the useful information of the NIT is carried in descriptors, discussed in \autoref{nit_descriptors}. The fields in the NIT section apart from the common fields are the following:
 \begin{itemize}
-\item{\textit{network\_ID} field, with 16 bits, contains a unique network identification, calculated from the broadcaster call sign;}
-\item{\textit{network\_descriptors\_length} contains the byte number of all the network descriptors;}
-\item{\textit{transport\_stream\_loop\_length} contains the byte number of all the transport stream loop descriptors;}
-\item{\textit{transport\_stream\_ID} contains the unique TS ID, the same that is in PAT;}
-\item{\textit{original\_network\_ID}  contains the same value of \textit{network\_ID} field;}
-\item{\textit{transport\_descriptors\_length} contains the byte number of all the transport descriptors.}
+\item{\textit{network\hspace{0.1mm}\_\hspace{0.1mm}ID} field, with 16 bits, contains a unique network identification, calculated as described in \autoref{special_fields};}
+\item{\textit{network\hspace{0.1mm}\_\hspace{0.1mm}descriptors\hspace{0.1mm}\_\hspace{0.1mm}length} contains the byte number of all the network descriptors;}
+\item{\textit{transport\hspace{0.1mm}\_\hspace{0.1mm}stream\hspace{0.1mm}\_\hspace{0.1mm}loop\hspace{0.1mm}\_\hspace{0.1mm}length} contains the byte number of all the transport stream loop descriptors;}
+\item{\textit{transport\hspace{0.1mm}\_\hspace{0.1mm}stream\hspace{0.1mm}\_\hspace{0.1mm}ID} contains the unique TS ID, the same that is in PAT;}
+\item{\textit{original\hspace{0.1mm}\_\hspace{0.1mm}network\hspace{0.1mm}\_\hspace{0.1mm}ID}  contains the same value of \textit{network\hspace{0.1mm}\_\hspace{0.1mm}ID} field;}
+\item{\textit{transport\hspace{0.1mm}\_\hspace{0.1mm}descriptors\hspace{0.1mm}\_\hspace{0.1mm}length} contains the byte number of all the transport descriptors.}
 \end{itemize}
 
 \subsection{Time Offset Table}
 \label{TOT}
-The Time Offset Table conta
+The Time Offset Table contains a \texttt{UTC-3\hspace{0.1mm}\_\hspace{0.1mm}time} field, with 40 bits, to hold the information about the current time and date. The two most significant bytes correspond to the least significant bits of the Modified Julian Date \citeonline[Annex A]{NBR}. The other 3 bytes represent the time of the day with 6 digits in BCD encoding, so that 14:54:22 is encoded as \texttt{0x145422} in hexadecimal.
+
+The only descriptor that the TOT contains is the \textit{local\hspace{0.1mm}\_\hspace{0.1mm}time\hspace{0.1mm}\_\hspace{0.1mm}offset\hspace{0.1mm}\_\hspace{0.1mm}descriptor}. It indicates the time and date when there will be a transition of time, such as Daylight Saving Time periods and must be compliant to the EN 300 468:2007 standard, subsection 5.2.19 \citeonline[8.3.25]{NBR}.
 
 \subsection{Event Information Table}
 \label{EIT}
-The Event Information Table was not yet investigated and is currently not implemented. Although it is mandatory, its absence does not affect the functioning of the system, as will be noticed in \autoref{}.
+The Event Information Table was not yet investigated and is currently not implemented. Although it is mandatory, its absence does not affect the functioning of the system, as will be shown in \autoref{test_remultiplexing}.
 
 \section{Program and System Descriptors}
 \label{descriptors}
@@ -1015,7 +1011,7 @@ Each descriptor is briefly described in the following sections.
 
 \subsection{PMT Descriptors}
 \label{pmt_descriptors}
-The \textit{AAC descriptor} is not defined in the ABNT standard. The ABNT Operational Guideline for SBTVD suggests the following syntax: the first byte is the descriptor tag, with value \texttt{0x7C}; the second byte is the descriptor length, to be filled appropriately; a third byte is to inform the profile and level of the audio streams of the service described by the PMT, whose values are defined in a table and are \texttt{0x29} for AAC Profile - level 2 or \texttt{0x2E} for HE-AAC Profile - level 4, just to cite two examples. The fourth byte has only a flag to set whether an optional field is used in the following bytes, but it is not used in practical applications.
+The \textit{AAC descriptor} is not defined in the ABNT standard. The ABNT Operational Guideline for SBTVD suggests the following syntax: the first byte is the descriptor tag, with value \texttt{0x7C}; the second byte is the descriptor length, to be filled appropriately; a third byte is to inform the profile and level of the audio streams of the service described by the PMT, whose values are defined in a table\cite{guia} and are \texttt{0x29} for AAC Profile - level 2 or \texttt{0x2E} for HE-AAC Profile - level 4, just to cite two examples. The fourth byte has only a flag to set whether an optional field is used in the following bytes, but it is not used in practical applications.
 
 The \textit{Parental rating descriptor} tag is \texttt{}, after the length byte what follows is a loop of four bytes: the first three represent a country code with three characters encoded according to ISO 8859-15\footnote{ISO 8859 is a character encoding standard similar to the well known ASCII standard, but more complete in terms of characters foreign to the English language. Each character is encoded as a number.}, for Brazil the characters are \texttt{BRA} which are coded as \texttt{0x42 0x52 0x41}. The other byte in the loop is the rating for the service being broadcasted. The first four bits encode the minimum age to watch: from free to all audiences (\texttt{'0001'}) to above 18 years only (\texttt{'0110'}), with steps in 10 years, 12, 14 and 16. The codes outside this range are forbidden. The other four bits inform the presence of scenes with drugs (\texttt{'0001'}), violence (\texttt{'0010'}) and sex (\texttt{'0100'}). Combinations of these values are possible, so if a show has scenes of drugs and violence, the four bits would be \texttt{'0011'}, the most significant bit is reserved for future applications.
 
@@ -1023,18 +1019,29 @@ The \textit{Parental rating descriptor} tag is \texttt{}, after the length byte 
 \label{nit_descriptors}
 The \textit{Network name descriptor} carries the name of the transmission system. Tag and length have one byte each, and the name is encoded according to the ISO 8859-15 standard in the rest of the descriptor. The network names for two local broadcasters in Porto Alegre are "Band HDTV" and "RBS TV POA".
 
-The \textit{Service list descriptor} provides a list of all the services in the Transport Stream. Tag and length have one byte each, and the data fields are formed with a loop of two fields: \texttt{service\_id} and \texttt{service\_type}. The service ID is the same as the program number defined in the PMT. The service type is defined by ABNT \citeonline[8.3.13]{NBR}: \texttt{0x00} for HDTV and SDTV services and \texttt{0xC0} for 1-Segment services.
+The \textit{Service list descriptor} provides a list of all the services in the Transport Stream. Tag and length have one byte each, and the data fields are formed with a loop of two fields: \texttt{service\hspace{0.1mm}\_\hspace{0.1mm}id} and \texttt{service\hspace{0.1mm}\_\hspace{0.1mm}type}. The service ID is the same as the program number defined in the PMT and explained below. The service type is defined by ABNT \citeonline[8.3.13]{NBR}: \texttt{0x00} for HDTV and SDTV services and \texttt{0xC0} for 1-Segment services.
 
-The \textit{TS information descriptor}
-\textit{Terrestrial delivery system descriptor}
-\textit{Partial reception descriptor} (for 1-Segment reception)
-\textit{System management descriptor}
+The \textit{TS information descriptor} carries in the \texttt{remote\hspace{0.1mm}\_\hspace{0.1mm}control\hspace{0.1mm}\_\hspace{0.1mm}key\hspace{0.1mm}\_\hspace{0.1mm}id} field the virtual channel associated to the transport stream. \texttt{ts\hspace{0.1mm}\_\hspace{0.1mm}name\hspace{0.1mm}\_\hspace{0.1mm}char} carries the name of the TS, which is the same as in the \textit{network name descriptor}. The field \texttt{transmission\hspace{0.1mm}\_\hspace{0.1mm}type\hspace{0.1mm}\_\hspace{0.1mm}count} states the number of transmission types in the TS. The field \texttt{transmission\hspace{0.1mm}\_\hspace{0.1mm}type\hspace{0.1mm}\_\hspace{0.1mm}info} is repeated for each type and is used to designate the hierarchical layers and other transmission parameters. The definition of its value was not found in the standard, so an analysis was done in the local broadcasters streams to discover what were used the values. For HD services, the value is \texttt{0x0F} and for 1-Segment it is \texttt{0xAF}. Next, a list of the services that are included in each of the layers is added.
 
-TODO cálculo dos valores de area code, network ID
+The \textit{Terrestrial delivery system descriptor} indicates several physical conditions of the transmission channel. After tag and length, what follows is an \texttt{area\hspace{0.1mm}\_\hspace{0.1mm}code} field, calculated according to \autoref{special_fields} 
+
+The \textit{Partial reception descriptor} carries the service ID that contains the 1-Segment reception service. It is only mandatory if partial reception is used.
+
+The \textit{System management descriptor} identifies if the Transport Stream contains free to air or paid content, and if the transmission system is the SBTVD or other. Further information is available in the standard \citeonline[8.3.21]{NBR}.
+
+The service ID field has 16 bits. The eleven most significant are the less significant on the network ID. The next two bits are the service type, \texttt{0x00} for television and \texttt{0x11} for 1-Segment television. The last three bits are the service number, a counter representing at most 8 services.
 
 \subsection{SDT Descriptors}
-\label{nit_descriptors}
-TODO
+\label{sdt_descriptors}
+
+The \textit{Service descriptor} is the only mandatory descriptor in SDT, and there must be as many of it as services in the TS. It carries the name of the provider and the name of each service in the Transport Stream. After tag and length fields there is a service type field, whose value is the same as defined above in \autoref {nit_descriptors}. What follows is a sequence of bytes encoding each character of the provider name and the service name.
+
+\subsection{Special Fields}
+\label{special_fields}
+
+The area code is calculated as follows\citeonline[Annex E]{NBR}. It is formed by 12 bits, the 5 most significant are a unique code per state and the other 7 are an identification of the region according to the IBGE\footnote{IBGE is the Brazilian Institute of Geography and Statistics. It is the agency responsible for statistical, geographic, cartographic, geodetic and environmental information in Brazil.}. Next comes the \texttt{guard\hspace{0.1mm}\_\hspace{0.1mm}interval}, with 2 bits mapping the four possible values for the guard interval: 1/32 is \texttt{0x00}, 1/16 is \texttt{0x01}, 1/8 is \texttt{0x10} and 1/4 is \texttt{0x11}.  Next comes the \texttt{transmission\hspace{0.1mm}\_\hspace{0.1mm}mode}, other two bits mapping the following modes: mode 1 is \texttt{0x00}, mode 2 is \texttt{0x01} and mode 3 is \texttt{0x10}. Finally is added the frequency of the central channel, encoded with the following syntax: $(473 + 6 * (X - 14) + 1/7) * 7 = $ \texttt{frequency} in MHz, where X is the channel number from 14 to 69.
+
+The fields \texttt{network\hspace{0.1mm}\_\hspace{0.1mm}ID}, \texttt{original\hspace{0.1mm}\_\hspace{0.1mm}network\hspace{0.1mm}\_\hspace{0.1mm}ID} and \texttt{service\hspace{0.1mm}\_\hspace{0.1mm}ID} are calculated according to Annex H in \cite{NBR}. To calculate the \texttt {network\hspace{0.1mm}\_\hspace{0.1mm}ID} one should take the call sign of the broadcaster, consider only the last letter and the three digits. To each of the possible letters (A, B, P, Q, T) is associated a number from 0 to 4, in the letter order presented here, which is concatenated to the three digits and form a number in decimal base. This number converted to binary forms the \texttt{network\hspace{0.1mm}\_\hspace{0.1mm}ID}. As an example, the standard cites the call sign "ZYB205. The letters "ZY" are discarded and the "B" becomes a 1. The network ID is 1205, that in hexadecimal base is \texttt{0x04B5}.
 
 % An example of an hypothetical decoder start-up operation is shown in \autoref{fig:funcionamento_inicial_decoder}.
 
@@ -1050,7 +1057,7 @@ TODO
 
 \chapter{Available Solutions and Limitations}
 
-A quick search on a search engine for the keywords \textit{MPEG2 TS multiplexer} returns a long list of commercial solutions for multiplexing media files of most different formats in MPEG2 standard. The commercial solutions are usually associated with dedicated hardware, such as the solution presented by \cite{harris}, which are targeted for broadcasters and are expensive, of the order of a few thousand dollars. The main customers of these solutions are television broadcasters, producing live content and need low latency for signal encoding. These devices operate in real time, receiving streams of video, audio and data across multiple ASI interfaces and delivering output in a multiplexed stream in MPEG2 standard. The free solutions are \ textit {} software compatible with Windows and Linux platforms, mostly. Some have graphics and pattern to aid its use by users unfamiliar with the standard interface configurations. The main difference is that the goal is not the user of the system in real time, so that the specification for the processing and memory of personal computers are usually sufficient to run the tools. The input and output interfaces are commonly files that store binary data streams in a sequential manner.
+A quick search on a search engine for the keywords \textit{MPEG2 TS multiplexer} returns a long list of commercial solutions for multiplexing media files of most different formats in MPEG2 standard. The commercial solutions are usually associated with dedicated hardware, such as the solution presented by \cite{harris}, which are targeted for broadcasters and are expensive, of the order of a few thousand dollars. The main customers of these solutions are television broadcasters, producing live content and need low latency for signal encoding. These devices operate in real time, receiving streams of video, audio and data across multiple ASI interfaces and delivering output in a multiplexed stream in MPEG2 standard. The free solutions are software compatible with Windows and Linux platforms, mostly. Some have graphics and pattern to aid its use by users unfamiliar with the standard interface configurations. The main difference is that the goal is not the user of the system in real time, so that the specification for the processing and memory of personal computers are usually sufficient to run the tools. The input and output interfaces are commonly files that store binary data streams in a sequential manner.
 
 %Uma busca rápida em um motor de pesquisa pelas palavras-chave \textit{MPEG2 TS muxer} retorna uma infinidade de soluçoes comerciais e gratuitas para a multiplexaçao de arquivos de mídia dos mais diferentes formatos no padrão MPEG2. As soluçoes comerciais geralmente estão associadas a \textit{hardwares} dedicados, como a apresentada por \cite{harris} e custam elevadas somas, da ordem de alguns milhares de dólares. Estes equipamentos funcionam em tempo real, recebendo fluxos de vídeo, áudio e dados em múltiplas interfaces de entrada ASI e entregando na saída um fluxo multiplexado no padrão MPEG2. Os principais clientes destas soluções são geradoras de televisão, que produzem conteúdo ao vivo e precisam de baixa latência na codificação do sinal. As soluções gratuitas são \textit{softwares} compatíveis com as plataformas Windows e Linux, na sua maioria. Alguns têm interface gráfica e configuraçoes padrão para auxiliar o seu uso por usuários pouco familiarizados com o padrão. A principal diferença é que o objetivo não é a utilizaçao do sistema em tempo real, de modo que as especificaçoes de processamento e memória dos computadores pessoais geralmente são suficientes para executar as ferramentas. As interfaces de entrada e saída são comumente arquivos binários que armazenam os fluxos de dados de maneira sequencial.
 
@@ -1117,8 +1124,8 @@ Even though FFMPEG doesn't provide native support for multiple MPEG services, it
 
 \begin{itemize}
 \item{add support to multiple service MPEG2 transport streams;}
-\item{add the tables which are optional in the ISO/IEC standard but are mandatory in SBTVD;}
-\item{create a more user-friendly interface and simplify the operation of the command-line interface.}
+\item{add the tables which are optional in the ISO/IEC standard but are mandatory in SBTVD.}
+%\item{possibly include a more user-friendly interface and simplify the operation of the command-line interface.}
 \end{itemize}
 
 
@@ -1144,9 +1151,9 @@ The structures used by the multiplexer that represent the definitions on the sta
 
 \texttt{MpegTSWriteStream} represents one elementary stream that is sent through the TS. It has a pointer to the corresponding service, the stream PID, a continuity counter, the stream's current PTS and DTS values and the stream raw payload itself.
 
-The main multiplexer structure is \textit{MpegTSWrite}, shown in \autoref{lst_MpegTSWrite}, that represents the Transport Stream itself. The structure contains the PSI tables PAT, NIT and SDT as three \textit{MpegTSSection} structures, a dynamic array of \textit{MpegTSServices} and many control variables, such as the counter \texttt{nb\_services} for the number of services contained in the TS, the desired constant multiplexing rate \texttt{mux\_rate} and a pair of variables to control the repeated transmission of each PSI table.
+The main multiplexer structure is \textit{MpegTSWrite}, shown in \autoref{lst_MpegTSWrite}, that represents the Transport Stream itself. The structure contains the PSI tables PAT, NIT and SDT as three \textit{MpegTSSection} structures, a dynamic array of \textit{MpegTSServices} and many control variables, such as the counter \texttt{nb\hspace{0.1mm}\_\hspace{0.1mm}services} for the number of services contained in the TS, the desired constant multiplexing rate \texttt{mux\hspace{0.1mm}\_\hspace{0.1mm}rate} and a pair of variables to control the repeated transmission of each PSI table.
 
-Along with the control variables, the physical network information is included as well: the fields \texttt{transport\_stream\_id} and \texttt{original\_network\_id} are assigned values received from the command-line.
+Along with the control variables, the physical network information is included as well: the fields \texttt{transport\hspace{0.1mm}\_\hspace{0.1mm}stream\hspace{0.1mm}\_\hspace{0.1mm}id} and \texttt{original\hspace{0.1mm}\_\hspace{0.1mm}network\hspace{0.1mm}\_\hspace{0.1mm}id} are assigned values received from the command-line.
 
 Each command-line parameter passed to FFmpeg is parsed and must be validated before use. Each valid option is listed as one entry in a structure, an example is presented in \autoref{lst_input_option}. The first field is the option name, the second is a help text, the third is the position within a structure where it should be stored, then comes the variable type, the default value if it is not passed as argument, the minimum value, the maximum, and finally a internal definition of the option.
 
@@ -1162,23 +1169,23 @@ Each command-line parameter passed to FFmpeg is parsed and must be validated bef
 
 \subsection{Functions}
 
-The main functions related to the multiplexing process are \texttt{av\_write\_header()} for writing the TS stream header, \texttt{av\_write\_packet()} for writing the packets and \texttt{av\_write\_trailer()} for writting the stream tail. The list below describes the sequence of the calls to the functions:
+The main functions related to the multiplexing process are \texttt{av\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}write\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}header()} for writing the TS stream header, \texttt{av\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}write\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}packet()} for writing the packets and \texttt{av\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}write\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}trailer()} for writting the stream tail. The list below describes the sequence of the calls to the functions:
 
 \begin{enumerate}
-	\item{A call to \texttt{av\_write\_header()} initializes the control variables;}
-	\item{as long as there is available data in the input streams, successive calls to \texttt{av\_write\_packet()} occur, each one writes one 188-byte TS packet in the output \textit{.ts} file. In its turn, \texttt{av\_write\_packet()} calls \texttt{mpegts\_write\_pes()} to handle the writing process of the current TS packet:}
+	\item{A call to \texttt{av\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}header()} initializes the control variables;}
+	\item{as long as there is available data in the input streams, successive calls to \texttt{av\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}packet()} occur, each one writes one 188-byte TS packet in the output \textit{.ts} file. In its turn, \texttt{av\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}packet()} calls \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}pes()} to handle the writing process of the current TS packet:}
 	\begin{enumerate}
-		\item {\label{itm:ret_si_info} \texttt{mpegts\_write\_pes()} calls  \texttt{retransmit\_si\_info()}, that outputs one PSI table section in the packet, if it's time;}
-		\item {\label{itm:dts_condition} \texttt{mpegts\_write\_pes()} loops among the streams and searches a stream with the current frame DTS within the time interval of the current PCR.}
+		\item {\label{itm:ret_si_info} \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}pes()} calls  \texttt{retransmit\hspace{0.1mm}\_\hspace{0.1mm}si\hspace{0.1mm}\_\hspace{0.1mm}info()}, that outputs one PSI table section in the packet, if it's time;}
+		\item {\label{itm:dts_condition} \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}pes()} loops among the streams and searches a stream with the current frame DTS within the time interval of the current PCR.}
 	\end{enumerate}
-	\item{when input streams are over, \texttt{av\_write\_end()} frees allocated memory and closes the files.}
+	\item{when input streams are over, \texttt{av\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}end()} frees allocated memory and closes the files.}
 \end{enumerate}
 
-To decide if it's time, in \autoref{itm:ret_si_info}, \texttt{retransmit\_si\_info()} uses the control variables \texttt{*\_packet\_count} and \texttt{*\_packet\_period} of each table to control the transmission rates by incrementing the corresponding \texttt{packet\_count} each time the function is called and outputting the table only when the counter reaches \texttt{packet\_period};
+To decide if it's time, in \autoref{itm:ret_si_info}, \texttt{retransmit\hspace{0.1mm}\_\hspace{0.1mm}si\hspace{0.1mm}\_\hspace{0.1mm}info()} uses the control variables \texttt{*\hspace{0.1mm}\_\hspace{0.1mm}packet\hspace{0.1mm}\_\hspace{0.1mm}count} and \texttt{*\hspace{0.1mm}\_\hspace{0.1mm}packet\hspace{0.1mm}\_\hspace{0.1mm}period} of each table to control the transmission rates by incrementing the corresponding \texttt{packet\hspace{0.1mm}\_\hspace{0.1mm}count} each time the function is called and outputting the table only when the counter reaches \texttt{packet\hspace{0.1mm}\_\hspace{0.1mm}period};
 
-In \autoref{itm:dts_condition}, if \texttt{mpegts\_write\_pes()} finds a suitable PES packet, it fills a TS packet with data from this stream. If not, \texttt{mpegts\_write\_pes()} \texttt{mpegts\_insert\_pcr\_only()} is called to output only the necessary for a single PCR, without PES payload nor PSI tables, or \texttt{mpegts\_insert\_null\_packet()} is called to output an empty TS packet, full of stuffing bytes.
+In \autoref{itm:dts_condition}, if \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}pes()} finds a suitable PES packet, it fills a TS packet with data from this stream. If not, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}pes()} \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}insert\hspace{0.1mm}\_\hspace{0.1mm}pcr\hspace{0.1mm}\_\hspace{0.1mm}only()} is called to output only the necessary for a single PCR, without PES payload nor PSI tables, or \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}insert\hspace{0.1mm}\_\hspace{0.1mm}null\hspace{0.1mm}\_\hspace{0.1mm}packet()} is called to output an empty TS packet, full of stuffing bytes.
 
-FFmpeg has dedicated functions to write TS packets with PSI tables. \texttt{mpegts\_write\_section()} is responsible for writing the TS packet header fields described in \autoref{ts_header}. \texttt{mpegts\_write\_section1()} is responsible for writing the common fields for all PSI tables, described in \autoref{iso_psi}.
+FFmpeg has dedicated functions to write TS packets with PSI tables. \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}section()} is responsible for writing the TS packet header fields described in \autoref{ts_header}. \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}section1()} is responsible for writing the common fields for all PSI tables, described in \autoref{iso_psi}.
 
 %and \autoref{abnt_psi}
 
@@ -1195,15 +1202,15 @@ FFmpeg has dedicated functions to write TS packets with PSI tables. \texttt{mpeg
 \label{implementation}
 % ---
 
-%Find: \_
-% Replace with: \hspace{0.1mm}\_\hspace{0.1mm}
+%Find: \hspace{0.1mm}\_\hspace{0.1mm}
+% Replace with: \hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}
 
 \section{New input options}
 In order to provide flexibility to the user to configure the Transport Stream parameters according to his needs, several options were added to the command-line interface.
 
-Most of them materialize the physical characteristics of the network and their names are very related to the definitions in the standards: \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}transport\hspace{0.1mm}\_\hspace{0.1mm}stream\hspace{0.1mm}\_\hspace{0.1mm}id}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}original\hspace{0.1mm}\_\hspace{0.1mm}network\hspace{0.1mm}\_\hspace{0.1mm}id}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}area\hspace{0.1mm}\_\hspace{0.1mm}code}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}guard\hspace{0.1mm}\_\hspace{0.1mm}interval}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}transmission\hspace{0.1mm}\_\hspace{0.1mm}mode}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}physical\hspace{0.1mm}\_\hspace{0.1mm}channel}, \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}virtual\hspace{0.1mm}\_\hspace{0.1mm}channel}.
+Most of them materialize the physical characteristics of the network and their names are very related to the definitions in the standards: \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}transport\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}stream\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}id}, \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}original\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}network\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}id}, \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}area\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}code}, \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}guard\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}interval}, \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}transmission\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}mode}, \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}physical\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}channel}, \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}virtual\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}channel}.
 
-Others are used as control variables and are self-explanatory: \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}final\hspace{0.1mm}\_\hspace{0.1mm}nb\hspace{0.1mm}\_\hspace{0.1mm}services} and \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}transmission\hspace{0.1mm}\_\hspace{0.1mm}profile}. Their use is explained in the following sections.
+Others are used as control variables and are self-explanatory: \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}final\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}nb\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}services} and \texttt{mpegts\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}transmission\hspace{0.1mm}\hspace{0.1mm}\_\hspace{0.1mm}\hspace{0.1mm}profile}. Their use is explained in the following sections.
 
 % ---
 \section{Multiple services}
@@ -1211,7 +1218,9 @@ Others are used as control variables and are self-explanatory: \texttt{mpegts\hs
 
 \subsection{Introduction}
 
-The first proposed modification to the original FFMPEG code is to add multiple service support. The first task was to find a way to give to the multiplexer new information about how many services should be generated. This was done by creating a new command-line parameter: the option \texttt{mpegts\_transmission\_profile}. Two profiles were previewed:
+The first proposed modification to the original FFMPEG code is to add multiple service support. The first task was to find a way to give to the multiplexer new information about how many services should be generated. This was done by creating a new command-line parameter: the option \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}transmission\hspace{0.1mm}\_\hspace{0.1mm}profile}.
+
+Two profiles were designed:
 \begin{itemize}
 \item profile number '1' was designed with two services: one Full-segment service with a high-definition video stream and an audio stream and one 1-Segment service with a low-definition video stream and another audio stream;
 \item profile number '2' was designed with a variable number of services: up to four services, each with a standard-definition video stream and an audio stream; and one  1-Segment service with a low-definition video stream and another audio stream.
@@ -1221,31 +1230,32 @@ Further information about the Full-Segment and 1-Segment services are provided i
 
 \subsection{Profile 1: one Full-seg service and one 1-Seg service}
 
-First the service ID for the HDTV service is calculated, based on the definitions in \autoref{calculo_sid}: the network ID is the \texttt{ts->onid} variable; the service type is hard-coded as \texttt{'00'}, as well as the program number (\texttt{0x0}). Then, one \texttt{MpegTSService} is added to the services array in \texttt{MpegTSWrite} with the existent \texttt{mpegts\_add\_service()} function. The parameters to this function are the recent calculated HD service ID, the provider name and the hard-coded service name. The process is repeated for the 1-Segment service, except that the service type is coded as \texttt{'11'} and the program number as \texttt{0x1}. Finally, the variable \texttt{ts->final\_nb\_services} is set as \texttt{'2'}.
+First the service ID for the HDTV service is calculated, based on the definitions in \autoref{special_fields}: the network ID is the \texttt{ts->onid} variable; the service type is hard-coded as \texttt{'00'}, as well as the program number (\texttt{0x0}). Then, one \texttt{MpegTSService} is added to the services array in \texttt{MpegTSWrite} with the existent \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}add\hspace{0.1mm}\_\hspace{0.1mm}service()} function. The parameters to this function are the recent calculated HD service ID, the provider name and the hard-coded service name. The process is repeated for the 1-Segment service, except that the service type is coded as \texttt{'11'} and the program number as \texttt{0x1}. Finally, the variable \texttt{ts->final\hspace{0.1mm}\_\hspace{0.1mm}nb\hspace{0.1mm}\_\hspace{0.1mm}services} is set as \texttt{'2'}.
 
 \subsection{Profile 2: standard definition services and one 1-Seg service}
 
-Profile two is not yet implemented, but the guidelines are the same as for profile 1. Instead of setting the variable \texttt{ts->final\_nb\_services} as 2, the value is left free for the user to choose and instead of creating only two services, a loop iterates the service creation until a counter reaches the total number of services.
+Profile two is not yet implemented, but the guidelines are the same as for profile 1. Instead of setting the variable \texttt{ts->final\hspace{0.1mm}\_\hspace{0.1mm}nb\hspace{0.1mm}\_\hspace{0.1mm}services} as 2, the value is left free for the user to choose and instead of creating only two services, a loop iterates the service creation until a counter reaches the total number of services.
 
 \subsection{Stream Mapping}
 \label{stream_mapping}
 
-When calling FFmpeg, the user defines the order that input streams shall be placed in the \texttt{AVFormatContext} structure with the \texttt{-map} option. This same sequence is used in the streams loops throughout the code, and defines also the order of assignment of streams PIDs. The first input stream receives the value in \texttt{mpegts\_pmt\_start\_pid} and the value is incremented by one for each new stream. The default value for \texttt{mpegts\_pmt\_start\_pid} is \texttt{0x100}.
+When calling FFmpeg, the user defines the order that input streams shall be placed in the \texttt{AVFormatContext} structure with the \texttt{-map} option. This same sequence is used in the streams loops throughout the code, and defines also the order of assignment of streams PIDs. The first input stream receives the value in \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}pmt\hspace{0.1mm}\_\hspace{0.1mm}start\hspace{0.1mm}\_\hspace{0.1mm}pid} and the value is incremented by one for each new stream. The default value for \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}pmt\hspace{0.1mm}\_\hspace{0.1mm}start\hspace{0.1mm}\_\hspace{0.1mm}pid} is \texttt{0x100}.
 
-As already explained, streams hold the information of which service contains them with a pointer to one \texttt{MpegTSService} instance within the \texttt{MpegTSWriteStream} structure. Before the modifications of this project, since there was only one service, all the streams belonged to it. Now, the multiplexer iterates through all the streams and does a modulus operation with the stream index and the value of \texttt{mpegts\_final\_nb\_services} to assign alternately one stream to each service, as shown in \autoref{lst_stream_assignment}. \texttt{ts\_st} is the stream structure, \texttt{i} is the iteration variable.
+As already explained, streams hold the information of which service contains them with a pointer to one \texttt{MpegTSService} instance within the \texttt{MpegTSWriteStream} structure. Before the modifications of this project, since there was only one service, all the streams belonged to it. Now, the multiplexer iterates through all the streams and does a modulus operation with the stream index and the value of \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}final\hspace{0.1mm}\_\hspace{0.1mm}nb\hspace{0.1mm}\_\hspace{0.1mm}services} to assign alternately one stream to each service, as shown in \autoref{lst_stream_assignment}. \texttt{ts\hspace{0.1mm}\_\hspace{0.1mm}st} is the stream structure, \texttt{i} is the iteration variable.
 
 \begin{lstlisting}[caption={Assigning streams to services.}, label={lst_stream_assignment}]
 ts_st->service = ts->services[i % ts->final_nb_services];
 \end{lstlisting}
 
-Considering the example shown in Figure \ref{fig:diagrama_estruturas_ffmpeg}, the mapping should be done by placing first the two video streams, then the first audio stream corresponding to the first service, then the audio stream corresponding to the second service and finally the second audio stream corresponding to the first service.
+%Considering the example shown in Figure \ref{fig:diagrama_estruturas_ffmpeg}, 
+The mapping should be done by placing first the two video streams, then the first audio stream corresponding to the first service, then the audio stream corresponding to the second service and finally the second audio stream corresponding to the first service.
 
 \section{PSI tables}
 
 %\subsection{Introduction}
-Each time \texttt{retransmit\_si\_info()} is called, it updates the counters for each table and tests if they have reached the period value. If true, \texttt{retransmit\_si\_info()} calls the \texttt{mpegts\_write\_<table>()} function, where \texttt{<table>} is one of the following: \texttt{sdt, nit, tot, pat, pmt}. To add SDT, NIT and TOT support, three sets of conditional calls were added, similar to the one shown in \autoref{lst_write_table_call}.
+Each time \texttt{retransmit\hspace{0.1mm}\_\hspace{0.1mm}si\hspace{0.1mm}\_\hspace{0.1mm}info()} is called, it updates the counters for each table and tests if they have reached the period value. If true, \texttt{retransmit\hspace{0.1mm}\_\hspace{0.1mm}si\hspace{0.1mm}\_\hspace{0.1mm}info()} calls the \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}<table>()} function, where \texttt{<table>} is one of the following: \texttt{sdt, nit, tot, pat, pmt}. To add SDT, NIT and TOT support, three sets of conditional calls were added, similar to the one shown in \autoref{lst_write_table_call}.
 
-\begin{lstlisting}[caption={Conditional call to \texttt{mpegts\_write\_nit()}.}, label={lst_write_table_call}]
+\begin{lstlisting}[caption={Conditional call to \texttt{mpegts\hspace{0.1mm}\_\hspace{0.1mm}write\hspace{0.1mm}\_\hspace{0.1mm}nit()}.}, label={lst_write_table_call}]
 if (++ts->nit_packet_count == ts->nit_packet_period) {
     ts->nit_packet_count = 0;
     mpegts_write_nit(s);
@@ -1254,38 +1264,44 @@ if (++ts->nit_packet_count == ts->nit_packet_period) {
 
 A set of macros were added to hold the default values of network characteristics, shown in \autoref{lst_macros}. In C language, when an array variable is declared, a memory area with the size of the array is allocated and the variable itself is a pointer to the first element of the array \citeonline[5.1]{ritchie}. ISO defines 1024 bytes as the maximum authorized length of a table \citeonline[2.4.4]{ISO}. Excluding 8 bytes of the table header and 4 bytes of the CRC, results in 1012 bytes.
 
-To create the bitstream of the table with pointer manipulation, first an array of type \texttt{uint8\_t}\footnote{\texttt{uint8\_t} is an unsigned integer type with size of 1 byte.} with 1012 bytes is declared with name \texttt{data}. Then a pointer \texttt{q} of the same type is declared and the first address of the array is assigned to it.
+To create the bitstream of the table with pointer manipulation, first an array of type \texttt{uint8\hspace{0.1mm}\_\hspace{0.1mm}t}\footnote{\texttt{uint8\hspace{0.1mm}\_\hspace{0.1mm}t} is an unsigned integer type with size of 1 byte.} with 1012 bytes is declared with name \texttt{data}. Then a pointer \texttt{q} of the same type is declared and the first address of the array is assigned to it.
 
-Since all the bytes in the array are stored in a contiguous memory area, it is easy to create the table bitstream by assigning the byte value of the address pointed by \texttt{q} and incrementing the pointer after each assignment, so that the next assignment is done in the next byte of the array. Since section length is dependant on how many bytes are used and length fields are at the beginning of the headers, length fields are skipped in a first pass to be filled later, and an auxiliary pointer(\texttt{len\_ptr}) holds the position of the length fields for the second pass. 
+Since all the bytes in the array are stored in a contiguous memory area, it is easy to create the table bitstream by assigning the byte value of the address pointed by \texttt{q} and incrementing the pointer after each assignment, so that the next assignment is done in the next byte of the array. Since section length is dependant on how many bytes are used and length fields are at the beginning of the headers, length fields are skipped in a first pass to be filled later, and an auxiliary pointer(\texttt{len\hspace{0.1mm}\_\hspace{0.1mm}ptr}) holds the position of the length fields for the second pass. 
 
 \subsection{Length Calculation}
+\label{length_calc}
 
-Section lengths are calculated in a simple way. Most of the time their value only counts the variable size part of the sections, from right after the length field and up to the end of the last byte of the section. By calculating the difference of the two pointers \texttt{q} and \texttt{len\_ptr}, one gets the number of bytes written including length bytes. If one subtracts the size of the length field from this difference, he easily obtains the length of the variable portion of the section.
+Section lengths are calculated in a simple way. Most of the time their value only counts the variable size part of the sections, from right after the length field and up to the end of the last byte of the section. By calculating the difference of the two pointers \texttt{q} and \texttt{len\hspace{0.1mm}\_\hspace{0.1mm}ptr}, one gets the number of bytes written including length bytes. If one subtracts the size of the length field from this difference, he easily obtains the length of the variable portion of the section.
 
 \autoref{lst_pointer_assignment} shows an excerpt of the code: the pointer assignment algorithm. \autoref{fig:pointer_assignment} shows an example of how the  algorithm works. Six of the bytes allocated to variable \texttt{data} are shown on top, empty.
 \begin{enumerate}
 \item The first \texttt{data} address is assigned to \texttt{q} , as shown by the continuous arrow.
 \item \label{itm:len_ptr1} The syntax shown assigns the value \texttt{0x10} to the address pointed by \texttt{q} and increments by one the pointed address. The continuous arrow shows the pointed address after \autoref{itm:len_ptr1} is completed.
-\item \label{itm:len_ptr2} \texttt{len\_ptr} stores the current position of \texttt{q}, as indicated by the dashed arrow; the address pointed to by \texttt{q} is incremented by 2 units, as indicated by the continuous arrow, to leave space to the length fields.
+\item \label{itm:len_ptr2} \texttt{len\hspace{0.1mm}\_\hspace{0.1mm}ptr} stores the current position of \texttt{q}, as indicated by the dashed arrow; the address pointed to by \texttt{q} is incremented by 2 units, as indicated by the continuous arrow, to leave space to the length fields.
 \item the value \texttt{0x45} is stored in the address currently pointed by \texttt{q}, and \texttt{q} is incremented by 1 byte.
-\item after all fields are filled with data and the length of the section is known, the length is written using the auxiliary pointer \texttt{len\_ptr}, that still points to the same position defined in \autoref{itm:len_ptr2}.
+\item after all fields are filled with data and the length of the section is known, the length is written using the auxiliary pointer \texttt{len\hspace{0.1mm}\_\hspace{0.1mm}ptr}, that remains pointing to the same position defined in \autoref{itm:len_ptr2}.
 \end{enumerate}
 
 \begin{figure}[!h]
 \centering
 \caption{Pointer assignment example.}
-\includegraphics[width=1\linewidth]{figuras/pointer_assignment.png}
+\includegraphics[width=0.8\linewidth]{figuras/pointer_assignment.png}
 \\Source: The author.
 \label{fig:pointer_assignment}
 \end{figure}
 
 \subsection{Descriptors}
-protótipo para facilitar a replicação
-como calcula o length, com ponteiros
-falar das input parameters adicionados para possibilitar a variação dos descritores
 
-separar as tabelas em subseções se tiverem especificidades
+In order to facilitate the creation of the descriptors, a prototype of C code was written. It is presented in \autoref{lst_proto_desc}. This was possible because the descriptors syntax follow a regular syntax, they always start with a tag byte, followed by a length field with one or two bytes, and followed by data bytes. The calculation of descriptors lengths use the same algorithm described in \autoref{length_calc}. All the descriptors in tables from PSI/SI which were described in theoretical sections were coded in the application.
 
+\begin{lstlisting}[caption={Descriptors prototype.}, label={lst_proto_desc}]
+	*q++ = 0x;
+	_length_ptr = q;
+	*q++;
+	put16(&q, 0x);
+	*q++ = 0x; 
+_length_ptr[0] = q - _length_ptr - 1;
+\end{lstlisting}
 
 %% ---
 %%  capitulo de Resultados
@@ -1310,7 +1326,7 @@ The other available solution in the Dektec DTA-115 PCI modulator board, which is
 % \label{fig:scope_eitv_dektec}
 % \end{figure}
 
-Two visualization devices are available for each service type: a Philips LCD TV and an EiTV Set Top Box for Full-Segment reception and for 1-Segment reception a Lenoxx GPS and a Samsung Cell Phone. Additionally, a USB receiver with Full-segment and 1-Segment reception capabilities is used attached to a Linux Workstation. With the USB receiver, Transport Streams are captured and then analysed using two free softwares: \textit{MPEG-2 TS Packet Analyser} \cite{} and \textit{SBTVD Transport Stream Parser v0.32} \cite{}. FFprobe is also used as a tool to analyse TSs and display information about the streams contained in them.
+Two visualization devices are available for each service type: a Philips LCD TV and an EiTV Set Top Box for Full-Segment reception and for 1-Segment reception a Lenoxx GPS with DTV and a Samsung Cell Phone with DTV. Additionally, a Pixelview PenTV USB receiver with Full-segment and 1-Segment reception capabilities is used attached to a Linux Workstation. With the USB receiver, Transport Streams are captured and then analysed using two free softwares: \textit{MPEG-2 TS Packet Analyser} \cite{} and \textit{SBTVD Transport Stream Parser v0.32} \cite{}. FFprobe is also used as a tool to analyse TSs and display information about the streams contained in them.
 
 \section{Timing tests}
 
@@ -1336,7 +1352,7 @@ Attention should be given to the importance of the \texttt{muxrate} option. In t
 
 After realizing the need of setting muxrate, it was necessary to know what value should be set. If an underestimated bit-rate is chosen, the PCRs and PTSs will be calculated incorrectly and frames will not be delivered at the expected frame rate. When the transmitter eventually sends the bit-stream to the air in a slower bitrate than necessary, playback will present freeze moments because there will be instants of time without video or audio to be displayed, i.e., it is as if the stream was reproduced in slow motion. On the other hand, an overestimated TS bit-rate causes the multiplexer to add too much stuffing packets into the stream and use unnecessary band.
 
-Analyses of the local broadcast channel shown that TSs carried about 11 \% of stuffing bytes, as can be shown in the graphics in \autoref{fig:graph_rbs_dump} and \autoref{fig:graph_band_dump}. The percentages indicated in the figures refer to the amount of data in each PIDs. The PID numbers and packet counts can be seen in \autoref{tab_dumps}. In the graphs, the designation of stuffing packets is \textit{null packet}. From this information, the muxrate option was set at 3.6 Mpbs, which results in an overhead of about 11 \%, as can be seen in \autoref{fig:graph_generated_dump}.
+Analyses of the local broadcast channel shown that TSs carried about 11 \% of stuffing bytes, as can be shown in the graphics in \autoref{fig:graph_rbs_dump} and \autoref{fig:graph_band_dump}. The percentages indicated in the figures refer to the amount of data in each PIDs. The PID numbers and packet counts can be seen in \autoref{tab_dumps}. In the graphs, the designation of stuffing packets is \textit{null packet}. From this information, the muxrate option was set at 3.6 Mbps, which results in an overhead of about 11 \%, as can be seen in \autoref{fig:graph_generated_dump}.
 
 \begin{figure}[!h]
 \centering
@@ -1407,7 +1423,7 @@ Input #0, mpegts, from 'dst.ts':
     Stream #0:1[0x101](und): Audio: aac_latm ([17][0][0][0] / 0x0011), 48000 Hz, stereo, fltp
 \end{lstlisting}
 
-FFprobe displays what is in \autoref{lst_ffprobe_clean} when analysing the output of \autoref{lst_ffmpeg_single_service}. The TS lasts 59.98 seconds and has a bitrate of 3662 kbps. It contains only one program, with program\_number 1, that has two streams: one video stream (PID \texttt{0x100}) and one audio stream (PID \texttt{0x101}) that comply to the requirements of the SBTVD standard.
+FFprobe displays what is in \autoref{lst_ffprobe_clean} when analysing the output of \autoref{lst_ffmpeg_single_service}. The TS lasts 59.98 seconds and has a bitrate of 3662 kbps. It contains only one program, with program\hspace{0.1mm}\_\hspace{0.1mm}number 1, that has two streams: one video stream (PID \texttt{0x100}) and one audio stream (PID \texttt{0x101}) that comply to the requirements of the SBTVD standard.
 
 The streams were received in the visualization devices and the sync between video and audio was verified by watching and hearing the outputs in scenes where people were filmed while talking. Three different people stated that video and audio were in sync.
 
@@ -1423,7 +1439,7 @@ The results were satisfactory, and although there was no employment of functiona
 
 \section{Multiple Services Tests}
 
-These tests were carried out after applying the implementations described in \autoref{implementation}. Their purpose is to validate the developed system. Two different sets of tests were made, one with a TS captured from a local broadcast channel with PenTV and the other with a TS created with the developed multiplexer.
+These tests were carried out after applying the implementations described in \autoref{implementation}. Their purpose is to validate the developed system. Two different sets of tests were made, one with a TS captured from a local broadcast channel with the USB receiver and the other with a TS created with the developed multiplexer.
 
 \subsection{Retransmitting a captured TS}
 \label{retransmitting}
@@ -1447,11 +1463,12 @@ The modulator board was configured with the following configuration, which is kn
 \item layer B configured with 64QAM modulation, code rate 3/4, time interleave of 2 and occupying twelve segments\footnotemark[\value{footnote}];
 \end{itemize}
 
-With the captured TS file loaded in StreamXpress and these configurations set, in the program interface it is possible to select which PIDs should really be transmitted and in which layer in real-time, as shown in \autoref{}. Several different combinations of transmitted PIDs and the status of reception in the TV and cell phone are organized in the following tables. They are separated by the reception device and within each device separated by its tuning configuration.
+With the captured TS file loaded in StreamXpress and these configurations set, in the program interface it is possible to select which PIDs should really be transmitted and in which layer in real-time. Several different combinations of transmitted PIDs and the status of reception in the TV and cell phone are organized in the following tables. They are separated by the reception device and within each device separated by its tuning configuration.
 
 \begin{table}
     \caption {TV receiver in manual tuning method.}
-    \begin{tabular}{|l|l|l|l|}
+    \begin{center}
+\begin{tabular}{|l|l|l|l|}
     \hline
     Sent PIDs                   & Signal Level & Screen / Speakers Status & Service Name \\ \hline
     NIT                         & 0            & Blue Screen              & NONE         \\ \hline
@@ -1461,14 +1478,17 @@ With the captured TS file loaded in StreamXpress and these configurations set, i
     NIT, PAT, PMT, A/V ESs, SDT & Good         & Video and Audio in Sync  & Band HDTV    \\ \hline
     \end{tabular}
 	\label{tab_manual_tuning}
+\end{center}
 
 \end{table}
 
 \begin{table}
     \caption {TV receiver in normal operation mode.}
-    \begin{tabular}{|l|l|l|l|}
+    \begin{center}
+\begin{tabular}{|l|l|l|l|}
     \hline
-    Sent PIDs               & Opens A/V Streams & "No Signal" Flag & "No available programme" flag \\ \hline
+    Sent PIDs               & Opens A/V & "No Signal" & "No available \\
+                   & Streams & Flag & programme" flag \\ \hline
     NIT                     & NO                & YES              & NO                            \\ \hline
     NIT, PAT                & NO                & NO               & YES                           \\ \hline
     NIT, PAT, PMT           & NO                & NO               & YES                           \\ \hline
@@ -1477,11 +1497,13 @@ With the captured TS file loaded in StreamXpress and these configurations set, i
 	NIT, PAT, PMT, A/V ESs  & YES, both         & NO               & NO                            \\ \hline
     \end{tabular}
 	\label{tab_normal_operation}
+\end{center}
 \end{table}
 
 \begin{table}
     \caption {TV receiver in blind search mode.}
-    \begin{tabular}{|l|l|}
+    \begin{center}
+\begin{tabular}{|l|l|}
     \hline
     Sent PIDs & Finds channel \\ \hline
     NIT       & YES           \\ \hline
@@ -1490,6 +1512,7 @@ With the captured TS file loaded in StreamXpress and these configurations set, i
     NIT, PAT  & YES           \\ \hline
     \end{tabular}
 	\label{tab_blind_search}
+\end{center}
 \end{table}
 
 Several important information can be observed from this tables:
@@ -1511,7 +1534,8 @@ With the cell phone, the results are slightly different. There is no manual tuni
 
 \begin{table}
     \caption {Cell phone in blind search and normal operation.}
-    \begin{tabular}{|l|l|l|}
+    \begin{center}
+\begin{tabular}{|l|l|l|}
     \hline
     Sent PIDs              & Finds channel in blind search & Status in normal operation \\ \hline
     NIT                    & YES                           & "Signal too weak, retry?"  \\ \hline
@@ -1520,13 +1544,15 @@ With the cell phone, the results are slightly different. There is no manual tuni
     NIT, PMT, A/V ESs      & YES                           & Opens A/V                  \\ \hline
     \end{tabular}
 	\label{tab_cell}
+\end{center}
 \end{table}
 
 This whole set of tests provides now information about what to expect when the stream generated by the developed multiplexer is broadcasted.
 
 \subsection{Transmitting a remultiplexed TS with two services}
+\label{test_remultiplexing}
 
-The main objective of this last set of tests is to confirm that the developed multiplexer creates a TS compliant to the standard and that is is received and decoded correctly. The two inputs are edited Transport Streams which were captured and remultiplexed, one contains the Full Segment service and the other, the 1-Segment service. The signal flow is shown in \autoref{fig:test_scn_muxing}
+The main objective of this last set of tests is to confirm that the developed multiplexer creates a TS compliant to the standard and that it is received and decoded correctly. The two inputs are edited Transport Streams which were captured and remultiplexed, one contains the Full Segment service and the other, the 1-Segment service. The signal flow is shown in \autoref{fig:test_scn_muxing}
 
 \begin{figure}[!h]
 \centering
@@ -1605,7 +1631,7 @@ In \autoref{fig:ts_parser_tve_remux_sdt} the TS Parser is analysing the SDT of t
 \label{fig:ts_parser_tve_remux_sdt}
 \end{figure}
 
-After this complete analysis among the PSI/SI tables generated by the code developed in the project, it can be seen that all the transmitted tables and descriptors are compliant to the standard and contain valid information. Also, the information in the tables is readable by the receptors as will be seen next. The EIT table and its descriptors, not yet implemented, did not prevent the system from working. The TOT table is currently presenting errors in operation and although it was generated, it was not broadcasted.
+After this complete analysis among the PSI/SI tables generated by the code developed in the project, it can be seen that all the transmitted tables and descriptors are compliant to the standard and contain valid information. Also, the information in the tables is readable by the receptors as will be seen next. The EIT table and its descriptors, not yet implemented, did not block the system functionalities. The TOT table is currently presenting errors in operation and although it was generated, it was not broadcasted.
 
 The same sequence of tests of \autoref{retransmitting} was carried out for this Transport Stream. The results were similar as in the other tests, which is why the tables with results are not presented. Instead, some pictures were taken to illustrate the system working.
 
@@ -1633,9 +1659,9 @@ In the left side of \autoref{fig:cell_with_sdt}, the reception on the cell phone
 
 \begin{figure}[!h]
 \centering
-\includegraphics[width=0.45\linewidth]{figuras/cell_with_sdt.jpg}
+\includegraphics[width=0.9\linewidth]{figuras/cell_with_sdt.jpg}
 \\Source: The author.
-\caption{Reception in the Cell Phone.}
+\caption{Reception in the Cell Phone and TV manual tuning.}
 \label{fig:cell_with_sdt}
 \end{figure}
 
@@ -1653,32 +1679,60 @@ In the left side of \autoref{fig:cell_with_sdt}, the reception on the cell phone
 % ---
 % Conclusão (outro exemplo de capítulo sem numeração e presente no sumário)
 % ---
-\chapter*[Conclusions and Future Perspectives]{Conclusions and Future Perspectives}
-\addcontentsline{toc}{chapter}{Conclusions and Future Perspectives}
+\chapter[Conclusions and Future Development]{Conclusions and Future Development}
+%\addcontentsline{toc}{chapter}{Conclusions and Future Development}
 % ---
 
-Intro sobre o tema
+%Intro sobre o tema
 
-Objetivos e como foram alcançados
-	4 objetivos do projeto? Talvez seja melhor dizer o que é o objetivo do cliente
-	
-Metodologia (implementar modificações em ferramenta existente) com alguns resultados
-	experimentação, testes(ferramentas de teste gratuitas), leituras de documentação das ferramentas
+Television is the most widespread mean of communication in Brazil, terrestrial broadcasts cover up to 70\% of the population and people rely on television to fulfil their needs of information and entertainment. Differently of Internet, TV has roughly a unidirectional communication channel. With the growing Internet coverage, people are discovering the benefits of interactivity, which is impossible with analog television systems. Interactivity is possible if multiple data can be sent to the receiver, and the options presented to the user. By combining TV coverage to interactivity, social inclusion of remote or poor areas can be promoted. Several projects are already in development, such as the Brasil 4D that delivers lists of job vacancies and allows users to schedule medical appointments.
 
-Discussão sobre as variáveis, alguma dificuldade 
-	lack of documentation for the tool (kbps -> bps) muxrate
+Also, paid TV systems deliver high-quality video and audio contents, and subscriptions are becoming cheaper every year. There is a strong risk that, without the migration of free to air analog television to a high-quality digital system, the broadcasters will loose their audience to paid TV. It is technically not feasible to broadcast multiple TV programs or increase media quality within the existing analog channels. It is therefore necessary to adopt a digital transmission system, which provides the solution to both technical issues pointed out.
 
-Experimentos que poderiam ter sido realizados com a ferramenta do jeito como está	
-	codificação de ES de video usando quadros de refereência
+After years of discussions, the Brazilian consortium decided to base our digital television system, SBTVD-T, in the one made by the Japanese, ISDB-T. The technical aspects that led towards this choice instead of the others were the lower power consumption due to better modulation schemes and the possibility to broadcast to mobile devices as well as fixed devices within the same physical channel.
+
+%Objetivos e como foram alcançados
+%	4 objetivos do projeto? Talvez seja melhor dizer o que é o objetivo do cliente
+
+The purpose of this study arose from the need for a tool to test the set-top box that is being developed in the Signal Processing Laboratory. There was no available tool to multiplex and broadcast the reference elementary streams, necessary to test the reception and decoding of the set-top-box. Hence, the objective of the project was to develop a flexible and free tool that allows for the transmission of multimedia streams according to the Brazilian standard.
+
+%Metodologia (implementar modificações em ferramenta existente) com alguns resultados
+%	experimentação, testes(ferramentas de teste gratuitas), leituras de documentação das ferramentas
+
+To achieve this, it was necessary to study the standards ISO/IEC13818-1 and NBR15603. After some research looking for similar solutions that already existed, FFmpeg was found to be very easily modifiable, and was chosen as starting point of development. As methods to validate the development, a set of four receivers were used, as well as tools to analyse the generated bitstreams.
+
+%Discussão sobre as variáveis, alguma dificuldade 
+%	lack of documentation for the tool (kbps -> bps) muxrate
+
+Although the code of FFmpeg was well commented, the lack of documentation for the tool led to several misuses at first tests. For example, there was no indication of the unit of the option muxrate and it was supposed to be kbps at first. After wrongly generated streams, it was realized that the unit was actually bps. Also, the LATM flag in the multiplexer does not really encapsulate the audio stream in LATM, it only sets the stream type in the PMT stream descriptor. This was discovered after having no audio reception in the EiTV set-top-box receiver while there was audio in the Philips TV receiver. This is probably due to the fact that only the TV has an audio decoder compliant to DTV standards other than SBTVD.
+
+%Experimentos que poderiam ter sido realizados com a ferramenta do jeito como está	
+%	codificação de ES de video usando quadros de refereência
 	
-Resultados: funciona? o que funciona dos targets iniciais? multiservice, sync, sbtvd compliance. .tudo? parte? o que falta?
-	EIT nao foi feita, TOT nao funciona
-	consequencias para o projeto do set top box. agora será possível transmitir videos de referencia
+Additionally to the tests that were already performed, extra experimentations can be done by applying reference video frames in the multiplexer input. The current development status allows that. Also, the encoding and multiplexing steps that are done separately could be combined into one, so that the same video input could generate both the HD and 1-Segment services.
 	
-futuras implementações. o que faria se tivesse mais tempo?
-	enriquecer a interface com o usario
-	fazer o código e testar outros profiles(profile 2 nao implementado)
-	EIT nao ta feita, TOT nao funciona.
+%Resultados: funciona? o que funciona dos targets iniciais? multiservice, sync, sbtvd compliance. .tudo? parte? o que falta?
+%	EIT nao foi feita, TOT nao funciona
+%	consequencias para o projeto do set top box. agora será possível transmitir videos de referencia
+
+Looking back to the objectives defined at the introductory chapter, it can be seen that the proposed tasks were all accomplished. The project delivers a tool which is compliant to the SBTVD standard, transmits video and audio in synchronization and allows multiple services to be broadcasted. The compliance to SBTVD and multiple service support are the two features added by this project. Timing functionalities already existed, although no one in the lab could dedicate enough effort to get it to work before.
+
+The SBTVD compliance was achieved by adding the System Information tables which were not present in the original FFmpeg software. The Network Information Table is being created correctly. This is affirmed because in blind scans the receivers are capable of identifying the channel in their presence. Without it, though, the channel is not identified. The Service Description Table is also correct, as the receivers manage to show the service names when they receive the table.
+
+The analyses carried out with the generated streams show the formation of almost all descriptors, the exceptions are those that the analysers can not decode. All the program and system descriptors added are being correctly interpreted by TS Analyser and TS Parser, as was shown in the tests described in previous chapters.
+
+The SBTVD compliance is not yet fullt implemented, though. Even if it was proven that the multiplexed stream can be received by the devices and they manage to correctly decode the streams, the Event Information Table, which is mandatory, is not yet implemented. This table is not responsible for any tuning, demodulation of decoding tasks, it is only informational and that is why it was left to further development. The system works without it.
+
+Besides, the Time Offset Table and its mandatory descriptor were implemented as well, but when they were transmitted the time information in the receivers was not updated as indicated in the table all the times. Not much time was dedicated until now to understand why this issue happens, because the multiplexer works without this information. There is no relation between current time display and presentation of the streams in sync.
+
+Most of all, the parts which are not yet implemented are described in the theoretical chapters and can be developed with little effort, using the FFmpeg framework and taking profit of some of the algorithms described by the author.
+
+Future development in this project can be done to turn the interface of the tool more user-friendly. It is possible to create a graphical interface with lists of valid parameter values and the status of the multiplexing process. Additionally, one key feature yet to be implemented is the second transmission profile to allow the creation of transport streams with more than just two services. The profile 2 is already defined and described in the text, and excerpts of code can be reused to implement this feature.
+
+% futuras implementações. o que faria se tivesse mais tempo?
+	% enriquecer a interface com o usario
+	% fazer o código e testar outros profiles(profile 2 nao implementado)
+	% EIT nao ta feita, TOT nao funciona.
 
 
 
@@ -1720,8 +1774,6 @@ In ISDB-T, a UHF channel is split into 13 frequency segments. The narrow-band re
 
 The modulation schemes usually used in 'S0' are different than the ones of the other segments. Since 1-segment TV is targeted for mobile devices, the signal reach should be higher and at most a small dipole antenna is availlable, then QPSK modulation is used. For the other segments, the amount of data is much higher, and customers don't mind to have an amplified antenna attached to the back of their TV, so less robust modulation is applied, such as 64QAM. 
 
-TODO Referências!!!
-
 \begin{figure}
 \centering
 \caption{ISDB-T channel, segment and program allocation.}
@@ -1734,10 +1786,6 @@ TODO Referências!!!
 \chapter{Excerpts of code in C language}
 
 The following lists present either code developed by the author or parts of the existent code used throughout the text to illustrate the functioning of the tool.
-
-\begin{lstlisting}[caption={Example of input option}, label=lst_input_option]
-{ "mpegts_transport_stream_id", "Set transport_stream_id field.", offsetof(MpegTSWrite, transport_stream_id), AV_OPT_TYPE_INT, {.i64 = 0x0001 }, 0x0001, 0xffff, AV_OPT_FLAG_ENCODING_PARAM}
-\end{lstlisting}
 
 \begin{lstlisting}[caption={Excerpt of MpegTSWrite structure}, label=lst_MpegTSWrite]
 typedef struct MpegTSWrite {
@@ -1755,10 +1803,10 @@ int pmt_start_pid;
 ...
 }MpegTSWrite;
 \end{lstlisting}
-%\hline
-%\end{tabular}
-%\end{center}
-%\end{table}
+
+\begin{lstlisting}[caption={Example of input option}, label=lst_input_option]
+{ "mpegts_transport_stream_id", "Set transport_stream_id field.", offsetof(MpegTSWrite, transport_stream_id), AV_OPT_TYPE_INT, {.i64 = 0x0001 }, 0x0001, 0xffff, AV_OPT_FLAG_ENCODING_PARAM}
+\end{lstlisting}
 
 \begin{lstlisting}[caption={Excerpt of MpegTSSection structure}, label=lst_MpegTSSection]
 typedef struct MpegTSSection {
@@ -1774,8 +1822,8 @@ typedef struct MpegTSService {
 MpegTSSection pmt; 
 int sid; 
 char *name;
-char *provider\_name;
-int pcr\_pid;
+char *provider\hspace{0.1mm}\_\hspace{0.1mm}name;
+int pcr\hspace{0.1mm}\_\hspace{0.1mm}pid;
 ...
 }MpegTSService;
 \end{lstlisting}
@@ -1832,10 +1880,38 @@ sys_mgmt_desc_length_ptr = q;
 *q++ = 0x01;
 \end{lstlisting}
 
-\chapter{Tutorial for capturing streams}
+\chapter{Analyses of PSI tables}
+\label{pat_pmt_analysis}
 
-captura de streams do ar com o pen tv, via tzap e dvbsnoop
-	com o tzap da pra saber se houve erros nao corrigíveis na recepção
+As the first example, consider \autoref{fig:TSAnalyser_close_PAT}, that shows the display of a TS Analyser when a PAT table section is analysed. The field \textit{table id} indicates \texttt{0x00}, which is the PAT code according to \autoref{fig:tab_psi_tables_ids}. The pair \textit{program\hspace{0.1mm}\_\hspace{0.1mm}number} \texttt{0} and \textit{program\hspace{0.1mm}\_\hspace{0.1mm}map\hspace{0.1mm}\_\hspace{0.1mm}PID} \texttt{16} is unique and its presence indicates that the NIT table is present and is carried in the PID \texttt{16}. It's unique because, according to the ISO standard, a program number \texttt{0} always indicates the NIT PID, and the NIT table shall always use the PID \texttt{16}, \citeonline[2.4.4.3]{ISO}. The other pairs indicate that there are two programs in the transport stream, with program numbers \texttt{23104} and \texttt{23129}. Each of these programs have their PMTs allocated in the PIDs \texttt{257} and \texttt{8136}, respectively. In the \autoref{PMT}, it will be seen how these values are taken into account.
+
+\begin{figure}[!hb]
+\centering
+\caption{TS Analyser output showing a PAT Table.}
+\includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PAT.png}
+\\Source: Reproduction of the MPEG TS Analyser software.
+\label{fig:TSAnalyser_close_PAT}
+\end{figure}
+
+\autoref{fig:TSAnalyser_close_PMT}, that follows, shows a snapshot of the analyser output for a PMT table. In the example, the \textit{program number} is \texttt{23104}, the table ID corresponding to the PMT is \texttt{0x02} (as defined by ISO13818-1) and the PCR information is carried in the PID (PCR\hspace{0.1mm}\_\hspace{0.1mm}PID) \texttt{256d}. Yet, from \autoref{fig:TSAnalyser_close_PMT_TS_Header}, it can be seen at the TS Header that the PID carrying the PMT table is number \texttt{257}, as indicated by the PAT table analysed before.
+
+By analysing both \autoref{tab_ISOESTypes} and \autoref{fig:TSAnalyser_close_PMT}, one may notice that the stream types and PIDs that come after the PCR information match: the ES with PID \texttt{273} is H.264 video and the ESs with PIDs \texttt{274} and \texttt{275} are AAC/LATM audio streams, which means that there are two audio streams. The stream with type \texttt{6d} and PID \texttt{288} is the subtitle / closed captions stream. Later on this chapter the descriptors shown here will be discussed.
+
+\begin{figure}[!hb]
+\centering
+\caption{TS Analyser output showing a PMT Table.}
+\includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PMT.png}
+\\Source: Reproduction of the MPEG TS Analyser software.
+\label{fig:TSAnalyser_close_PMT}
+\end{figure}
+
+\begin{figure}[!hb]
+\centering
+\caption{TS Analyser output showing the TS Header info for the PMT Table.}
+\includegraphics[width=0.4\linewidth]{figuras/TSAnalyser_close_PMT_TS_Header.png}
+\\Source: Reproduction of the MPEG TS Analyser software.
+\label{fig:TSAnalyser_close_PMT_TS_Header}
+\end{figure}
 
 % ----------------------------------------------------------
 %\lipsum[55]
