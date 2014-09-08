@@ -1,0 +1,66 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  Modèle LaTeX pour les documents TB
+%
+%  Par Charles Duchêne, IG JI
+%  Juin 2013
+%
+%  Toutes les images doivent se trouver
+%  dans un sous-dossier pictures
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,a4paper]{article}
+\RequirePackage[utf8]{inputenc} 
+\RequirePackage[T1]{fontenc}
+\usepackage[english,francais]{babel}
+\usepackage[pdftex]{hyperref}	
+\usepackage[Rennes,version]{telecom}	
+\usepackage{aeguill}
+\usepackage{times}
+\usepackage{listingsutf8}
+\usepackage{makeidx}
+\usepackage{glossaries}
+\makeindex
+\makeglossary
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Variables pour ce document
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\author{Charles \textsc{Duchêne}, élève ingénieur\\\url{charles.duchene@telecom-bretagne.eu}}			% service émetteur ou auteur
+\title{Modèle \LaTeX{} Télécom Bretagne}									% titre du document
+\contributors{}													% contributeurs
+\version{1.0}													% version du document, avec option version
+\docdescription{Documentation utilisateur : comment utiliser le modèle \LaTeX{} pour Télécom Bretagne ?}	% description en première de couverture
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{configuration.tex} % fichier de configuration optionnel
+
+
+%%%% DÉBUT DOCUMENT
+\begin{document}
+% ne pas modifier ! imprime la première page du document
+\TBfrontcover
+
+%% Affichage des listes et tables.
+\TBsommaire
+%\listoffigures  % décommenter pour avoir la liste des figures
+%\listoftables   % décommenter pour avoir la liste des tables
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     CORPS DU DOCUMENT
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{includes/presentation.tex}
+\input{includes/options.tex}
+
+% ANNEXES
+\appendix
+\TBannexe{Fichier telecom.sty}
+\lstinputlisting[style=stylelatex]{telecom.sty}
+
+% INDEX, RÉFÉRENCES et GLOSSAIRE
+% \TBindex
+% \TBbiblio{plain-fr}{includes/biblio}
+% \TBglossary
+
+% ne pas modifier ! imprime la dernière page du document
+\TBcoverpage
+\end{document}
